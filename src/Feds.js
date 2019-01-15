@@ -21,7 +21,7 @@ const styles = (theme) => ({
 
 });
 
-function MediaCard(props) {
+function Feds(props) {
   const { classes } = props;
 
   return (
@@ -29,16 +29,18 @@ function MediaCard(props) {
     <Card className={classes.card}
     raised='true'>
       <CardActionArea>
-
-        <img src={props.article.urlToImage} className={classes.media} />
+      {(props.fed.photoUrl) ?
+        <img src={props.fed.photoUrl} className={classes.media} /> :
+         <img src='https://art.sdsu.edu/wp-content/uploads/2015/02/default-user-01.png' className={classes.media} />
+      }
         <CardContent>
-        <a target='blank' href={props.article.url} style={{ textDecoration: 'none', color: 'white' }}>
+
           <Typography gutterBottom variant="h5" component="h2">
-            {props.article.title}
+            {props.fed.name}
           </Typography>
-          </a>
+
           <Typography component="p" align='right'>
-            {props.article.author}
+            {props.fed.party}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -55,8 +57,8 @@ function MediaCard(props) {
   );
 }
 
-MediaCard.propTypes = {
+Feds.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MediaCard);
+export default withStyles(styles)(Feds);

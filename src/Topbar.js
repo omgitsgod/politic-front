@@ -22,7 +22,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import {FitnessCenter, PowerSettingsNew, CenterFocusStrong, History, RssFeed, Favorite, Album, LocationOn, Settings, Home, AccountBalance, LineWeight, Chat } from '@material-ui/icons'
+import {FitnessCenter, PowerSettingsNew, CenterFocusStrong, History, RssFeed, Favorite, Album, LocationOn, Settings, Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 
 const styles = {
@@ -75,6 +75,7 @@ class MenuAppBar extends React.Component {
     const open = Boolean(anchorEl);
 
     const sideList = (
+      (this.props.logged) ?
       <div className={classes.list}>
 
 
@@ -113,8 +114,46 @@ class MenuAppBar extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Chat" />
               </ListItem></Link>
+
           </List>
       </div>
+      :
+      <div className={classes.list}>
+      <ListItem button>
+
+      <ListItemIcon className={classes.menuButton} onClick={this.toggleDrawer('left', true)} aria-label="Menu">
+        <MenuIcon />
+      </ListItemIcon>
+      <ListItemText primary="politic" />
+      </ListItem>
+        <Divider />
+        <Divider />
+        <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+        <ListItem button>
+
+        <ListItemIcon>
+          <Home />
+        </ListItemIcon>
+        <ListItemText primary="Home" />
+          </ListItem></Link>
+          <Link to='/signin' style={{ textDecoration: 'none', color: 'white' }}>
+          <ListItem button>
+
+          <ListItemIcon>
+            <LockOpen />
+          </ListItemIcon>
+          <ListItemText primary="Sign In" />
+            </ListItem></Link>
+            <Link to='/signup' style={{ textDecoration: 'none', color: 'white' }}>
+            <ListItem button>
+
+            <ListItemIcon>
+              <Create/>
+            </ListItemIcon>
+            <ListItemText primary="Sign Up" />
+              </ListItem></Link>
+      </div>
+
     );
 
 
@@ -133,8 +172,16 @@ class MenuAppBar extends React.Component {
             <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>  politic </Link>
             </Typography>
 
-            {auth ? (
+            {(this.props.logged) ? (
               <div>
+              <IconButton
+                aria-owns={open ? 'menu-appbar' : undefined}
+                aria-haspopup="true"
+                onClick={this.handleMenu}
+                color="inherit"
+              >
+                <Star />
+              </IconButton>
               <Badge className={classes.margin} badgeContent={25} color="primary">
                 <MailIcon />
               </Badge>
@@ -168,37 +215,16 @@ class MenuAppBar extends React.Component {
               </div>
             ) : (
               <div>
-                <IconButton
-                  aria-owns={open ? 'menu-appbar' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleMenu}
-                  color="inherit"
-                >
-                  <PowerSettingsNew />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem ><FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
-                      }
-                      label={auth ? 'Logout' : 'Login'}
-                    />
-                  </FormGroup></MenuItem>
-                </Menu>
+              <Link to='/signup' style={{ textDecoration: 'none', color: 'white' }}>
+              <Button>
+              Sign Up
+              </Button>
+              </Link>
+              <Link to='/signin' style={{ textDecoration: 'none', color: 'white' }}>
+              <Button>
+              Sign In
+              </Button>
+              </Link>
               </div>
             )}
           </Toolbar>
