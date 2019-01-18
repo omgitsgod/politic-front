@@ -4,7 +4,7 @@ import { Paper, Typography, TextField, Button, List, ListItem, ListItemText, Lis
 import { withStyles } from '@material-ui/core/styles'
 import Image from 'material-ui-image'
 import MediaCard from './MediaCard'
-import { API_ROOT, HEADERS } from './constants';
+import { API_ROOT } from './constants';
 
 const styles = theme => console.log(theme) || ({
 main: {
@@ -34,53 +34,46 @@ main: {
 
 })
 export default withStyles(styles) (
-class HeadlinesContainer extends Component {
+class SavedArts extends Component {
 
   state = {
     articles: []
   }
 
-  saveArticle = (article) => {
-
-    const newArticle = {
-      title: article.title,
-      author: article.author,
-      publishedAt: article.publishedAt,
-      url: article.url,
-      urlToImage: article.urlToImage,
-      description: article.description,
-      user_id: 4
-    }
-
-    fetch(`${API_ROOT}/articles`, {
-      method: 'POST',
-      headers: HEADERS,
-      body: JSON.stringify({newArticle})
-    })
-  }
-
   componentDidMount() {
-    fetch(`https://newsapi.org/v2/top-headlines?sources=politico&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles}))
+    fetch(`${API_ROOT}/articles`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.EJP9HEoZEPuBcc_wTncwkS_4T7yYO4wnd8wF2Zyo6Mg`
+      }
+    })
+      .then(res => res.json())
+      .then(x => {
+        if (this.props.user) {
+        const articles = x.filter(y => y.user_id === this.props.user.user.id)
+        this.setState({ articles })}
+      } )
+
   }
   render() {
     const { classes } = this.props
   const x =  this.state.articles.map(article =>
     <Grid item xs={3}>
-    <MediaCard save={this.saveArticle} article={article}/>
+    <MediaCard article={article}/>
     </Grid>
   )
-  console.log(this.props.id)
+
     return (
       <main className={classes.main}>
       <Paper className={classes.paper}>
 
     <Typography variant='display2' align='center' gutterBottom>
-      Headlines
+      Saved Articles
       </Typography>
       <Divider />
       <Grid container spacing={16}>
       <Grid container spacing={32} justify='center'>
-      {x}
+      {(this.state.articles) ? x : ""}
       </Grid>
       </Grid>
       </Paper>

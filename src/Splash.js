@@ -49,20 +49,22 @@ class HeadlinesContainer extends Component {
 
   state = {
     feds: [],
-    state: ''
+    state: '',
   }
 
   componentDidMount() {
-  fetch(`https://www.googleapis.com/civicinfo/v2/representatives?address=10009&includeOffices=true&roles=headOfGovernment&roles=deputyHeadOfGovernment&roles=governmentOfficer&roles=legislatorUpperBody&prettyPrint=true&key=${process.env.REACT_APP_CIVIC_API_KEY}`).then(r => r.json()).then(json => {
+
+    const zip = (this.props.zip) ?  this.props.zip : '10009'
+  fetch(`https://www.googleapis.com/civicinfo/v2/representatives?address=${zip}&includeOffices=true&roles=headOfGovernment&roles=deputyHeadOfGovernment&roles=governmentOfficer&roles=legislatorUpperBody&prettyPrint=true&key=${process.env.REACT_APP_CIVIC_API_KEY}`).then(r => r.json()).then(json => {
 
     this.setState({
       feds: json.officials,
       state: json.normalizedInput.state
     })
       console.log(this.state)
-    debugger
-  })
 
+  });
+  debugger
   }
   render() {
     const { classes } = this.props

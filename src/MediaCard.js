@@ -23,7 +23,7 @@ const styles = (theme) => ({
 
 function MediaCard(props) {
   const { classes } = props;
-
+  console.log(props.article)
   return (
 
     <Card className={classes.card}
@@ -43,7 +43,7 @@ function MediaCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={() => props.save(props.article)}>
           Save
         </Button>
         <Button size="small" color="primary">

@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -24,6 +25,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {FitnessCenter, PowerSettingsNew, CenterFocusStrong, History, RssFeed, Favorite, Album, LocationOn, Settings, Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
+import SavedArts from './SavedArts'
 
 const styles = {
   root: {
@@ -163,28 +165,32 @@ class MenuAppBar extends React.Component {
 
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} onClick={this.toggleDrawer('left', true)}  color="inherit" aria-label="Menu">
+            {(this.props.logged) ? <IconButton className={classes.menuButton} onClick={this.toggleDrawer('left', true)}  color="inherit" aria-label="Menu">
               <AccountBalance />
             </IconButton>
-
-            <Typography variant="h6" color="inherit" className={classes.grow}>
+            :
+            ''
+          }
+            <Typography variant="h6" color="inherit" align='left' className={classes.grow}>
 
             <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>  politic </Link>
             </Typography>
 
             {(this.props.logged) ? (
               <div>
+              <Link to='/savedarts' style={{ textDecoration: 'none', color: 'white' }}>
               <IconButton
-                aria-owns={open ? 'menu-appbar' : undefined}
                 aria-haspopup="true"
-                onClick={this.handleMenu}
-                color="inherit"
+                color="secondary"
               >
                 <Star />
               </IconButton>
+              </Link>
+              <Link to='/chat' style={{ textDecoration: 'none', color: 'black' }}>
               <Badge className={classes.margin} badgeContent={25} color="primary">
                 <MailIcon />
               </Badge>
+              </Link>
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : undefined}
                   aria-haspopup="true"
@@ -216,12 +222,25 @@ class MenuAppBar extends React.Component {
             ) : (
               <div>
               <Link to='/signup' style={{ textDecoration: 'none', color: 'white' }}>
+
               <Button>
+              <Icon
+                aria-haspopup="true"
+                color="secondary"
+              >
+                <Create />
+              </Icon>
               Sign Up
               </Button>
               </Link>
               <Link to='/signin' style={{ textDecoration: 'none', color: 'white' }}>
               <Button>
+              <Icon
+                aria-haspopup="true"
+                color="secondary"
+              >
+                <LockOpen />
+              </Icon>
               Sign In
               </Button>
               </Link>
