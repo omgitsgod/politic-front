@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Paper, Typography, TextField, Button, List, ListItem, ListItemText, ListItemSecondaryAction,
-  IconButton, Grid, Divider, Avatar } from '@material-ui/core'
+import { Paper, Typography,  Grid, Divider} from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import Image from 'material-ui-image'
 import MediaCard from './MediaCard'

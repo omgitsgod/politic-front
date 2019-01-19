@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import  HeadlinesContainer from './HeadlinesContainer'
 import MenuAppBar from './Topbar'
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
-import MediaCard from './MediaCard'
+import { Route  } from 'react-router-dom'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 import Chat from './Chat'
 import Splash from './Splash'
 import SavedArts from './SavedArts'
+import { HEADERS, API_WS_ROOT } from './constants'
+import { ActionCableProvider } from 'react-actioncable-provider';
 
 
 
@@ -54,6 +54,8 @@ class App extends Component {
     this.setState({
       id: this.state.user.user.id
     })}
+
+
   }
   render() {
     return (
@@ -61,17 +63,17 @@ class App extends Component {
       <div className="App">
         <MenuAppBar logged={this.state.logged} handleUser={this.handleUser}/>
         {(this.state.logged) ?
-      <div>
+      <ActionCableProvider url={API_WS_ROOT + this.state.user.jwt}>
       <Route exact path="/" component={Splash} />
       <Route path="/news" component={HeadlinesContainer} />
       <Route path="/news" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
       <Route path="/savedarts" component={SavedArts} />
       <Route path="/savedarts" render={(props)=><SavedArts {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
-      <Route path="/chat" component={Chat} />
+      <Route path="/chat" render={(props)=><Chat {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
       <Route path="/splash" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} zip={this.state.zip}/>}/>
       <Route path="/signin" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} zip={this.state.zip}/>}/>
         <Route path="/signup" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} zip={this.state.zip}/>}/>
-      </div>
+      </ActionCableProvider>
       :
       <div>
       <Route exact path="/" component={HeadlinesContainer} />

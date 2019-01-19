@@ -18,6 +18,7 @@ class NewMessageForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
 
+    HEADERS.Authorization = `Bearer ${this.props.user.jwt}`
     fetch(`${API_ROOT}/messages`, {
       method: 'POST',
       headers: HEADERS,

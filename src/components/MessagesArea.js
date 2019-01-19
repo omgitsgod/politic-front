@@ -2,16 +2,15 @@ import React from 'react';
 import NewMessageForm from './NewMessageForm';
 import { Typography, Paper } from '@material-ui/core'
 
-const MessagesArea = ({
-  conversation: { id, title, messages },
-}) => {
+const MessagesArea = (props) => {
+  console.log(props)
   return (
     <div className="messagesArea">
     <Typography variant='display2' align='center' gutterBottom>
-      {title}
+      {props.conversation.title}
       </Typography>
-      <Paper>{orderedMessages(messages)}
-      <NewMessageForm conversation_id={id} />
+      <Paper>{orderedMessages(props.conversation.messages)}
+      <NewMessageForm user={props.user} conversation_id={props.conversation.id} />
       </Paper>
     </div>
   );

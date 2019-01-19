@@ -53,9 +53,9 @@ class HeadlinesContainer extends Component {
       <main className={classes.main}>
       <Paper className={classes.paper}>
 
-    
+
       <Divider />
-      <ConversationsList />
+      <ConversationsList user={this.props.user}/>
       </Paper>
       </main>
     );

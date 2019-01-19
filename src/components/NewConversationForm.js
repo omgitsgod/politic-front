@@ -12,6 +12,7 @@ class NewConversationForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault()
+    HEADERS.Authorization = `Bearer ${this.props.user.jwt}`
     fetch(`${API_ROOT}/conversations`, {
       method: 'POST',
       headers: HEADERS,

@@ -16,7 +16,7 @@ class ConversationsList extends React.Component {
     fetch(`${API_ROOT}/conversations`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.EJP9HEoZEPuBcc_wTncwkS_4T7yYO4wnd8wF2Zyo6Mg`
+        Authorization: `Bearer ${this.props.user.jwt}`
       }
     })
       .then(res => res.json())
@@ -64,9 +64,10 @@ class ConversationsList extends React.Component {
             <Grid container spacing={16}>
         {mapConversations(conversations, this.handleClick)}
         </Grid>
-        <NewConversationForm />
+        <NewConversationForm user={this.props.user} />
         {activeConversation ? (
           <MessagesArea
+          user={this.props.user}
             conversation={findActiveConversation(
               conversations,
               activeConversation
