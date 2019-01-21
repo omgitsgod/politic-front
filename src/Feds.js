@@ -8,6 +8,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { red } from '@material-ui/core/colors'
 
 const styles = (theme) => ({
   card: {
@@ -50,17 +51,23 @@ class Feds extends Component {
           <Typography gutterBottom component="p" align='right'>
             {this.props.fed.office.name}
           </Typography>
+          { (this.props.fed.party === "Democratic") ?
           <Typography component="p" align='right' color="secondary">
             {this.props.fed.party}
           </Typography>
+          :
+          <Typography component="p" align='right' color="error">
+            {this.props.fed.party}
+          </Typography>
+        }
         </CardContent>
       </CardActionArea>
 
       <CardActions>
-        <Button size="small" color="primary" onClick={()=>this.props.handlePol(this.props.fed)}>
+        <Button size="small" onClick={()=>this.props.handlePol(this.props.fed)}>
           More Info
         </Button>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" >
           Share
         </Button>
       </CardActions>

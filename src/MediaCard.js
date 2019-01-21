@@ -41,14 +41,18 @@ function MediaCard(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
+      { (props.save) ?
       <CardActions>
         <Button size="small" color="primary" onClick={() => props.save(props.article)}>
           Save
         </Button>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" disabled="true">
           Share
         </Button>
       </CardActions>
+      :
+      ''
+    }
     </Card>
 
   );

@@ -8,6 +8,7 @@ import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import People from '@material-ui/icons/People';
 
 
 
@@ -108,6 +109,16 @@ class MenuAppBar extends React.Component {
           </ListItemIcon>
           <ListItemText primary="News" />
             </ListItem></Link>
+            <Link to='/people' style={{ textDecoration: 'none', color: 'white' }}>
+            <ListItem button>
+
+            <ListItemIcon>
+              <People />
+            </ListItemIcon>
+            <ListItemText primary="Pols" />
+              </ListItem></Link>
+
+
             <Link to='/chat' style={{ textDecoration: 'none', color: 'white' }}>
             <ListItem button>
 

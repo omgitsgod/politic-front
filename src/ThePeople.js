@@ -47,6 +47,7 @@ class HeadlinesContainer extends Component {
     const zip = (this.props.address) ?  this.props.address : '07028'
   fetch(`https://www.googleapis.com/civicinfo/v2/representatives?address=${zip}&levels=administrativeArea1&levels=country&key=AIzaSyAXEhp82D0-hWEDCRn6b46cg-lpWCx1bdU`).then(r => r.json()).then(json => {
     const waka = json.officials
+    if (waka.length === 9) {
     waka[0].office = json.offices[0]
     waka[1].office = json.offices[1]
     waka[2].office = json.offices[2]
@@ -56,6 +57,7 @@ class HeadlinesContainer extends Component {
     waka[6].office = json.offices[5]
     waka[7].office = json.offices[6]
     waka[8].office = json.offices[7]
+  }
     this.setState({
       feds: waka,
       state: json.normalizedInput.state
@@ -88,7 +90,7 @@ this.setState({fed: pol})
       <Paper className={classes.paper}>
 
     <Typography variant='display2' align='center' gutterBottom>
-      The Pols
+      Pols
       </Typography>
       <Divider />
       <Grid container spacing={16}>

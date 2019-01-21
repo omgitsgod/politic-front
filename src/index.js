@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
-import { grey, blue } from '@material-ui/core/colors'
+import { grey, blue, red} from '@material-ui/core/colors'
 import { CssBaseline } from '@material-ui/core'
 import {BrowserRouter as Router } from 'react-router-dom'
 import { ActionCableProvider } from 'react-actioncable-provider';
@@ -15,6 +15,7 @@ const theme = createMuiTheme({
   palette: {
     primary: grey,
     secondary: blue,
+    error: red,
     type: 'dark'
   },
   root: {

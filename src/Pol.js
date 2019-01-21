@@ -9,6 +9,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper'
+import { Tab, Tabs, Grid } from '@material-ui/core'
+import MediaCard from './MediaCard'
+import { AccessTime, NotificationImportant, KeyboardBackspace } from '@material-ui/icons'
 
 const styles = (theme) => ({
     main: {
@@ -17,7 +20,7 @@ const styles = (theme) => ({
       marginLeft: theme.spacing.unit * 3,
       marginRight: theme.spacing.unit * 3,
       [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-        width: 400,
+        width: 1000,
         marginLeft: 'auto',
         marginRight: 'auto',
       },
@@ -45,74 +48,103 @@ class Pol extends Component {
   state = {
     data: {},
     open: {},
-    secs: {}
+    secs: {},
+    tab: 'Data',
+    articles: [],
+    display: '',
+    cycle: {}
+  }
+
+  handleChange = (event, change) => {
+    if (change === "Back") {
+      this.props.handlePol("Back")
+    } else {
+    this.setState({
+      tab: change
+    })
+  }
+  }
+
+  handleBills = () => {
+
+            fetch(`https://api.propublica.org/congress/v1/members/${this.state.data.id.bioguide}/bills/cosponsored.json`,{
+              headers: {
+                Accept: "application/json",
+                'X-API-KEY': process.env.REACT_APP_PROPUB_API_KEY
+              }
+            }).then(r => r.json()).then(bills => this.setState({bills: bills.results[0].bills, display: 'bills'}))
+}
+
+  handleVotes = () => {
+
+          fetch(`https://api.propublica.org/congress/v1/members/${this.state.data.id.bioguide}/votes.json`,{
+            headers: {
+              Accept: "application/json",
+              'X-API-KEY': process.env.REACT_APP_PROPUB_API_KEY
+            }
+          }).then(r => r.json()).then(votes => this.setState({vote: votes.results[0].votes, display: 'votes'}))
+}
+
+  handleFinances = () => {
+    fetch(`https://cors-anywhere.herokuapp.com/https://www.opensecrets.org/api/?method=memPFDprofile&year=2019&cid=${this.state.data.id.opensecrets}&output=json&apikey=${process.env.REACT_APP_SECRETS_API_KEY}`)
+      .then(r => r.json()).then(moneys =>
+        fetch(`https://cors-anywhere.herokuapp.com/https://www.opensecrets.org/api/?method=candSummary&output=json&cid=${this.state.data.id.opensecrets}&apikey=${process.env.REACT_APP_SECRETS_API_KEY}`)
+        .then(r => r.json()).then(cycle => this.setState({secs: moneys.response.member_profile, cycle: cycle.response.summary["@attributes"], display: 'secs'})) )
+
+  }
+
+  handleContribs = () => {
+    fetch(`https://cors-anywhere.herokuapp.com/https://www.opensecrets.org/api/?method=candContrib&cid=${this.state.data.id.opensecrets}&output=json&apikey=${process.env.REACT_APP_SECRETS_API_KEY}`)
+    .then(r => r.json()).then(contribs => this.setState({contribs: contribs.response.contributors.contributor, display: 'contribs'}))
+  }
+
+  handleIndustry = () => {
+    fetch(`https://cors-anywhere.herokuapp.com/https://www.opensecrets.org/api/?method=candIndustry&cid=${this.state.data.id.opensecrets}&output=json&cycle=2018&apikey=${process.env.REACT_APP_SECRETS_API_KEY}`)
+    .then(r => r.json()).then(industry => this.setState({industry: industry.response.industries.industry, display: 'industry'}))
   }
 
   componentDidMount() {
     fetch('https://theunitedstates.io/congress-legislators/legislators-current.json').then(r => r.json()).then(x => {
       const repIDS = (x.filter(z => z.name.official_full === this.props.fed.name)[0])
-      const id = process.env.REACT_APP_SECRETS_API_KEY
       if (repIDS) {
-      const url = `https://cors-anywhere.herokuapp.com/https://www.opensecrets.org/api/?method=memPFDprofile&year=2019&cid=${repIDS.id.opensecrets}&output=json&apikey=${id}`
-      fetch(url).then(r => r.json()).then(moneys => {
-        const statey = {
-          data: repIDS,
-          secs: moneys.response.member_profile
-        }
-        const urly = `https://cors-anywhere.herokuapp.com/https://www.opensecrets.org/api/?method=candSummary&output=json&cid=${repIDS.id.opensecrets}&apikey=${id}`
-        fetch(urly).then(r => r.json()).then(cycle => {
-          statey.cycle = cycle.response.summary["@attributes"]
-        const nextUrl = `https://cors-anywhere.herokuapp.com/https://www.opensecrets.org/api/?method=candContrib&cid=${repIDS.id.opensecrets}&output=json&apikey=${id}`
-          fetch(nextUrl).then(r => r.json()).then(contribs => {
-            statey.contribs = contribs.response.contributors.contributor
-          const newyUrl = `https://cors-anywhere.herokuapp.com/https://www.opensecrets.org/api/?method=candIndustry&cid=${repIDS.id.opensecrets}&output=json&cycle=2018&apikey=${id}`
-          fetch(newyUrl).then(r => r.json()).then(industry => {
-            statey.industry = industry.response.industries.industry
-          const  nowUrl = `https://api.propublica.org/congress/v1/members/${repIDS.id.bioguide}/votes.json`
-          fetch(nowUrl,{
-            headers: {
-              Accept: "application/json",
-              'X-API-KEY': "KG6Q8QpzWKZGgegNhwqsOOAIx3WqOLgVU4moQ7VO"
-            }
-          }).then(r => r.json()).then(votes => {
-            statey.vote = votes.results[0].votes
-            const lalaurl = `https://api.propublica.org/congress/v1/members/${repIDS.id.bioguide}/bills/cosponsored.json`
-            fetch(lalaurl,{
-              headers: {
-                Accept: "application/json",
-                'X-API-KEY': "KG6Q8QpzWKZGgegNhwqsOOAIx3WqOLgVU4moQ7VO"
+
+              const namey = repIDS.id.wikipedia.split(" ").join("%20")
+            fetch(`https://newsapi.org/v2/everything?sources=politico&q=${namey}&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(news => {
+              this.setState({
+                data: repIDS,
+                articles: news.articles})})}
+                else {
+                  const namey = this.props.fed.name.split(" ").join("%20")
+                fetch(`https://newsapi.org/v2/everything?sources=politico&q=${namey}&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(news => {
+                  this.setState({
+                    articles: news.articles})})
+                }
               }
-            }).then(r => r.json()).then(bills => {
-              statey.bills = bills.results[0].bills
-                this.setState(statey)
-            })
-
-          })
-
-          })
-          })
-
-        })
-        }) }
-
-    })
-  //  .then(fetch(`https://cors-anywhere.herokuapp.com/https://www.opensecrets.org/api/?method=memPFDprofile&year=2016&cid=N00007360&output=json&apikey=${process.env.REACT_APP_SECRETS_API_KEY}`).then(console.log))
-  //const id = '8c4d690fde5d6a3a92a09231a877210d'
-  //const url = `https://cors-anywhere.herokuapp.com/https://www.opensecrets.org/api/?method=memPFDprofile&year=2019&cid=N00027658&output=json&apikey=${id}`
-  //fetch(url).then(r => r.json()).then(console.log)
-  }
+              )
+}
   render() {
   const { classes } = this.props;
   console.log(this.state.data)
   console.log(this.state);
+  if (this.state.tab !== "News") {
   return (
     <main className={classes.main}>
 
     <Card className={classes.paper}
     raised='true'>
-    <Button align='left' onClick={()=>this.props.handlePol("Back")}>
-    Back
-    </Button>
+    <Tabs
+      value={this.state.tab}
+     onChange={this.handleChange}
+      variant="fullWidth"
+      indicatorColor="secondary"
+      textColor="secondary"
+    >
+      <Tab icon={<KeyboardBackspace />} value={"Back"} label="Back" />
+      <Tab icon={<NotificationImportant />} value={"Data"} label="Data" />
+      <Tab icon={<AccessTime />} value={"News"} label="News" />
+
+    </Tabs>
+
       <CardActionArea>
       {(this.props.fed.photoUrl) ?
         <img src={this.props.fed.photoUrl} className={classes.media} /> :
@@ -127,60 +159,130 @@ class Pol extends Component {
           <Typography component="p" align='right'>
             {this.props.fed.party}
           </Typography>
-          {(this.state.secs.assets) ?
-            <div>
-            <Typography component="p" align='left'>
+        </CardContent>
+        </CardActionArea>
+        {(this.state.data.id) ?
+        <CardActions>
+        <Button size="small" color="primary" onClick={this.handleFinances}>
+          My Finances
+        </Button>
+          <Button size="small" color="primary" onClick={this.handleVotes} >
+            How do I vote?
+          </Button>
+          <Button size="small" color="primary" onClick={this.handleContribs}>
+            Who pays me?
+          </Button>
+          <Button size="small" color="primary" onClick={this.handleBills}>
+            Bills Ive Sponsered
+          </Button>
+          <Button size="small" color="primary" onClick={this.handleIndustry}>
+            Which Industries Own Me
+          </Button>
+        </CardActions>
+        :
+        ''
+      }
+          <CardActionArea>
+        {this.state.display === "secs" ?
+        <div>
+        <Typography component="p" align='center'>
+        First Elected: {this.state.cycle.first_elected}
+        </Typography>
+        <Typography component="p" align='center'>
             Cash on hand: ${this.state.cycle.cash_on_hand}
             </Typography>
-            <Typography component="p" align='left'>
-            First Elected: ${this.state.cycle.first_elected}
-            </Typography>
-            <Typography component="p" align='left'>
+        <Typography component="p" align='center'>
             {this.state.secs["@attributes"].transaction_count} transactions recorded:
             </Typography>
-            <Typography component="p" align='left'>
+            <Typography component="p" align='center'>
             Lowest: {this.state.secs["@attributes"].tx_low} | Highest: {this.state.secs["@attributes"].tx_high}
             </Typography>
-            <Typography component="p" align='left'>
+            <Typography component="p" align='center'>
             Networth: ${this.state.secs["@attributes"].net_low} - ${this.state.secs["@attributes"].net_high}
             </Typography>
-            <Typography variant="h5" align='left'>
+            <Typography variant="h5" align='center'>
             Assets
             </Typography>
-            {this.state.secs.assets.asset.map(x => <div><Typography component="p" align='left'>{x["@attributes"].name}:</Typography><Typography component="p" align='left'>${x["@attributes"].holdings_low} - ${x["@attributes"].holdings_high}</Typography></div>)}
-            <Typography variant="h5" align='left'>
+            {this.state.secs.assets.asset.map(x => <div><Typography component="p" align='center'>{x["@attributes"].name}:</Typography><Typography component="p" align='center'>${x["@attributes"].holdings_low} - ${x["@attributes"].holdings_high}</Typography></div>)}
+            </div>
+      :
+    ''}
+    {this.state.display === "contribs" ?
+    <div>
+    <Typography variant="h5" align='center'>
             Contributors
             </Typography>
-              {this.state.contribs.map(x => <div><Typography component="p" align='left'>{x["@attributes"].org_name}:</Typography><Typography component="p" align='left'>${x["@attributes"].total}</Typography></div>)}
-              <Typography variant="h5" align='left'>
-              By Industry
+              {this.state.contribs.map(x => <div><Typography component="p" align='center'>{x["@attributes"].org_name}:</Typography><Typography component="p" align='center'>${x["@attributes"].total}</Typography></div>)}
+    </div>
+    :
+    ''}
+    {this.state.display === "industry" ?
+    <div>
+    <Typography variant="h5" align='center'>
+            By Industry
+            </Typography>
+              {this.state.industry.map(x => <div><Typography component="p" align='center'>{x["@attributes"].industry_name}:</Typography><Typography component="p" align='center'>Total: ${x["@attributes"].total}</Typography><Typography component="p" align='center'>Individuals: ${x["@attributes"].indivs} | PACS: ${x["@attributes"].pacs}</Typography></div>)}
+    </div>
+    :
+    ''}
+    {this.state.display === "votes" ?
+    <div>
+    <Typography variant="h5" align='center'>
+              Voting!
               </Typography>
-                {this.state.industry.map(x => <div><Typography component="p" align='left'>{x["@attributes"].industry_name}:</Typography><Typography component="p" align='left'>${x["@attributes"].total}</Typography><Typography component="p" align='left'>Individuals: ${x["@attributes"].indivs} | PACS: ${x["@attributes"].pacs}</Typography></div>)}
-                <Typography variant="h5" align='left'>
-                Voting!
-                </Typography>
-                  {this.state.vote.map(x => <div><Typography component="p" align='left'>{x.bill.bill_id}: {x.description} </Typography><br /><br /><Typography component="p" align='left'>{x.question} | Voted: {x.position}</Typography><br /><Typography component="p" align='left'>Total: yes: {x.total.yes}/no: {x.total.no}/not voting:{x.total.not_voting}</Typography></div>)}
-                  <Typography variant="h5" align='left'>
+                {this.state.vote.map(x => <div><br /><Typography component="p" align='center'>{x.bill.bill_id}: {x.description} </Typography><br /><Typography component="p" align='center'>{x.question} | Voted: {x.position}</Typography><br /><Typography component="p" align='center'>Total: yes: {x.total.yes}/no: {x.total.no}/not voting:{x.total.not_voting}</Typography></div>)}
+
+    </div>
+    :
+    ''}
+    {this.state.display === "bills" ?
+    <div>
+    <Typography variant="h5" align='center'>
                   Bills!
                   </Typography>
-                    {this.state.bills.map(x => <div><Typography component="p" align='left'>{x.bill_id}: {x.short_title} </Typography><br/></div>)}
-            </div>
-          :
-        ""}
-        </CardContent>
+                    {this.state.bills.map(x => <div><Typography component="p" align='center'>{x.bill_id}: {x.short_title} </Typography><br/></div>)}
+    </div>
+    :
+    ''}
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary" >
-          How do I vote?
-        </Button>
-        <Button size="small" color="primary">
-          Who pays me?
-        </Button>
-      </CardActions>
+      :
+
+
     </Card>
 
     </main>
   );
+} else if (this.state.articles.length > 0) {
+  return (
+    <main className={classes.main}>
+    <Paper className={classes.paper}>
+    <Tabs
+      value={this.state.tab}
+     onChange={this.handleChange}
+      variant="fullWidth"
+      indicatorColor="secondary"
+      textColor="secondary"
+    >
+      <Tab icon={<KeyboardBackspace />} value={"Back"} label="Back" />
+      <Tab icon={<NotificationImportant />} value={"Data"} label="Data" />
+      <Tab icon={<AccessTime />} value={"News"} label="News" />
+
+    </Tabs>
+    <Grid container spacing={16}>
+    <Grid container spacing={32} justify='center'>
+    {this.state.articles.map(article =>
+    <Grid item xs={3}>
+    <MediaCard  save={this.saveArticle} article={article}/>
+    </Grid>
+  )}
+
+    </Grid>
+    </Grid>
+    </Paper>
+    </main>
+
+  )
+}
 }
 }
 

@@ -73,16 +73,18 @@ class App extends Component {
       <Route path="/news" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
       <Route path="/savedarts" render={(props)=><SavedArts {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
       <Route path="/chat" render={(props)=><Chat {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
+
       <Route path="/splash" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
       <Route path="/signin" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
         <Route path="/signup" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
       </ActionCableProvider>
       :
       <div>
-      <Route exact path="/" component={HeadlinesContainer} />
 
+      <Route exact path="/" component={HeadlinesContainer} />
       <Route path="/signin" render={(props)=><SignIn {...props} handleUser={this.handleUser}/>}/>
       <Route path="/signup" render={(props)=><SignUp {...props} handleUser={this.handleUser}/>}/>
+
       </div>
     }
       </div>

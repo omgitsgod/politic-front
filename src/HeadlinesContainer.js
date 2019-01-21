@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Paper, Typography, Grid, Divider} from '@material-ui/core'
+import { Paper, Typography, Grid, Divider, Tabs, Tab, } from '@material-ui/core'
+import { NotificationImportant, Favorite, AccessTime } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles'
 import MediaCard from './MediaCard'
 import { API_ROOT, HEADERS } from './constants';
+
 
 const styles = theme => console.log(theme) || ({
 main: {
@@ -35,8 +37,17 @@ export default withStyles(styles) (
 class HeadlinesContainer extends Component {
 
   state = {
-    articles: []
+    articles: [],
+    topic: 'Headlines'
   }
+  handleChange = (event, change) => {
+
+    if (change === "Recent") {
+  fetch(`https://newsapi.org/v2/everything?sources=politico&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles, topic: change}))
+} else if ( change === "Headlines") {
+  fetch(`https://newsapi.org/v2/top-headlines?sources=politico&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles, topic: change}))
+}
+}
 
   saveArticle = (article) => {
 
@@ -58,22 +69,49 @@ class HeadlinesContainer extends Component {
   }
 
   componentDidMount() {
+    if (this.state.topic === "Headlines") {
     fetch(`https://newsapi.org/v2/top-headlines?sources=politico&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles}))
+  } else if (this.state.topic === "Recent") {
+   fetch(`https://newsapi.org/v2/everything?sources=politico&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles}))
+ }
   }
   render() {
     const { classes } = this.props
-  const x =  this.state.articles.map(article =>
+    let x
+  if  (this.props.user) {
+   x =  this.state.articles.map(article =>
     <Grid item xs={3}>
-    <MediaCard save={this.saveArticle} article={article}/>
+    <MediaCard  save={this.saveArticle} article={article}/>
     </Grid>
   )
+} else {
+   x =  this.state.articles.map(article =>
+    <Grid item xs={3}>
+    <MediaCard article={article}/>
+    </Grid>
+  )
+}
   console.log(this.props.id)
     return (
       <main className={classes.main}>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper}>{
+        (this.props.user) ?
+      <Tabs
+        value={this.state.topic}
+       onChange={this.handleChange}
+        variant="fullWidth"
+        indicatorColor="secondary"
+        textColor="secondary"
+      >
+        <Tab icon={<NotificationImportant />} value={"Headlines"} label="Headlines" />
+        <Tab icon={<AccessTime />} value={"Recent"} label="Recent" />
 
+      </Tabs>
+      :
+      ''
+    }
     <Typography variant='display2' align='center' gutterBottom>
-      Headlines
+      {this.state.topic}
       </Typography>
       <Divider />
       <Grid container spacing={16}>
