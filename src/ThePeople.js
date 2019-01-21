@@ -3,6 +3,8 @@ import { Paper, Typography, Grid, Divider} from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import MediaCard from './MediaCard'
 import { API_ROOT, HEADERS } from './constants';
+import Feds from './Feds'
+import Pol from './Pol'
 
 const styles = theme => console.log(theme) || ({
 main: {
@@ -35,45 +37,58 @@ export default withStyles(styles) (
 class HeadlinesContainer extends Component {
 
   state = {
-    articles: []
-  }
-
-  saveArticle = (article) => {
-
-    const newArticle = {
-      title: article.title,
-      author: article.author,
-      publishedAt: article.publishedAt,
-      url: article.url,
-      urlToImage: article.urlToImage,
-      description: article.description,
-      user_id: this.props.user.user.id
-    }
-    HEADERS.Authorization = `Bearer ${this.props.user.jwt}`
-    fetch(`${API_ROOT}/articles`, {
-      method: 'POST',
-      headers: HEADERS,
-      body: JSON.stringify({article: newArticle, user_id: this.props.user.user.id}),
-    })
+    feds: [],
+    state: '',
+    fed: ''
   }
 
   componentDidMount() {
-    fetch(`https://newsapi.org/v2/top-headlines?sources=politico&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles}))
-  }
+
+    const zip = (this.props.address) ?  this.props.address : '07028'
+  fetch(`https://www.googleapis.com/civicinfo/v2/representatives?address=${zip}&levels=administrativeArea1&levels=country&key=AIzaSyAXEhp82D0-hWEDCRn6b46cg-lpWCx1bdU`).then(r => r.json()).then(json => {
+    const waka = json.officials
+    waka[0].office = json.offices[0]
+    waka[1].office = json.offices[1]
+    waka[2].office = json.offices[2]
+    waka[3].office = json.offices[2]
+    waka[4].office = json.offices[3]
+    waka[5].office = json.offices[4]
+    waka[6].office = json.offices[5]
+    waka[7].office = json.offices[6]
+    waka[8].office = json.offices[7]
+    this.setState({
+      feds: waka,
+      state: json.normalizedInput.state
+    })
+      console.log(this.state.feds)
+      console.log(json)
+
+  })
+
+}
+handlePol = (pol) => {
+  if (pol === "Back") {
+    this.setState({fed: ''})
+  } else {
+this.setState({fed: pol})
+}
+}
   render() {
     const { classes } = this.props
-  const x =  this.state.articles.map(article =>
+  const x =  this.state.feds.map(fed =>
     <Grid item xs={3}>
-    <MediaCard save={this.saveArticle} article={article}/>
+    <Feds fed={fed} handlePol={this.handlePol}/>
     </Grid>
   )
   console.log(this.props.id)
+
+  if (this.state.fed.length === 0) {
     return (
       <main className={classes.main}>
       <Paper className={classes.paper}>
 
     <Typography variant='display2' align='center' gutterBottom>
-      Headlines
+      The Pols
       </Typography>
       <Divider />
       <Grid container spacing={16}>
@@ -84,6 +99,12 @@ class HeadlinesContainer extends Component {
       </Paper>
       </main>
     );
+  }
+  else {
+    return (
+    <Pol fed={this.state.fed} handlePol={this.handlePol}/>
+  )
+  }
   }
 }
 )

@@ -10,6 +10,7 @@ import Splash from './Splash'
 import SavedArts from './SavedArts'
 import { HEADERS, API_WS_ROOT } from './constants'
 import { ActionCableProvider } from 'react-actioncable-provider';
+import ThePeople from './ThePeople'
 
 
 
@@ -18,7 +19,8 @@ class App extends Component {
     loggedIn: false,
     user: {},
     zip: '',
-    id: 0
+    id: 0,
+    address: ''
   }
 
   handleUser = (user) => {
@@ -38,14 +40,15 @@ class App extends Component {
 
 
    handleZip = (position) => {
-	let params = {
-		lat: position.coords.latitude,
-		lng: position.coords.longitude,
-		username: 'demo'
-    }
 
-	fetch(`http://api.geonames.org/findNearbyPostalCodesJSON?lat=${params.lat}&lng=${params.lng}&username=omgitsgod`).then(r => r.json()).then(x => this.setState({zip: x.postalCodes[0].postalCode}))
-
+	//fetch(`http://api.geonames.org/findNearbyPostalCodesJSON?lat=${params.lat}&lng=${params.lng}&username=omgitsgod`).then(r => r.json()).then(x => this.setState({zip: x.postalCodes[0].postalCode}))
+  const lat = position.coords.latitude
+  const long = position.coords.longitude
+  const url = `https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=${lat}%2C${long}%2C250&mode=retrieveAddresses&maxresults=1&gen=9&${process.env.REACT_APP_IDCODE_API_KEY}`
+  fetch(url).then(r=>r.json()).then(x => this.setState({
+    zip: x.Response.View[0].Result[0].Location.Address.PostalCode,
+    address: (x.Response.View[0].Result[0].Location.Address.HouseNumber + "%20" + x.Response.View[0].Result[0].Location.Address.Street + "%20" + x.Response.View[0].Result[0].Location.Address.PostalCode).split(" ").join('%20')
+  }))
 }
 
   componentDidMount () {
@@ -58,6 +61,7 @@ class App extends Component {
 
   }
   render() {
+    console.log(this.state.address)
     return (
 
       <div className="App">
@@ -65,14 +69,13 @@ class App extends Component {
         {(this.state.logged) ?
       <ActionCableProvider url={API_WS_ROOT + this.state.user.jwt}>
       <Route exact path="/" component={Splash} />
-      <Route path="/news" component={HeadlinesContainer} />
+      <Route path="/people" render={(props)=><ThePeople {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
       <Route path="/news" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
-      <Route path="/savedarts" component={SavedArts} />
       <Route path="/savedarts" render={(props)=><SavedArts {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
       <Route path="/chat" render={(props)=><Chat {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
-      <Route path="/splash" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} zip={this.state.zip}/>}/>
-      <Route path="/signin" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} zip={this.state.zip}/>}/>
-        <Route path="/signup" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} zip={this.state.zip}/>}/>
+      <Route path="/splash" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
+      <Route path="/signin" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
+        <Route path="/signup" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
       </ActionCableProvider>
       :
       <div>

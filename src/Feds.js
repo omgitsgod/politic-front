@@ -1,4 +1,5 @@
 import React from 'react';
+import { Component } from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -20,40 +21,54 @@ const styles = (theme) => ({
 
 });
 
-function Feds(props) {
-  const { classes } = props;
+class Feds extends Component {
 
+  state = {
+    data: ''
+  }
+
+  componentDidMount() {
+    fetch('https://theunitedstates.io/congress-legislators/legislators-current.json').then(r => r.json()).then(x => this.setState({data: (x.filter(z => z.name.official_full === this.props.fed.name)[0])}))
+  }
+  render() {
+  const { classes } = this.props;
+  console.log(this.state.data)
   return (
 
     <Card className={classes.card}
     raised='true'>
       <CardActionArea>
-      {(props.fed.photoUrl) ?
-        <img src={props.fed.photoUrl} className={classes.media} /> :
+      {(this.props.fed.photoUrl) ?
+        <img src={this.props.fed.photoUrl} className={classes.media} /> :
          <img src='https://art.sdsu.edu/wp-content/uploads/2015/02/default-user-01.png' className={classes.media} />
       }
         <CardContent>
 
-          <Typography gutterBottom variant="h5" component="h2">
-            {props.fed.name}
+          <Typography gutterBottom variant="h5" component="h2" >
+            {this.props.fed.name}
           </Typography>
-
-          <Typography component="p" align='right'>
-            {props.fed.party}
+          <Typography gutterBottom component="p" align='right'>
+            {this.props.fed.office.name}
+          </Typography>
+          <Typography component="p" align='right' color="secondary">
+            {this.props.fed.party}
           </Typography>
         </CardContent>
       </CardActionArea>
+
       <CardActions>
-        <Button size="small" color="primary">
-          Save
+        <Button size="small" color="primary" onClick={()=>this.props.handlePol(this.props.fed)}>
+          More Info
         </Button>
         <Button size="small" color="primary">
           Share
         </Button>
       </CardActions>
+
     </Card>
 
   );
+}
 }
 
 Feds.propTypes = {

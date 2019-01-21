@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles'
 import Image from 'material-ui-image'
 import MediaCard from './MediaCard'
 import Feds from './Feds'
+import Pol from './Pol'
+import ThePeople from './ThePeople'
 
 const styles = theme => console.log(theme) || ({
 main: {
@@ -49,11 +51,12 @@ class HeadlinesContainer extends Component {
   state = {
     feds: [],
     state: '',
+    fed: ''
   }
 
   componentDidMount() {
 
-    const zip = (this.props.zip) ?  this.props.zip : '10009'
+    const zip = (this.props.address) ?  this.props.zip : '07028'
   fetch(`https://www.googleapis.com/civicinfo/v2/representatives?address=${zip}&includeOffices=true&roles=headOfGovernment&roles=deputyHeadOfGovernment&roles=governmentOfficer&roles=legislatorUpperBody&prettyPrint=true&key=${process.env.REACT_APP_CIVIC_API_KEY}`).then(r => r.json()).then(json => {
 
     this.setState({
@@ -62,66 +65,28 @@ class HeadlinesContainer extends Component {
     })
       console.log(this.state)
 
-  });
-  debugger
-  }
+  })
+
+}
+handlePol = (pol) => {
+this.setState({fed: pol})
+}
   render() {
     const { classes } = this.props
+
     return (
       <main className={classes.main}>
-      <Paper className={classes.paper}>
-
+      <Paper>
     <Typography variant='display2' align='center' gutterBottom>
       Your District in {this.state.state} State
       </Typography>
       <Divider />
-
-      <Paper className={classes.contain}>
-
-      <Typography variant='display2' align='center' gutterBottom>
-        Executive
-        </Typography>
-        <Grid container spacing={16}>
-        <Grid container spacing={32} justify='center'>
-        <Paper className={classes.paper}>
-        <Typography variant='display2' align='center' gutterBottom>
-          Federal
-          </Typography>
-
-
-            {(this.state.feds.length> 0) ? <div><Feds fed={this.state.feds[0]}/> <Feds fed={this.state.feds[1]}/>  </div>: ''}
-
-          </Paper>
-          <Paper className={classes.paper}>
-          <Typography variant='display2' align='center' gutterBottom>
-            {this.state.state} State
-            </Typography>
-            {(this.state.feds.length> 0) ? <div><Feds fed={this.state.feds[4]}/> <Feds fed={this.state.feds[5]}/>  </div>: ''}
-            </Paper>
-            </Grid>
-            </Grid>
-        </Paper>
-
-        <Paper className={classes.paper}>
-        <Typography variant='display2' align='center' gutterBottom>
-          Congress
-          </Typography>
-          <Paper className={classes.paper}>
-          <Typography variant='display2' align='center' gutterBottom>
-            Senate
-            </Typography>
-            {(this.state.feds.length> 0) ? <div><Feds fed={this.state.feds[3]}/> <Feds fed={this.state.feds[2]}/>  </div>: ''}
-            </Paper>
-            <Paper className={classes.paper}>
-            <Typography variant='display2' align='center' gutterBottom>
-              House
-              </Typography>
-              </Paper>
-          </Paper>
-
+      <ThePeople user={this.props.user} handleUser={this.props.handleUser} address={this.props.address} zip={this.props.zip}/>
       </Paper>
       </main>
     );
   }
+
+
 }
 )
