@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper'
 import { Tab, Tabs, Grid } from '@material-ui/core'
 import MediaCard from './MediaCard'
-import { AccessTime, NotificationImportant, KeyboardBackspace } from '@material-ui/icons'
+import { KeyboardBackspace, Info, LineWeight } from '@material-ui/icons'
 
 const styles = (theme) => ({
     main: {
@@ -140,8 +140,8 @@ class Pol extends Component {
       textColor="secondary"
     >
       <Tab icon={<KeyboardBackspace />} value={"Back"} label="Back" />
-      <Tab icon={<NotificationImportant />} value={"Data"} label="Data" />
-      <Tab icon={<AccessTime />} value={"News"} label="News" />
+      <Tab icon={<Info />} value={"Data"} label="Info" />
+      <Tab icon={<LineWeight />} value={"News"} label="News" />
 
     </Tabs>
 
@@ -164,19 +164,25 @@ class Pol extends Component {
         {(this.state.data.id) ?
         <CardActions>
         <Button size="small" color="primary" onClick={this.handleFinances}>
+        <Typography component="p" color="secondary">
           My Finances
+          </Typography>
         </Button>
           <Button size="small" color="primary" onClick={this.handleVotes} >
             How do I vote?
           </Button>
           <Button size="small" color="primary" onClick={this.handleContribs}>
+          <Typography component="p" color="secondary">
             Who pays me?
+            </Typography>
           </Button>
           <Button size="small" color="primary" onClick={this.handleBills}>
             Bills Ive Sponsered
           </Button>
           <Button size="small" color="primary" onClick={this.handleIndustry}>
+          <Typography component="p" color="secondary">
             Which Industries Own Me
+            </Typography>
           </Button>
         </CardActions>
         :
@@ -264,8 +270,8 @@ class Pol extends Component {
       textColor="secondary"
     >
       <Tab icon={<KeyboardBackspace />} value={"Back"} label="Back" />
-      <Tab icon={<NotificationImportant />} value={"Data"} label="Data" />
-      <Tab icon={<AccessTime />} value={"News"} label="News" />
+      <Tab icon={<Info />} value={"Data"} label="Info" />
+      <Tab icon={<LineWeight />} value={"News"} label="News" />
 
     </Tabs>
     <Grid container spacing={16}>

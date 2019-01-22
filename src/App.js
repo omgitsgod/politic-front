@@ -11,6 +11,7 @@ import SavedArts from './SavedArts'
 import { HEADERS, API_WS_ROOT } from './constants'
 import { ActionCableProvider } from 'react-actioncable-provider';
 import ThePeople from './ThePeople'
+import Bills from './Bills'
 
 
 
@@ -68,19 +69,19 @@ class App extends Component {
         <MenuAppBar logged={this.state.logged} handleUser={this.handleUser}/>
         {(this.state.logged) ?
       <ActionCableProvider url={API_WS_ROOT + this.state.user.jwt}>
-      <Route exact path="/" component={Splash} />
+
       <Route path="/people" render={(props)=><ThePeople {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
       <Route path="/news" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
       <Route path="/savedarts" render={(props)=><SavedArts {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
       <Route path="/chat" render={(props)=><Chat {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
 
-      <Route path="/splash" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
-      <Route path="/signin" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
-        <Route path="/signup" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
+      <Route exact path="/" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
+      <Route path="/signin" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
+        <Route path="/signup" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
       </ActionCableProvider>
       :
       <div>
-
+      <Route exact path="/bills" component={Bills} />
       <Route exact path="/" component={HeadlinesContainer} />
       <Route path="/signin" render={(props)=><SignIn {...props} handleUser={this.handleUser}/>}/>
       <Route path="/signup" render={(props)=><SignUp {...props} handleUser={this.handleUser}/>}/>
