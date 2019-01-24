@@ -24,7 +24,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import MailIcon from '@material-ui/icons/Mail';
-import { Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star, CreditCard, HowToVote } from '@material-ui/icons'
+import { Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star, CreditCard, HowToVote, Event } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import SavedArts from './SavedArts'
 
@@ -136,6 +136,15 @@ class MenuAppBar extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Pols" />
               </ListItem></Link>
+              <Link to='/events' style={{ textDecoration: 'none', color: 'white' }}>
+              <ListItem button>
+
+              <ListItemIcon>
+                <Event />
+              </ListItemIcon>
+              <ListItemText primary="Events" />
+                </ListItem></Link>
+
 
 
             <Link to='/chat' style={{ textDecoration: 'none', color: 'white' }}>

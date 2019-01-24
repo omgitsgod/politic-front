@@ -15,6 +15,7 @@ import Bills from './Bills'
 import { withStyles } from '@material-ui/core/styles'
 import ww2_and_wash_mount from './ww2_and_wash_mount.mp4'
 import Votes from './Votes'
+import Events from './Events'
 
 
 
@@ -79,7 +80,7 @@ class App extends Component {
         <MenuAppBar logged={this.state.logged} handleUser={this.handleUser}/>
         {(this.state.logged) ?
       <ActionCableProvider url={API_WS_ROOT + this.state.user.jwt}>
-    
+        <Route exact path="/events" component={Events} />
       <Route path="/people" render={(props)=><ThePeople {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
       <Route path="/news" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
       <Route path="/savedarts" render={(props)=><SavedArts {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
@@ -92,6 +93,7 @@ class App extends Component {
       </ActionCableProvider>
       :
       <div>
+      <Route exact path="/events" component={Events} />
       <Route exact path="/bills" component={Bills} />
       <Route exact path="/votes" component={Votes} />
       <Route exact path="/" component={HeadlinesContainer} />

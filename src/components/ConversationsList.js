@@ -5,7 +5,7 @@ import NewConversationForm from './NewConversationForm';
 import MessagesArea from './MessagesArea';
 import Cable from './Cable';
 import { Typography, Paper, Grid, Button, Tab, Tabs } from '@material-ui/core'
-import { AccessTime } from '@material-ui/icons'
+import { Chat } from '@material-ui/icons'
 
 class ConversationsList extends React.Component {
   state = {
@@ -113,7 +113,7 @@ const mapConversations = (conversations  = [], handleClick) => {
   return conversations.map(conversation => {
     return (
 
-<Tab key={conversation.id} icon={<AccessTime />} value={conversation.title} label={conversation.title} onClick={() => handleClick(conversation.id)} />
+<Tab key={conversation.id} icon={<Chat />} value={conversation.title} label={conversation.title} onClick={() => handleClick(conversation.id)} />
 
 
 

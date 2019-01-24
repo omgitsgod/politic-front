@@ -16,6 +16,8 @@ import ContriTable from './ContriTable'
 import IndusTable from './IndusTable'
 import AssetTable from './AssetTable'
 import BillCard from './BillCard'
+import EventCard from './EventCard'
+import VoteCard from './VoteCard'
 
 const styles = (theme) => ({
     main: {
@@ -104,6 +106,10 @@ class Pol2 extends Component {
         fetch(`https://cors-anywhere.herokuapp.com/https://www.opensecrets.org/api/?method=candSummary&output=json&cid=${this.state.data.id.opensecrets}&apikey=${process.env.REACT_APP_SECRETS_API_KEY}`)
         .then(r => r.json()).then(cycle => this.setState({secs: moneys.response.member_profile, cycle: cycle.response.summary["@attributes"], display: 'secs'})) )
 
+  }
+  handleEvents = () => {
+    fetch(`https://cors-anywhere.herokuapp.com/http://politicalpartytime.org/api/v1/event/?beneficiaries__crp_id=${this.state.data.id.opensecrets}&format=json`)
+    .then(r => r.json()).then(events => this.setState({events: events.objects, display: 'events'}))
   }
 
   handleContribs = () => {
@@ -201,6 +207,11 @@ class Pol2 extends Component {
           <Button size="small" color="primary" onClick={this.handleBills}>
             Bills Ive Sponsered
           </Button>
+          <Button size="small" color="primary" onClick={this.handleEvents}>
+          <Typography component="p" color="secondary">
+            Events
+            </Typography>
+          </Button>
           <Button size="small" color="primary" onClick={this.handleIndustry}>
           <Typography component="p" color="secondary">
             Which Industries Own Me
@@ -244,6 +255,19 @@ class Pol2 extends Component {
     </div>
     :
     ''}
+    {this.state.display === "events" ?
+    <div>
+    <Typography variant="h5" align='center'>
+            Events
+            </Typography>
+            <Grid container spacing={16}>
+            <Grid container spacing={32} justify='center'>
+            {this.state.events.map(event=> <Grid item xs={3}> <EventCard event={event}/> </Grid>)}
+              </Grid>
+              </Grid>
+    </div>
+    :
+    ''}
     {this.state.display === "industry" ?
     <div>
     <Typography variant="h5" align='center'>
@@ -258,7 +282,11 @@ class Pol2 extends Component {
     <Typography variant="h5" align='center'>
               Voting!
               </Typography>
-                {this.state.vote.map(x => <div><br /><Typography component="p" align='center'>{x.bill.bill_id}: {x.description} </Typography><br /><Typography component="p" align='center'>{x.question} | Voted: {x.position}</Typography><br /><Typography component="p" align='center'>Total: yes: {x.total.yes}/no: {x.total.no}/not voting:{x.total.not_voting}</Typography></div>)}
+              <Grid container spacing={16}>
+              <Grid container spacing={32} justify='center'>
+                {this.state.vote.map(vote => <Grid item xs={3}> <VoteCard vote={vote} handlePol={this.handleBillPol} /> </Grid>)}
+                </Grid>
+                </Grid>
 
     </div>
     :
@@ -293,7 +321,7 @@ class Pol2 extends Component {
 } else if (this.state.articles.length > 0) {
   return (
     <main className={classes.main}>
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
     <Tabs
       value={this.state.tab}
      onChange={this.handleChange}
