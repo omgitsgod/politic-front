@@ -57,6 +57,14 @@ class HeadlinesContainer extends Component {
     waka[6].office = json.offices[5]
     waka[7].office = json.offices[6]
     waka[8].office = json.offices[7]
+  } else if (waka.length === 7) {
+    waka[0].office = json.offices[0]
+    waka[1].office = json.offices[1]
+    waka[2].office = json.offices[2]
+    waka[3].office = json.offices[2]
+    waka[4].office = json.offices[3]
+    waka[5].office = json.offices[4]
+    waka[6].office = json.offices[5]
   }
     this.setState({
       feds: waka,
@@ -87,7 +95,7 @@ this.setState({fed: pol})
   if (this.state.fed.length === 0) {
     return (
       <main className={classes.main}>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} style={{ background: 'transparent', boxShadow: 'none'}}>
 
     <Typography variant='display2' align='center' gutterBottom>
       Pols

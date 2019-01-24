@@ -12,6 +12,12 @@ import Paper from '@material-ui/core/Paper'
 import { Tab, Tabs, Grid } from '@material-ui/core'
 import MediaCard from './MediaCard'
 import { KeyboardBackspace, Info, LineWeight } from '@material-ui/icons'
+import BillCard from './BillCard'
+import Pol2 from './Pol2'
+import ContriTable from './ContriTable'
+import IndusTable from './IndusTable'
+import AssetTable from './AssetTable'
+import VoteCard from './VoteCard'
 
 const styles = (theme) => ({
     main: {
@@ -52,7 +58,8 @@ class Pol extends Component {
     tab: 'Data',
     articles: [],
     display: '',
-    cycle: {}
+    cycle: {},
+    billPol: ''
   }
 
   handleChange = (event, change) => {
@@ -62,6 +69,13 @@ class Pol extends Component {
     this.setState({
       tab: change
     })
+  }
+  }
+  handleBillPol = (pol) => {
+    if (pol === "Back") {
+      this.setState({billPol: ''})
+    } else {
+  this.setState({billPol: pol})
   }
   }
 
@@ -125,12 +139,14 @@ class Pol extends Component {
   render() {
   const { classes } = this.props;
   console.log(this.state.data)
-  console.log(this.state);
+  console.log(this.state.bills);
+  console.log(this.state)
   if (this.state.tab !== "News") {
   return (
     <main className={classes.main}>
 
     <Card className={classes.paper}
+    style={{ background: 'transparent', boxShadow: 'none'}}
     raised='true'>
     <Tabs
       value={this.state.tab}
@@ -191,25 +207,26 @@ class Pol extends Component {
           <CardActionArea>
         {this.state.display === "secs" ?
         <div>
-        <Typography component="p" align='center'>
+        <Typography component="p" align='right'>
         First Elected: {this.state.cycle.first_elected}
         </Typography>
-        <Typography component="p" align='center'>
+        <Typography component="p" align='right'>
             Cash on hand: ${this.state.cycle.cash_on_hand}
             </Typography>
-        <Typography component="p" align='center'>
+        <Typography component="p" align='right'>
             {this.state.secs["@attributes"].transaction_count} transactions recorded:
             </Typography>
-            <Typography component="p" align='center'>
+            <Typography component="p" align='right'>
             Lowest: {this.state.secs["@attributes"].tx_low} | Highest: {this.state.secs["@attributes"].tx_high}
             </Typography>
-            <Typography component="p" align='center'>
+            <Typography component="p" align='right'>
             Networth: ${this.state.secs["@attributes"].net_low} - ${this.state.secs["@attributes"].net_high}
             </Typography>
             <Typography variant="h5" align='center'>
             Assets
             </Typography>
-            {this.state.secs.assets.asset.map(x => <div><Typography component="p" align='center'>{x["@attributes"].name}:</Typography><Typography component="p" align='center'>${x["@attributes"].holdings_low} - ${x["@attributes"].holdings_high}</Typography></div>)}
+
+              <AssetTable assets={this.state.secs.assets.asset}/>
             </div>
       :
     ''}
@@ -218,7 +235,8 @@ class Pol extends Component {
     <Typography variant="h5" align='center'>
             Contributors
             </Typography>
-              {this.state.contribs.map(x => <div><Typography component="p" align='center'>{x["@attributes"].org_name}:</Typography><Typography component="p" align='center'>${x["@attributes"].total}</Typography></div>)}
+
+              <ContriTable contribs={this.state.contribs}/>
     </div>
     :
     ''}
@@ -227,7 +245,8 @@ class Pol extends Component {
     <Typography variant="h5" align='center'>
             By Industry
             </Typography>
-              {this.state.industry.map(x => <div><Typography component="p" align='center'>{x["@attributes"].industry_name}:</Typography><Typography component="p" align='center'>Total: ${x["@attributes"].total}</Typography><Typography component="p" align='center'>Individuals: ${x["@attributes"].indivs} | PACS: ${x["@attributes"].pacs}</Typography></div>)}
+
+              <IndusTable industry={this.state.industry}/>
     </div>
     :
     ''}
@@ -236,8 +255,11 @@ class Pol extends Component {
     <Typography variant="h5" align='center'>
               Voting!
               </Typography>
-                {this.state.vote.map(x => <div><br /><Typography component="p" align='center'>{x.bill.bill_id}: {x.description} </Typography><br /><Typography component="p" align='center'>{x.question} | Voted: {x.position}</Typography><br /><Typography component="p" align='center'>Total: yes: {x.total.yes}/no: {x.total.no}/not voting:{x.total.not_voting}</Typography></div>)}
-
+              <Grid container spacing={16}>
+              <Grid container spacing={32} justify='center'>
+                {this.state.vote.map(vote => <Grid item xs={3}> <VoteCard vote={vote} handlePol={this.handleBillPol} /> </Grid>)}
+                </Grid>
+                </Grid>
     </div>
     :
     ''}
@@ -246,7 +268,17 @@ class Pol extends Component {
     <Typography variant="h5" align='center'>
                   Bills!
                   </Typography>
-                    {this.state.bills.map(x => <div><Typography component="p" align='center'>{x.bill_id}: {x.short_title} </Typography><br/></div>)}
+                  {(this.state.billPol.length === 0) ?
+                  <Grid container spacing={16}>
+                  <Grid container spacing={32} justify='center'>
+
+
+                {this.state.bills.map(bill => <Grid item xs={3}> <BillCard bill={bill} handlePol={this.handleBillPol} /> </Grid>)}
+                </Grid>
+                </Grid>
+                :
+                <Pol2 id={this.state.billPol} handlePol={this.handleBillPol}/>
+              }
     </div>
     :
     ''}

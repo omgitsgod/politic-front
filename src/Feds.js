@@ -12,8 +12,10 @@ import { red } from '@material-ui/core/colors'
 
 const styles = (theme) => ({
   card: {
+    height: 400,
     maxWidth: 345,
-     marginTop: theme.spacing.unit * 8
+     marginTop: theme.spacing.unit * 8,
+
   },
   media: {
     height: 200,
@@ -37,6 +39,7 @@ class Feds extends Component {
   return (
 
     <Card className={classes.card}
+    style={{ opacity: '.7', boxShadow: 'none'}}
     raised='true'>
       <CardActionArea>
       {(this.props.fed.photoUrl) ?

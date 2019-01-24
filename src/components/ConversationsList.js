@@ -4,12 +4,14 @@ import { API_ROOT } from '../constants';
 import NewConversationForm from './NewConversationForm';
 import MessagesArea from './MessagesArea';
 import Cable from './Cable';
-import { Typography, Paper, Grid, Button } from '@material-ui/core'
+import { Typography, Paper, Grid, Button, Tab, Tabs } from '@material-ui/core'
+import { AccessTime } from '@material-ui/icons'
 
 class ConversationsList extends React.Component {
   state = {
     conversations: [],
-    activeConversation: null
+    activeConversation: null,
+    chat: ''
   };
 
   componentDidMount = () => {
@@ -58,12 +60,21 @@ class ConversationsList extends React.Component {
             handleReceivedMessage={this.handleReceivedMessage}
           />
         ) : null}
+        { !activeConversation ?
+          <div>
+          <Tabs
+            value={this.state.topic}
+           onChange={this.handleChange}
+            indicatorColor="secondary"
+            textColor="secondary"
+            variant="scrollable"
+          scrollButtons="auto"
+          >
+        {mapConversations(conversations, this.handleClick)}
+        </Tabs>
         <Typography variant='display2' align='center' gutterBottom>
           Conversations
           </Typography>
-            <Grid container spacing={16}>
-        {mapConversations(conversations, this.handleClick)}
-        </Grid>
         <NewConversationForm user={this.props.user} />
         {activeConversation ? (
           <MessagesArea
@@ -74,6 +85,18 @@ class ConversationsList extends React.Component {
             )}
           />
         ) : null}
+        </div>
+        :
+        <MessagesArea
+        user={this.props.user}
+          conversation={findActiveConversation(
+            conversations,
+            activeConversation
+
+          )}
+          style={{ background: 'transparent', boxShadow: 'none'}}
+        />
+      }
       </div>
     );
   };
@@ -92,13 +115,11 @@ const findActiveConversation = (conversations, activeConversation) => {
 const mapConversations = (conversations  = [], handleClick) => {
   return conversations.map(conversation => {
     return (
-      <Grid item xs={5}>
-      <Paper>
-      <Button key={conversation.id}   gutterBottom onClick={() => handleClick(conversation.id)}>
-        {conversation.title}
-        </Button>
-        </Paper>
-        </Grid>
+
+<Tab key={conversation.id} icon={<AccessTime />} value={conversation.title} label={conversation.title} onClick={() => handleClick(conversation.id)} />
+
+
+
     );
   });
 };

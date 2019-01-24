@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper'
 import { Tab, Tabs, Grid } from '@material-ui/core'
 import BillCard from './BillCard'
+import Pol2 from './Pol2'
 
 import { KeyboardBackspace, Info, LineWeight } from '@material-ui/icons'
 
@@ -49,7 +50,8 @@ class Bills extends Component {
 
   state = {
     bills : [],
-    tab: 'Recent'
+    tab: 'Recent',
+    fed: ''
   }
 
   componentDidMount() {
@@ -61,22 +63,42 @@ class Bills extends Component {
     }).then(r => r.json())
     .then(bills => this.setState({bills: bills.results[0].bills}))
   }
+
+  handlePol = (pol) => {
+    if (pol === "Back") {
+      this.setState({fed: ''})
+    } else {
+  this.setState({fed: pol})
+  }
+  }
+
+  handleChange = (event, change) => {
+    if (change === "Back") {
+    //  this.props.handlePol("Back")
+    } else {
+    this.setState({
+      tab: change
+    })
+  }
+  }
+
   render() {
       console.log(this.state)
       const { classes } = this.props;
-      const x = this.state.bills.map(bill => <Grid item xs={3}> <BillCard bill={bill} /> </Grid>)
+      const x = this.state.bills.map(bill => <Grid item xs={3}> <BillCard bill={bill} handlePol={this.handlePol} /> </Grid>)
     return (
       <main className={classes.main}>
-      <Paper className={classes.paper}>
+      { (this.state.fed.length === 0) ?
+      <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
       <Tabs
         value={this.state.tab}
-    //   onChange={this.handleChange}
+       onChange={this.handleChange}
         variant="fullWidth"
         indicatorColor="secondary"
         textColor="secondary"
       >
         <Tab icon={<KeyboardBackspace />} value={"Back"} label="Back" />
-        <Tab icon={<Info />} value={"Recent"} label="Recent" />
+        <Tab icon={<Info />} value={"Recent"} label="Recently Introduced" />
         <Tab icon={<LineWeight />} value={"News"} label="News" />
 
       </Tabs>
@@ -86,6 +108,11 @@ class Bills extends Component {
       </Grid>
       </Grid>
       </Paper>
+      :
+      <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
+      <Pol2 id={this.state.fed} handlePol={this.handlePol}/>
+      </Paper>
+    }
       </main>
     )
   }

@@ -94,7 +94,7 @@ class HeadlinesContainer extends Component {
   console.log(this.props.id)
     return (
       <main className={classes.main}>
-      <Paper className={classes.paper}>{
+      <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>{
         (this.props.user) ?
       <Tabs
         value={this.state.topic}

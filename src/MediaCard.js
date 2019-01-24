@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
   card: {
+    height: 400,
     maxWidth: 345,
      marginTop: theme.spacing.unit * 8
   },
@@ -26,6 +27,7 @@ function MediaCard(props) {
   return (
 
     <Card className={classes.card}
+    style={{ opacity: '.7', boxShadow: 'none'}}
     raised='true'>
       <CardActionArea>
 

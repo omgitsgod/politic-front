@@ -26,35 +26,9 @@ function BillCard(props) {
   return (
 
     <Card className={classes.card}
+    style={{ opacity: '.7', boxShadow: 'none'}}
     raised='true'>
-      {(props.article) ?
-      <CardActionArea>
-
-        <img src={props.article.urlToImage} className={classes.media} />
-        <CardContent>
-        <a target='blank' href={props.article.url} style={{ textDecoration: 'none', color: 'white' }}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {props.article.title}
-          </Typography>
-          </a>
-          <Typography component="p" align='right'>
-            {props.article.author}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-       (props.save) ?
-      <CardActions>
-        <Button size="small" color="primary" onClick={() => props.save(props.article)}>
-          Save
-        </Button>
-        <Button size="small" color="primary" disabled="true">
-          Share
-        </Button>
-      </CardActions>
-      :
-      ''
-
-    :
+      
     <CardActionArea>
     <CardContent>
     <a target='blank' href={props.bill.govtrack_url} style={{ textDecoration: 'none', color: 'white' }}>
@@ -65,7 +39,7 @@ function BillCard(props) {
     </CardContent>
     <br />
 <CardContent >
-    <Typography component="p" align='right'>
+    <Typography component="p" align='right' onClick={()=> props.handlePol(props.bill.sponsor_id)}>
           {props.bill.sponsor_title} {props.bill.sponsor_name}
     </Typography>
     {(props.bill.sponsor_party === "D") ?

@@ -24,7 +24,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import MailIcon from '@material-ui/icons/Mail';
-import { Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star } from '@material-ui/icons'
+import { Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star, CreditCard } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import SavedArts from './SavedArts'
 
@@ -109,6 +109,25 @@ class MenuAppBar extends React.Component {
           </ListItemIcon>
           <ListItemText primary="News" />
             </ListItem></Link>
+
+            <Link to='/bills' style={{ textDecoration: 'none', color: 'white' }}>
+            <ListItem button>
+
+            <ListItemIcon>
+              <CreditCard />
+            </ListItemIcon>
+            <ListItemText primary="Bills" />
+              </ListItem></Link>
+
+              <Link to='/votes' style={{ textDecoration: 'none', color: 'white' }}>
+              <ListItem button>
+
+              <ListItemIcon>
+                <CreditCard />
+              </ListItemIcon>
+              <ListItemText primary="Votes" />
+                </ListItem></Link>
+
             <Link to='/people' style={{ textDecoration: 'none', color: 'white' }}>
             <ListItem button>
 
@@ -174,7 +193,7 @@ class MenuAppBar extends React.Component {
     return (
       <div className={classes.root}>
 
-        <AppBar position="static">
+        <AppBar position="fixed" style={{ background: 'transparent', boxShadow: 'none'}}>
           <Toolbar>
             {(this.props.logged) ? <IconButton className={classes.menuButton} onClick={this.toggleDrawer('left', true)}  color="inherit" aria-label="Menu">
               <AccountBalance />
@@ -206,7 +225,7 @@ class MenuAppBar extends React.Component {
                   aria-owns={open ? 'menu-appbar' : undefined}
                   aria-haspopup="true"
                   onClick={this.handleMenu}
-                  color="inherit"
+                  color="secondary"
                 >
                   <AccountCircle />
                 </IconButton>
@@ -260,7 +279,7 @@ class MenuAppBar extends React.Component {
           </Toolbar>
         </AppBar>
 
-        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)} >
           <div
             tabIndex={0}
             role="button"

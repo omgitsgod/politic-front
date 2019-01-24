@@ -12,6 +12,10 @@ import { HEADERS, API_WS_ROOT } from './constants'
 import { ActionCableProvider } from 'react-actioncable-provider';
 import ThePeople from './ThePeople'
 import Bills from './Bills'
+import { withStyles } from '@material-ui/core/styles'
+import ww2_and_wash_mount from './ww2_and_wash_mount.mp4'
+import Votes from './Votes'
+
 
 
 
@@ -63,25 +67,33 @@ class App extends Component {
   }
   render() {
     console.log(this.state.address)
+    const { classes } = this.props
     return (
 
       <div className="App">
+      <video className="myVideo" loop autoPlay muted>
+         <source src={ww2_and_wash_mount} type='video/mp4' />
+         <source src={ww2_and_wash_mount} type='video/ogg' />
+         Your browser does not support the video tag.
+       </video>
         <MenuAppBar logged={this.state.logged} handleUser={this.handleUser}/>
         {(this.state.logged) ?
       <ActionCableProvider url={API_WS_ROOT + this.state.user.jwt}>
-
+      <Route exact path="/votes" component={Votes} />
       <Route path="/people" render={(props)=><ThePeople {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
       <Route path="/news" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
       <Route path="/savedarts" render={(props)=><SavedArts {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
       <Route path="/chat" render={(props)=><Chat {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
-
-      <Route exact path="/" render={(props)=><Splash {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
+      <Route exact path="/bills" component={Bills} />
+      <Route exact path="/votes" component={Votes} />
+      <Route exact path="/" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
       <Route path="/signin" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
         <Route path="/signup" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
       </ActionCableProvider>
       :
       <div>
       <Route exact path="/bills" component={Bills} />
+      <Route exact path="/votes" component={Votes} />
       <Route exact path="/" component={HeadlinesContainer} />
       <Route path="/signin" render={(props)=><SignIn {...props} handleUser={this.handleUser}/>}/>
       <Route path="/signup" render={(props)=><SignUp {...props} handleUser={this.handleUser}/>}/>

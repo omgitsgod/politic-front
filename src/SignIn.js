@@ -82,7 +82,7 @@ class SignIn extends Component  {
   return (
     <main className={classes.main}>
 
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper}style={{ background: 'transparent', boxShadow: 'none'}}>
         <Avatar  className={classes.avatar}>
           <LockIcon />
         </Avatar>
