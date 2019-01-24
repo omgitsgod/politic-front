@@ -73,6 +73,7 @@ Didnt Bother To Vote: {props.vote.total.not_voting}
 <Typography variant="h5" align='right'  style={{color: 'green'}}>
 Yay: {props.vote.total.yes}
 </Typography>
+<br />
     <Typography variant="h5" align='right' color="center" color="error">
     Nay: {props.vote.total.no}
     </Typography>

@@ -97,9 +97,9 @@ class Votes extends Component {
         indicatorColor="secondary"
         textColor="secondary"
       >
-        <Tab icon={<KeyboardBackspace />} value={"Back"} label="Back" />
+      
         <Tab icon={<Info />} value={"Recent"} label="Recently Voted" />
-        <Tab icon={<LineWeight />} value={"News"} label="News" />
+
 
       </Tabs>
       <Grid container spacing={16}>

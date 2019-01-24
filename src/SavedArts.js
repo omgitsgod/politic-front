@@ -64,7 +64,7 @@ class SavedArts extends Component {
 
     return (
       <main className={classes.main}>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
 
     <Typography variant='display2' align='center' gutterBottom>
       Saved Articles

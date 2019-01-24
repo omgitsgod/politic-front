@@ -79,13 +79,13 @@ class App extends Component {
         <MenuAppBar logged={this.state.logged} handleUser={this.handleUser}/>
         {(this.state.logged) ?
       <ActionCableProvider url={API_WS_ROOT + this.state.user.jwt}>
-      <Route exact path="/votes" component={Votes} />
+    
       <Route path="/people" render={(props)=><ThePeople {...props} user={this.state.user} handleUser={this.handleUser} address={this.state.address} zip={this.state.zip}/>}/>
       <Route path="/news" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
       <Route path="/savedarts" render={(props)=><SavedArts {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
       <Route path="/chat" render={(props)=><Chat {...props} user={this.state.user} handleUser={this.handleUser}/>}/>
-      <Route exact path="/bills" component={Bills} />
-      <Route exact path="/votes" component={Votes} />
+      <Route  path="/bills" component={Bills} />
+      <Route  path="/votes" component={Votes} />
       <Route exact path="/" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
       <Route path="/signin" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>
         <Route path="/signup" render={(props)=><HeadlinesContainer {...props} user={this.state.user} id={this.state.id} handleUser={this.handleUser}/>}/>

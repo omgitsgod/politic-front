@@ -97,10 +97,9 @@ class Bills extends Component {
         indicatorColor="secondary"
         textColor="secondary"
       >
-        <Tab icon={<KeyboardBackspace />} value={"Back"} label="Back" />
-        <Tab icon={<Info />} value={"Recent"} label="Recently Introduced" />
-        <Tab icon={<LineWeight />} value={"News"} label="News" />
 
+        <Tab icon={<Info />} value={"Recent"} label="Recently Introduced" />
+    
       </Tabs>
       <Grid container spacing={16}>
       <Grid container spacing={32} justify='center'>

@@ -36,6 +36,10 @@ class ConversationsList extends React.Component {
     });
   };
 
+  onBack = () => {
+    this.setState({activeConversation: null})
+  }
+
   handleReceivedMessage = response => {
     const { message } = response;
     const conversations = [...this.state.conversations];
@@ -76,15 +80,7 @@ class ConversationsList extends React.Component {
           Conversations
           </Typography>
         <NewConversationForm user={this.props.user} />
-        {activeConversation ? (
-          <MessagesArea
-          user={this.props.user}
-            conversation={findActiveConversation(
-              conversations,
-              activeConversation
-            )}
-          />
-        ) : null}
+
         </div>
         :
         <MessagesArea
@@ -95,6 +91,7 @@ class ConversationsList extends React.Component {
 
           )}
           style={{ background: 'transparent', boxShadow: 'none'}}
+          onBack={this.onBack}
         />
       }
       </div>

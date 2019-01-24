@@ -24,7 +24,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import MailIcon from '@material-ui/icons/Mail';
-import { Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star, CreditCard } from '@material-ui/icons'
+import { Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star, CreditCard, HowToVote } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import SavedArts from './SavedArts'
 
@@ -123,7 +123,7 @@ class MenuAppBar extends React.Component {
               <ListItem button>
 
               <ListItemIcon>
-                <CreditCard />
+                <HowToVote />
               </ListItemIcon>
               <ListItemText primary="Votes" />
                 </ListItem></Link>
@@ -195,7 +195,7 @@ class MenuAppBar extends React.Component {
 
         <AppBar position="fixed" style={{ background: 'transparent', boxShadow: 'none'}}>
           <Toolbar>
-            {(this.props.logged) ? <IconButton className={classes.menuButton} onClick={this.toggleDrawer('left', true)}  color="inherit" aria-label="Menu">
+            {(this.props.logged) ? <IconButton className={classes.menuButton} onClick={this.toggleDrawer('left', true)}  color="secondary" aria-label="Menu">
               <AccountBalance />
             </IconButton>
             :
@@ -217,9 +217,12 @@ class MenuAppBar extends React.Component {
               </IconButton>
               </Link>
               <Link to='/chat' style={{ textDecoration: 'none', color: 'black' }}>
-              <Badge className={classes.margin} badgeContent={25} color="primary">
+              <IconButton
+                aria-haspopup="true"
+                color="secondary"
+              >
                 <MailIcon />
-              </Badge>
+              </IconButton>
               </Link>
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : undefined}
