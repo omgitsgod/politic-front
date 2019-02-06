@@ -10,7 +10,7 @@ import {BrowserRouter as Router } from 'react-router-dom'
 import { ActionCableProvider } from 'react-actioncable-provider';
 import { register } from './serviceWorker';
 import { API_WS_ROOT } from './constants';
-
+import dotenv from 'dotenv'
 
 const theme = createMuiTheme({
   palette: {
@@ -23,6 +23,8 @@ const theme = createMuiTheme({
 
 
 })
+
+dotenv.config()
 
 ReactDOM.render(
   <Router>
