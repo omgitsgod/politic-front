@@ -45,7 +45,7 @@ class HeadlinesContainer extends Component {
     if (change === "Recent") {
   fetch(`https://newsapi.org/v2/everything?sources=politico&apiKey=${process.env.POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles, topic: change}))
 } else if ( change === "Headlines") {
-  fetch(`https://newsapi.org/v2/top-headlines?sources=politico&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles, topic: change}))
+  fetch(`https://newsapi.org/v2/top-headlines?sources=politico&apiKey=${process.env.POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles, topic: change}))
 }
 }
 
