@@ -255,8 +255,7 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}><Link to='/profile' style={{ textDecoration: 'none', color: 'white' }}>Profile </Link></MenuItem>
-                  <MenuItem onClick={this.handleClose}><Link to='/editprofile' style={{ textDecoration: 'none', color: 'white' }}>Edit Profile</Link></MenuItem>
+                  
                   <MenuItem onClick={() => this.props.handleUser({})}>Logout</MenuItem>
 
                 </Menu>

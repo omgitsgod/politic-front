@@ -65,10 +65,13 @@ function VoteCard(props) {
 </div>
 :
 ''
-}
-<Typography component="p" align='center'  >
-Didnt Bother To Vote: {props.vote.total.not_voting}
+}{(props.vote.position) ?
+<Typography variant="h6" align='right' color="secondary" >
+I voted {props.vote.position}
 </Typography>
+:
+null
+}
 
 <Typography variant="h5" align='right'  style={{color: 'green'}}>
 Yay: {props.vote.total.yes}

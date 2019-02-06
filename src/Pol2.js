@@ -184,8 +184,13 @@ class Pol2 extends Component {
 
         Republican
       </Typography>
-    }
-
+    } {(this.state.data.terms) ?
+    <Typography component="p" align='right'>
+    {this.state.data.terms[0].type} from {this.state.data.terms[0].state}
+    </Typography>
+    :
+    null
+}
       </CardContent>
       </CardActionArea>
 
