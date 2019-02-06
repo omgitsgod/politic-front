@@ -84,7 +84,7 @@ class HeadlinesContainer extends Component {
     <MediaCard  save={this.saveArticle} article={article}/>
     </Grid>
   )
-} else if (!this.props.user && this.state.articles[0]) {
+} else if (!this.props.user && this.state.articles) {
    x =  this.state.articles.map(article =>
     <Grid item xs={3}>
     <MediaCard article={article}/>
