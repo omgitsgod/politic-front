@@ -116,7 +116,7 @@ class HeadlinesContainer extends Component {
       <Divider />
       <Grid container spacing={16}>
       <Grid container spacing={32} justify='center'>
-      {x}
+      {(x) ? x : null}
       </Grid>
       </Grid>
       </Paper>
