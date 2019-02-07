@@ -63,7 +63,7 @@ class SignUp extends Component  {
       password: e.target.password.value
     }
 
-    fetch('https://politic-backend.herokuapp.com/api/v1/users', {
+    fetch('http://localhost:3001/api/v1/users', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
