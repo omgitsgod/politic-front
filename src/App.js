@@ -47,7 +47,7 @@ class App extends Component {
 
    handleZip = (position) => {
 
-	//fetch(`http://api.geonames.org/findNearbyPostalCodesJSON?lat=${params.lat}&lng=${params.lng}&username=omgitsgod`).then(r => r.json()).then(x => this.setState({zip: x.postalCodes[0].postalCode}))
+	
   const lat = position.coords.latitude
   const long = position.coords.longitude
   const url = `https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=${lat}%2C${long}%2C250&mode=retrieveAddresses&maxresults=1&gen=9&${process.env.REACT_APP_IDCODE_API_KEY}`
