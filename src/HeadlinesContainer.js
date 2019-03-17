@@ -114,7 +114,7 @@ class HeadlinesContainer extends Component {
       {this.state.topic}
       </Typography>
       <Typography variant='display2' align='center' gutterBottom>
-        {this.state.topic}
+        {process.env.REACT_APP_POLITICO_API_KEY}
         </Typography>
       <Divider />
       <Grid container spacing={16}>
