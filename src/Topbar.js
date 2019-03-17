@@ -165,7 +165,7 @@ class MenuAppBar extends React.Component {
       <ListItemIcon className={classes.menuButton} onClick={this.toggleDrawer('left', true)} aria-label="Menu">
         <MenuIcon />
       </ListItemIcon>
-      <ListItemText primary="" />
+      <ListItemText primary="politic" />
       </ListItem>
         <Divider />
         <Divider />
