@@ -113,6 +113,9 @@ class HeadlinesContainer extends Component {
     <Typography variant='display2' align='center' gutterBottom>
       {this.state.topic}
       </Typography>
+      <Typography variant='display2' align='center' gutterBottom>
+        {this.state.topic}
+        </Typography>
       <Divider />
       <Grid container spacing={16}>
       <Grid container spacing={32} justify='center'>
