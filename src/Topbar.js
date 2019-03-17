@@ -165,7 +165,7 @@ class MenuAppBar extends React.Component {
       <ListItemIcon className={classes.menuButton} onClick={this.toggleDrawer('left', true)} aria-label="Menu">
         <MenuIcon />
       </ListItemIcon>
-      <ListItemText primary="politic" />
+      <ListItemText primary="" />
       </ListItem>
         <Divider />
         <Divider />
@@ -255,7 +255,7 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  
+
                   <MenuItem onClick={() => this.props.handleUser({})}>Logout</MenuItem>
 
                 </Menu>
