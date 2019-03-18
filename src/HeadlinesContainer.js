@@ -90,12 +90,18 @@ class HeadlinesContainer extends Component {
     <MediaCard  save={this.saveArticle} article={article}/>
     </Grid>
   )
-} else if (!this.props.user && this.state.articles) {
+} else if (!this.props.user && this.state.articles && isBrowser) {
    x =  this.state.articles.map(article =>
     <Grid item xs={3}>
     <MediaCard article={article}/>
     </Grid>
   )
+} else if (!this.props.user && this.state.articles && isMobile) {
+    x = this.state.articles.map(article =>
+     <Grid item xs={12}>
+     <MediaCard article={article}/>
+     </Grid>
+   )
 }
   console.log(this.props.id)
     return (
@@ -130,7 +136,7 @@ class HeadlinesContainer extends Component {
       </BrowserView>
       <MobileView>
       <Typography variant='display2' align='center' gutterBottom>
-        {this.state.topic}
+        ''
         </Typography>
         <Typography variant='display2' align='center' gutterBottom>
           {this.state.topic}
