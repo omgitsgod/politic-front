@@ -19,7 +19,7 @@ import IndusTable from './IndusTable'
 import AssetTable from './AssetTable'
 import VoteCard from './VoteCard'
 import EventCard from './EventCard'
-import { isBrowser, isMobile } from "react-device-detect"
+import { isBrowser } from "react-device-detect"
 
 const styles = (theme) => ({
     main: {
@@ -151,9 +151,6 @@ class Pol extends Component {
   } else {
     gridNum = 12
   }
-  console.log(this.state.data)
-  console.log(this.state.bills);
-  console.log(this.state)
   if (this.state.tab !== "News") {
   return (
     <main className={classes.main}>

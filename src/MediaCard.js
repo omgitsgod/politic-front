@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
   card: {
-    
+
     maxWidth: 345,
      marginTop: theme.spacing.unit * 8
   },
@@ -23,7 +23,6 @@ const styles = (theme) => ({
 
 function MediaCard(props) {
   const { classes } = props;
-  console.log(props.article)
   return (
 
     <Card className={classes.card}

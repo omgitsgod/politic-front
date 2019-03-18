@@ -1,6 +1,6 @@
 import React from 'react';
 import { API_ROOT, HEADERS } from '../constants';
-import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
+import { FormControl, Input, InputLabel } from '@material-ui/core'
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 
@@ -48,7 +48,7 @@ class NewConversationForm extends React.Component {
           <InputLabel htmlFor="conversation">New Conversation</InputLabel>
           <Input id="conversation" name="conversation" value={this.state.title}  autoFocus onChange={this.handleChange} />
         </FormControl>
-      
+
       </form>
       </div>
     );

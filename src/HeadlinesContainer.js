@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Paper, Typography, Grid, Divider, Tabs, Tab, } from '@material-ui/core'
-import { NotificationImportant, Favorite, AccessTime } from '@material-ui/icons'
+import { NotificationImportant, AccessTime } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles'
 import MediaCard from './MediaCard'
 import { API_ROOT, HEADERS } from './constants';
-import { isBrowser, isMobile } from "react-device-detect"
+import { isBrowser } from "react-device-detect"
 
 
 const styles = theme => console.log(theme) || ({
@@ -98,7 +98,6 @@ class HeadlinesContainer extends Component {
     </Grid>
   )
 }
-  console.log(this.props.id)
     return (
       <main className={classes.main}>
       <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>{

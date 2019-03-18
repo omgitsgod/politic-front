@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Paper, Typography, Grid, Divider} from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import MediaCard from './MediaCard'
-import { API_ROOT, HEADERS } from './constants';
 import Feds from './Feds'
 import Pol from './Pol'
-import { isBrowser, isMobile } from "react-device-detect"
+import { isBrowser } from "react-device-detect"
 
 const styles = theme => console.log(theme) || ({
 main: {
@@ -71,8 +69,7 @@ class HeadlinesContainer extends Component {
       feds: waka,
       state: json.normalizedInput.state
     })
-      console.log(this.state.feds)
-      console.log(json)
+
 
   })
 
@@ -97,7 +94,6 @@ this.setState({fed: pol})
     <Feds fed={fed} handlePol={this.handlePol}/>
     </Grid>
   )
-  console.log(this.props.id)
 
   if (this.state.fed.length === 0) {
     return (

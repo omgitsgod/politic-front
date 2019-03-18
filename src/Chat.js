@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Paper, Typography, TextField, Button, List, ListItem, ListItemText, ListItemSecondaryAction,
-  IconButton, Grid, Divider, Avatar } from '@material-ui/core'
+import { Paper, Divider} from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import Image from 'material-ui-image'
-import MediaCard from './MediaCard'
 import ConversationsList from './components/ConversationsList'
 
 const styles = theme => console.log(theme) || ({
@@ -43,11 +40,6 @@ class HeadlinesContainer extends Component {
 
   render() {
     const { classes } = this.props
-  const x =  this.state.articles.map(article =>
-    <Grid item xs={3}>
-    <MediaCard article={article}/>
-    </Grid>
-  )
 
     return (
       <main className={classes.main}>

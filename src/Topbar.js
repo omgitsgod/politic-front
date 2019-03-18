@@ -9,12 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import People from '@material-ui/icons/People';
-
-
-
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import Badge from '@material-ui/core/Badge'
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -26,7 +22,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import MailIcon from '@material-ui/icons/Mail';
 import { Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star, CreditCard, HowToVote, Event } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
-import SavedArts from './SavedArts'
 
 const styles = {
   root: {
@@ -74,7 +69,7 @@ class MenuAppBar extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { auth, anchorEl } = this.state;
+    const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     const sideList = (

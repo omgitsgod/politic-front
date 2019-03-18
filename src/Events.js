@@ -2,19 +2,13 @@ import React from 'react';
 import { Component } from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper'
 import { Tab, Tabs, Grid } from '@material-ui/core'
 import EventCard from './EventCard'
 import Pol2 from './Pol2'
-import { isBrowser, isMobile } from "react-device-detect"
+import { isBrowser} from "react-device-detect"
 
-import { KeyboardBackspace, Info, LineWeight } from '@material-ui/icons'
+import { Info } from '@material-ui/icons'
 
 const styles = (theme) => ({
 
@@ -79,7 +73,6 @@ class Events extends Component {
   }
 
   render() {
-      console.log(this.state)
       const { classes } = this.props;
       let gridNum
       if (isBrowser) {

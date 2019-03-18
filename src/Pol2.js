@@ -18,7 +18,7 @@ import AssetTable from './AssetTable'
 import BillCard from './BillCard'
 import EventCard from './EventCard'
 import VoteCard from './VoteCard'
-import { isBrowser, isMobile } from "react-device-detect"
+import { isBrowser } from "react-device-detect"
 
 const styles = (theme) => ({
     main: {
@@ -146,9 +146,6 @@ class Pol2 extends Component {
   } else {
     gridNum = 12
   }
-  console.log(this.state.data)
-  console.log(this.state);
-  console.log(this.state.name);
   if (this.state.tab !== "News") {
 
   return (

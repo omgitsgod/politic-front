@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Paper, Typography,  Grid, Divider} from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import Image from 'material-ui-image'
 import MediaCard from './MediaCard'
 import { API_ROOT } from './constants';
-import { isBrowser, isMobile } from "react-device-detect"
+import { isBrowser} from "react-device-detect"
 
 const styles = theme => console.log(theme) || ({
 main: {
@@ -78,7 +77,7 @@ class SavedArts extends Component {
       <Divider />
       <Grid container spacing={16}>
       <Grid container spacing={32} justify='center'>
-      {(this.state.articles) ? x : ""}
+      {(this.state.articles.length > 0) ? x : ""}
       </Grid>
       </Grid>
       </Paper>

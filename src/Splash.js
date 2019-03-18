@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Paper, Typography, Grid, Divider } from '@material-ui/core'
+import { Paper, Typography, Divider } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import Image from 'material-ui-image'
-import MediaCard from './MediaCard'
-import Feds from './Feds'
-import Pol from './Pol'
 import ThePeople from './ThePeople'
 
 const styles = theme => console.log(theme) || ({
@@ -63,7 +59,6 @@ class HeadlinesContainer extends Component {
       feds: json.officials,
       state: json.normalizedInput.state
     })
-      console.log(this.state)
 
   })
 

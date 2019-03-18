@@ -4,7 +4,7 @@ import { API_ROOT } from '../constants';
 import NewConversationForm from './NewConversationForm';
 import MessagesArea from './MessagesArea';
 import Cable from './Cable';
-import { Typography, Paper, Grid, Button, Tab, Tabs } from '@material-ui/core'
+import { Typography, Tab, Tabs } from '@material-ui/core'
 import { Chat } from '@material-ui/icons'
 
 class ConversationsList extends React.Component {

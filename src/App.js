@@ -6,13 +6,11 @@ import { Route  } from 'react-router-dom'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 import Chat from './Chat'
-import Splash from './Splash'
 import SavedArts from './SavedArts'
-import { HEADERS, API_WS_ROOT } from './constants'
+import { API_WS_ROOT } from './constants'
 import { ActionCableProvider } from 'react-actioncable-provider';
 import ThePeople from './ThePeople'
 import Bills from './Bills'
-import { withStyles } from '@material-ui/core/styles'
 import ww2_and_wash_mount from './ww2_and_wash_mount.mp4'
 import Votes from './Votes'
 import Events from './Events'
@@ -41,13 +39,12 @@ class App extends Component {
         logged: false
       })
     }
-    console.log(user)
   }
 
 
    handleZip = (position) => {
 
-	
+
   const lat = position.coords.latitude
   const long = position.coords.longitude
   const url = `https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=${lat}%2C${long}%2C250&mode=retrieveAddresses&maxresults=1&gen=9&${process.env.REACT_APP_IDCODE_API_KEY}`
@@ -67,8 +64,6 @@ class App extends Component {
 
   }
   render() {
-    console.log(this.state.address)
-    const { classes } = this.props
     return (
 
       <div className="App">
