@@ -106,7 +106,6 @@ class HeadlinesContainer extends Component {
   console.log(this.props.id)
     return (
       <main className={classes.main}>
-      <BrowserView>
       <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>{
         (this.props.user) ?
       <Tabs
@@ -133,15 +132,6 @@ class HeadlinesContainer extends Component {
       </Grid>
       </Grid>
       </Paper>
-      </BrowserView>
-      <MobileView>
-      <Typography variant='display2' align='center' gutterBottom>
-        ''
-        </Typography>
-        <Typography variant='display2' align='center' gutterBottom>
-          {this.state.topic}
-          </Typography>
-      </MobileView>
       </main>
     );
   }
