@@ -147,8 +147,8 @@ class MenuAppBar extends React.Component {
 
 
 
-            <Link to='/chat' style={{ textDecoration: 'none', color: 'white' }}>
-            <ListItem button>
+            <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+            <ListItem button disabled>
 
             <ListItemIcon>
               <Chat />
@@ -225,10 +225,11 @@ class MenuAppBar extends React.Component {
                 <Star />
               </IconButton>
               </Link>
-              <Link to='/chat' style={{ textDecoration: 'none', color: 'black' }}>
+              <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
               <IconButton
                 aria-haspopup="true"
                 color="secondary"
+                disabled
               >
                 <MailIcon />
               </IconButton>

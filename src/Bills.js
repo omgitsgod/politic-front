@@ -86,12 +86,14 @@ class Bills extends Component {
   render() {
       console.log(this.state)
       const { classes } = this.props;
-      let x
+      let gridNum
       if (isBrowser) {
-        x = this.state.bills.map(bill => <Grid item xs={3}> <BillCard bill={bill} handlePol={this.handlePol} /> </Grid>)
-    } else {
-        x = this.state.bills.map(bill => <Grid item xs={12}> <BillCard bill={bill} handlePol={this.handlePol} /> </Grid>)
-    }
+        gridNum = 3
+      } else {
+        gridNum = 12
+      }
+      const x = this.state.bills.map(bill => <Grid item xs={gridNum}> <BillCard bill={bill} handlePol={this.handlePol} /> </Grid>)
+
     return (
       <main className={classes.main}>
       { (this.state.fed.length === 0) ?
