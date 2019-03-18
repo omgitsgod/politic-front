@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper'
 import { Tab, Tabs, Grid } from '@material-ui/core'
 import VoteCard from './VoteCard'
 import Pol2 from './Pol2'
+import { isBrowser, isMobile } from "react-device-detect"
 
 import { KeyboardBackspace, Info, LineWeight } from '@material-ui/icons'
 
@@ -85,7 +86,13 @@ class Votes extends Component {
   render() {
       console.log(this.state)
       const { classes } = this.props;
-      const x = this.state.votes.map(vote => <Grid item xs={3}> <VoteCard vote={vote} handlePol={this.handlePol} /> </Grid>)
+      let gridNum
+      if (isBrowser) {
+        gridNum = 3
+      } else {
+        gridNum = 12
+      }
+      const x = this.state.votes.map(vote => <Grid item xs={gridNum}> <VoteCard vote={vote} handlePol={this.handlePol} /> </Grid>)
     return (
       <main className={classes.main}>
       { (this.state.fed.length === 0) ?
@@ -97,7 +104,7 @@ class Votes extends Component {
         indicatorColor="secondary"
         textColor="secondary"
       >
-      
+
         <Tab icon={<Info />} value={"Recent"} label="Recently Voted" />
 
 

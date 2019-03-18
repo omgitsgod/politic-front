@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Image from 'material-ui-image'
 import MediaCard from './MediaCard'
 import { API_ROOT } from './constants';
+import { isBrowser, isMobile } from "react-device-detect"
 
 const styles = theme => console.log(theme) || ({
 main: {
@@ -56,12 +57,17 @@ class SavedArts extends Component {
   }
   render() {
     const { classes } = this.props
-  const x =  this.state.articles.map(article =>
-    <Grid item xs={3}>
-    <MediaCard article={article}/>
-    </Grid>
-  )
-
+    let gridNum
+    if (isBrowser) {
+      gridNum = 3
+    } else {
+      gridNum = 12
+    }
+    const x =  this.state.articles.map(article =>
+       <Grid item xs={gridNum}>
+       <MediaCard article={article}/>
+       </Grid>
+     )
     return (
       <main className={classes.main}>
       <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>

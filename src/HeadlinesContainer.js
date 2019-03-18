@@ -4,12 +4,7 @@ import { NotificationImportant, Favorite, AccessTime } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles'
 import MediaCard from './MediaCard'
 import { API_ROOT, HEADERS } from './constants';
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile
-} from "react-device-detect"
+import { isBrowser, isMobile } from "react-device-detect"
 
 
 const styles = theme => console.log(theme) || ({
@@ -83,25 +78,25 @@ class HeadlinesContainer extends Component {
   }
   render() {
     const { classes } = this.props
+    let gridNum
+    if (isBrowser) {
+      gridNum = 3
+    } else {
+      gridNum = 12
+    }
     let x
   if  (this.props.user) {
    x =  this.state.articles.map(article =>
-    <Grid item xs={3}>
+    <Grid item xs={gridNum}>
     <MediaCard  save={this.saveArticle} article={article}/>
     </Grid>
   )
-} else if (!this.props.user && this.state.articles && isBrowser) {
+} else if (!this.props.user && this.state.articles) {
    x =  this.state.articles.map(article =>
-    <Grid item xs={3}>
+    <Grid item xs={gridNum}>
     <MediaCard article={article}/>
     </Grid>
   )
-} else if (!this.props.user && this.state.articles && isMobile) {
-    x = this.state.articles.map(article =>
-     <Grid item xs={12}>
-     <MediaCard article={article}/>
-     </Grid>
-   )
 }
   console.log(this.props.id)
     return (

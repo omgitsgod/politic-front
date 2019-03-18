@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper'
 import { Tab, Tabs, Grid } from '@material-ui/core'
 import BillCard from './BillCard'
 import Pol2 from './Pol2'
+import { isBrowser, isMobile } from "react-device-detect"
 
 import { KeyboardBackspace, Info, LineWeight } from '@material-ui/icons'
 
@@ -85,7 +86,12 @@ class Bills extends Component {
   render() {
       console.log(this.state)
       const { classes } = this.props;
-      const x = this.state.bills.map(bill => <Grid item xs={3}> <BillCard bill={bill} handlePol={this.handlePol} /> </Grid>)
+      let x
+      if (isBrowser) {
+        x = this.state.bills.map(bill => <Grid item xs={3}> <BillCard bill={bill} handlePol={this.handlePol} /> </Grid>)
+    } else {
+        x = this.state.bills.map(bill => <Grid item xs={12}> <BillCard bill={bill} handlePol={this.handlePol} /> </Grid>)
+    }
     return (
       <main className={classes.main}>
       { (this.state.fed.length === 0) ?
@@ -99,7 +105,7 @@ class Bills extends Component {
       >
 
         <Tab icon={<Info />} value={"Recent"} label="Recently Introduced" />
-    
+
       </Tabs>
       <Grid container spacing={16}>
       <Grid container spacing={32} justify='center'>

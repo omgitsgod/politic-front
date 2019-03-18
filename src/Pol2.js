@@ -18,6 +18,7 @@ import AssetTable from './AssetTable'
 import BillCard from './BillCard'
 import EventCard from './EventCard'
 import VoteCard from './VoteCard'
+import { isBrowser, isMobile } from "react-device-detect"
 
 const styles = (theme) => ({
     main: {
@@ -139,6 +140,12 @@ class Pol2 extends Component {
 }
   render() {
   const { classes } = this.props;
+  let gridNum
+  if (isBrowser) {
+    gridNum = 3
+  } else {
+    gridNum = 12
+  }
   console.log(this.state.data)
   console.log(this.state);
   console.log(this.state.name);
@@ -267,7 +274,7 @@ class Pol2 extends Component {
             </Typography>
             <Grid container spacing={16}>
             <Grid container spacing={32} justify='center'>
-            {this.state.events.map(event=> <Grid item xs={3}> <EventCard event={event}/> </Grid>)}
+            {this.state.events.map(event=> <Grid item xs={gridNum}> <EventCard event={event}/> </Grid>)}
               </Grid>
               </Grid>
     </div>
@@ -289,7 +296,7 @@ class Pol2 extends Component {
               </Typography>
               <Grid container spacing={16}>
               <Grid container spacing={32} justify='center'>
-                {this.state.vote.map(vote => <Grid item xs={3}> <VoteCard vote={vote} handlePol={this.handleBillPol} /> </Grid>)}
+                {this.state.vote.map(vote => <Grid item xs={gridNum}> <VoteCard vote={vote} handlePol={this.handleBillPol} /> </Grid>)}
                 </Grid>
                 </Grid>
 
@@ -306,7 +313,7 @@ class Pol2 extends Component {
                   <Grid container spacing={32} justify='center'>
 
 
-                {this.state.bills.map(bill => <Grid item xs={3}> <BillCard bill={bill} handlePol={this.handleBillPol} /> </Grid>)}
+                {this.state.bills.map(bill => <Grid item xs={gridNum}> <BillCard bill={bill} handlePol={this.handleBillPol} /> </Grid>)}
                 </Grid>
                 </Grid>
                 :
@@ -342,7 +349,7 @@ class Pol2 extends Component {
     <Grid container spacing={16}>
     <Grid container spacing={32} justify='center'>
     {this.state.articles.map(article =>
-    <Grid item xs={3}>
+    <Grid item xs={gridNum}>
     <MediaCard  save={this.saveArticle} article={article}/>
     </Grid>
   )}

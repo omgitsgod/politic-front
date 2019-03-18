@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper'
 import { Tab, Tabs, Grid } from '@material-ui/core'
 import EventCard from './EventCard'
 import Pol2 from './Pol2'
+import { isBrowser, isMobile } from "react-device-detect"
 
 import { KeyboardBackspace, Info, LineWeight } from '@material-ui/icons'
 
@@ -80,7 +81,13 @@ class Events extends Component {
   render() {
       console.log(this.state)
       const { classes } = this.props;
-      const x = this.state.events.map(event => <Grid item xs={3}> <EventCard event={event}/> </Grid>)
+      let gridNum
+      if (isBrowser) {
+        gridNum = 3
+      } else {
+        gridNum = 12
+      }
+      const x = this.state.events.map(event => <Grid item xs={gridNum}> <EventCard event={event}/> </Grid>)
     return (
       <main className={classes.main}>
       { (this.state.fed.length === 0) ?

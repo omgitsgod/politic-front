@@ -5,6 +5,7 @@ import MediaCard from './MediaCard'
 import { API_ROOT, HEADERS } from './constants';
 import Feds from './Feds'
 import Pol from './Pol'
+import { isBrowser, isMobile } from "react-device-detect"
 
 const styles = theme => console.log(theme) || ({
 main: {
@@ -85,8 +86,14 @@ this.setState({fed: pol})
 }
   render() {
     const { classes } = this.props
-  const x =  this.state.feds.map(fed =>
-    <Grid item xs={3}>
+    let gridNum
+    if (isBrowser) {
+      gridNum = 3
+    } else {
+      gridNum = 12
+    }
+    const x =  this.state.feds.map(fed =>
+    <Grid item xs={gridNum}>
     <Feds fed={fed} handlePol={this.handlePol}/>
     </Grid>
   )
