@@ -4,6 +4,12 @@ import { NotificationImportant, Favorite, AccessTime } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles'
 import MediaCard from './MediaCard'
 import { API_ROOT, HEADERS } from './constants';
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect"
 
 
 const styles = theme => console.log(theme) || ({
@@ -94,6 +100,7 @@ class HeadlinesContainer extends Component {
   console.log(this.props.id)
     return (
       <main className={classes.main}>
+      <BrowserView>
       <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>{
         (this.props.user) ?
       <Tabs
@@ -120,6 +127,15 @@ class HeadlinesContainer extends Component {
       </Grid>
       </Grid>
       </Paper>
+      </BrowserView>
+      <MobileView>
+      <Typography variant='display2' align='center' gutterBottom>
+        {this.state.topic}
+        </Typography>
+        <Typography variant='display2' align='center' gutterBottom>
+          {this.state.topic}
+          </Typography>
+      </MobileView>
       </main>
     );
   }
