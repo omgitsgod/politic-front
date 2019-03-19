@@ -142,7 +142,7 @@ class MenuAppBar extends React.Component {
 
 
 
-            <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+            <Link to='/chat' style={{ textDecoration: 'none', color: 'white' }}>
             <ListItem button disabled>
 
             <ListItemIcon>
