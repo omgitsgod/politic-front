@@ -5,6 +5,7 @@
 * [Setup](#setup)
 ## General Info
 App to help learn more about United States politics
+![Screenshot](./Screenshot.png)
 
 ## Technologies
 Project is created with:
