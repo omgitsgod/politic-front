@@ -38,30 +38,30 @@ function SignUp(props) {
         <Avatar  className={classes.avatar}>
           <LockIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
         <form
          className={classes.form}
          onSubmit={handleAction}
         >
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="username">Username</InputLabel>
-            <Input id="username" name="username"  autoFocus autoComplete="off" />
+          <FormControl margin='normal' required fullWidth>
+            <InputLabel htmlFor='username'>Username</InputLabel>
+            <Input id='username' name='username'  autoFocus autoComplete='off' />
           </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="off" />
+          <FormControl margin='normal' required fullWidth>
+            <InputLabel htmlFor='password'>Password</InputLabel>
+            <Input name='password' type='password' id='password' autoComplete='off' />
           </FormControl>
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            control={<Checkbox value='remember' color='primary' />}
+            label='Remember me'
           />
           <Button
-            type="submit"
+            type='submit'
             fullWidth
-            variant="contained"
-            color="secondary"
+            variant='contained'
+            color='secondary'
             className={classes.submit}
             style={{background: 'transparent', boxShadow: 'none'}}
           >
