@@ -2,11 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -22,23 +17,15 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 .myVideo {
- position: fixed;
- right: 0;
- bottom: 0;
- top: 0;
- left: 0;
- object-fit: cover;
- width: 100%;
- min-height: 100%;
- z-index: -99;
- opacity: 0.8;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  width: 100%;
+  min-height: 100%;
+  z-index: -99;
+  opacity: 0.8;
 }
