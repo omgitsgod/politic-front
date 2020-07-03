@@ -1,244 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Icon from '@material-ui/core/Icon'
-import IconButton from '@material-ui/core/IconButton';
+import { AppBar, Toolbar, Typography, Icon, IconButton, MenuItem, Menu, Button, Drawer, List, ListItemText, Divider, ListItem, ListItemIcon } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import People from '@material-ui/icons/People';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import Button from '@material-ui/core/Button';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-
 import MailIcon from '@material-ui/icons/Mail';
-import { Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star, CreditCard, HowToVote, Event } from '@material-ui/icons'
+import { Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star, CreditCard, HowToVote, Event, People, AccountCircle } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-};
 
-class MenuAppBar extends React.Component {
-  state = {
-    auth: true,
-    anchorEl: null,
-    left: false,
-    anchorHuh: null,
+function MenuAppBar(props) {
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [left, setLeft] = useState(false);
+  const { classes, logged, handleUser } = props;
+  const open = Boolean(anchorEl);
+
+  const toggleDrawer = (side, open) => () => {
+
+    setLeft(open);
   };
 
-  toggleDrawer = (side, open) => () => {
-    this.setState({
-      left: open,
-    });
-  };
+  const handleMenu = event => {
 
-  handleChange = event => {
-    this.setState({ auth: event.target.checked });
-  };
-
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleMaybe = event => {
-    this.setState({ anchorHuh: event.currentTarget })
+    setAnchorEl(event.currentTarget);
   }
 
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
+  const handleClose = () => {
 
+    setAnchorEl(null);
+  }
 
-  render() {
-    const { classes } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
-
-    const sideList = (
-      (this.props.logged) ?
-      <div className={classes.list}>
-
-
-      <ListItem button>
-
-      <ListItemIcon className={classes.menuButton} onClick={this.toggleDrawer('left', true)} aria-label="Menu">
-        <MenuIcon />
-      </ListItemIcon>
-      <ListItemText primary="politic" />
-      </ListItem>
-        <Divider />
-        <Divider />
-        <List>
-
-        <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
-        <ListItem button>
-
-        <ListItemIcon>
-          <Home />
-        </ListItemIcon>
-        <ListItemText primary="Home" />
-          </ListItem></Link>
-          <Link to='/news' style={{ textDecoration: 'none', color: 'white' }}>
-          <ListItem button>
-
-          <ListItemIcon>
-            <LineWeight />
-          </ListItemIcon>
-          <ListItemText primary="News" />
-            </ListItem></Link>
-
-            <Link to='/bills' style={{ textDecoration: 'none', color: 'white' }}>
-            <ListItem button>
-
-            <ListItemIcon>
-              <CreditCard />
-            </ListItemIcon>
-            <ListItemText primary="Bills" />
-              </ListItem></Link>
-
-              <Link to='/votes' style={{ textDecoration: 'none', color: 'white' }}>
-              <ListItem button>
-
-              <ListItemIcon>
-                <HowToVote />
-              </ListItemIcon>
-              <ListItemText primary="Votes" />
-                </ListItem></Link>
-
-            <Link to='/people' style={{ textDecoration: 'none', color: 'white' }}>
-            <ListItem button>
-
-            <ListItemIcon>
-              <People />
-            </ListItemIcon>
-            <ListItemText primary="Pols" />
-              </ListItem></Link>
-              <Link to='/events' style={{ textDecoration: 'none', color: 'white' }}>
-              <ListItem button>
-
-              <ListItemIcon>
-                <Event />
-              </ListItemIcon>
-              <ListItemText primary="Events" />
-                </ListItem></Link>
-
-
-
-            <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
-            <ListItem button disabled>
-
-            <ListItemIcon>
-              <Chat />
-            </ListItemIcon>
-            <ListItemText primary="Chat" />
-              </ListItem></Link>
-
-          </List>
-      </div>
-      :
-      <div className={classes.list}>
-      <ListItem button>
-
-      <ListItemIcon className={classes.menuButton} onClick={this.toggleDrawer('left', true)} aria-label="Menu">
-        <MenuIcon />
-      </ListItemIcon>
-      <ListItemText primary="politic" />
-      </ListItem>
-        <Divider />
-        <Divider />
-        <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
-        <ListItem button>
-
-        <ListItemIcon>
-          <Home />
-        </ListItemIcon>
-        <ListItemText primary="Home" />
-          </ListItem></Link>
-          <Link to='/signin' style={{ textDecoration: 'none', color: 'white' }}>
-          <ListItem button>
-
-          <ListItemIcon>
-            <LockOpen />
-          </ListItemIcon>
-          <ListItemText primary="Sign In" />
-            </ListItem></Link>
-            <Link to='/signup' style={{ textDecoration: 'none', color: 'white' }}>
-            <ListItem button>
-
-            <ListItemIcon>
-              <Create/>
-            </ListItemIcon>
-            <ListItemText primary="Sign Up" />
-              </ListItem></Link>
-      </div>
-
-    );
-
-
-
-    return (
+  return (
       <div className={classes.root}>
-
-        <AppBar position="fixed" style={{ background: 'transparent', boxShadow: 'none'}}>
+        <AppBar position='fixed' style={{ background: 'transparent', boxShadow: 'none'}}>
           <Toolbar>
-            {(this.props.logged) ? <IconButton className={classes.menuButton} onClick={this.toggleDrawer('left', true)}  color="secondary" aria-label="Menu">
-              <AccountBalance />
-            </IconButton>
+            {(logged) ? 
+              <IconButton className={classes.menuButton} onClick={toggleDrawer('left', true)}  color='secondary' aria-label='Menu'>
+                <AccountBalance />
+              </IconButton>
             :
-            ''
-          }
-            <Typography variant="h6" color="inherit" align='left' className={classes.grow}>
-
-            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>  politic </Link>
+              ''
+            }
+            <Typography variant='h6' color='inherit' align='left' className={classes.grow}>
+              <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>  politic </Link>
             </Typography>
-
-            {(this.props.logged) ? (
+            {(logged) ? (
               <div>
-              <Link to='/savedarts' style={{ textDecoration: 'none', color: 'white' }}>
-              <IconButton
-                aria-haspopup="true"
-                color="secondary"
-              >
-                <Star />
-              </IconButton>
-              </Link>
-              <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
-              <IconButton
-                aria-haspopup="true"
-                color="secondary"
-                disabled
-              >
-                <MailIcon />
-              </IconButton>
-              </Link>
+                <Link to='/savedarts' style={{ textDecoration: 'none', color: 'white' }}>
+                  <IconButton
+                    aria-haspopup='true'
+                    color='secondary'
+                  >
+                    <Star />
+                  </IconButton>
+                </Link>
+                <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
+                  <IconButton
+                    aria-haspopup='true'
+                    color='secondary'
+                    disabled
+                  >
+                    <MailIcon />
+                  </IconButton>
+                </Link>
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleMenu}
-                  color="secondary"
+                  aria-haspopup='true'
+                  onClick={handleMenu}
+                  color='secondary'
                 >
                   <AccountCircle />
                 </IconButton>
                 <Menu
-                  id="menu-appbar"
+                  id='menu-appbar'
                   anchorEl={anchorEl}
                   anchorOrigin={{
                     vertical: 'top',
@@ -249,61 +83,172 @@ class MenuAppBar extends React.Component {
                     horizontal: 'right',
                   }}
                   open={open}
-                  onClose={this.handleClose}
+                  onClose={handleClose}
                 >
-
-                  <MenuItem onClick={() => this.props.handleUser({})}>Logout</MenuItem>
-
+                  <MenuItem onClick={() => handleUser({})}>Logout</MenuItem>
                 </Menu>
-              </div>
-            ) : (
+              </div>) 
+            :(
               <div>
-              <Link to='/signup' style={{ textDecoration: 'none', color: 'white' }}>
-
-              <Button>
-              <Icon
-                aria-haspopup="true"
-                color="secondary"
-              >
-                <Create />
-              </Icon>
-              Sign Up
-              </Button>
-              </Link>
-              <Link to='/signin' style={{ textDecoration: 'none', color: 'white' }}>
-              <Button>
-              <Icon
-                aria-haspopup="true"
-                color="secondary"
-              >
-                <LockOpen />
-              </Icon>
-              Sign In
-              </Button>
-              </Link>
-              </div>
-            )}
+                <Link to='/signup' style={{ textDecoration: 'none', color: 'white' }}>
+                  <Button>
+                    <Icon
+                      aria-haspopup='true'
+                      color='secondary'
+                    >
+                      <Create />
+                    </Icon>
+                    Sign Up
+                  </Button>
+                </Link>
+                <Link to='/signin' style={{ textDecoration: 'none', color: 'white' }}>
+                  <Button>
+                    <Icon
+                      aria-haspopup='true'
+                      color='secondary'
+                    >
+                      <LockOpen />
+                    </Icon>
+                    Sign In
+                  </Button>
+                </Link>
+              </div>)
+            }
           </Toolbar>
         </AppBar>
-
-        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)} >
+        <Drawer open={left} onClose={toggleDrawer('left', false)} >
           <div
             tabIndex={0}
-            role="button"
-            onClick={this.toggleDrawer('left', false)}
-            onKeyDown={this.toggleDrawer('left', false)}
+            role='button'
+            onClick={toggleDrawer('left', false)}
+            onKeyDown={toggleDrawer('left', false)}
           >
-            {sideList}
+            (logged) ?
+              <div className={classes.list}>
+                <ListItem button>
+                  <ListItemIcon className={classes.menuButton} onClick={toggleDrawer('left', true)} aria-label='Menu'>
+                    <MenuIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='politic' />
+                </ListItem>
+                <Divider />
+                <Divider />
+                <List>
+                  <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <Home />
+                      </ListItemIcon>
+                      <ListItemText primary='Home' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/news' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <LineWeight />
+                      </ListItemIcon>
+                      <ListItemText primary='News' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/bills' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <CreditCard />
+                      </ListItemIcon>
+                      <ListItemText primary='Bills' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/votes' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <HowToVote />
+                      </ListItemIcon>
+                      <ListItemText primary='Votes' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/people' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <People />
+                      </ListItemIcon>
+                      <ListItemText primary='Pols' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/events' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <Event />
+                      </ListItemIcon>
+                      <ListItemText primary='Events' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button disabled>
+                      <ListItemIcon>
+                        <Chat />
+                      </ListItemIcon>
+                      <ListItemText primary='Chat' />
+                    </ListItem>
+                  </Link>
+                </List>
+              </div>
+            :
+              <div className={classes.list}>
+                <ListItem button>
+                  <ListItemIcon className={classes.menuButton} onClick={toggleDrawer('left', true)} aria-label='Menu'>
+                    <MenuIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='politic' />
+                </ListItem>
+                <Divider />
+                <Divider />
+                <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <Home />
+                    </ListItemIcon>
+                    <ListItemText primary='Home' />
+                  </ListItem>
+                </Link>
+                <Link to='/signin' style={{ textDecoration: 'none', color: 'white' }}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <LockOpen />
+                    </ListItemIcon>
+                    <ListItemText primary='Sign In' />
+                  </ListItem>
+                </Link>
+                <Link to='/signup' style={{ textDecoration: 'none', color: 'white' }}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <Create/>
+                    </ListItemIcon>
+                    <ListItemText primary='Sign Up' />
+                  </ListItem>
+                </Link>
+              </div>
           </div>
         </Drawer>
-
       </div>
-    );
-  }
+  );
 }
 
 MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
+};
+
+const styles = {
+
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
 };
 
 export default withStyles(styles)(MenuAppBar);
