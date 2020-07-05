@@ -1,56 +1,47 @@
-import React, { Component } from 'react';
-import { Paper, Typography, Grid, Divider, Tabs, Tab, } from '@material-ui/core'
-import { NotificationImportant, AccessTime } from '@material-ui/icons'
-import { withStyles } from '@material-ui/core/styles'
-import MediaCard from './MediaCard'
-import { API_ROOT, HEADERS } from './constants';
-import { isBrowser } from "react-device-detect"
+import React, { useState, useEffect } from 'react';
+import { Paper, Typography, Grid, Divider, Tabs, Tab, } from '@material-ui/core';
+import { NotificationImportant, AccessTime } from '@material-ui/icons';
+import { withStyles } from '@material-ui/core/styles';
+import MediaCard from './MediaCard';
+import { isBrowser } from 'react-device-detect';
 
 
-const styles = theme => console.log(theme) || ({
-main: {
-      width: 'auto',
-      display: 'block', // Fix IE 11 issue.
-      marginLeft: theme.spacing.unit * 3,
-      marginRight: theme.spacing.unit * 3,
-      [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-        width: 1000,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-      },
-    },
-    paper: {
-      marginTop: theme.spacing.unit * 8,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-    },
+function HeadlinesContainer(props) {
 
-    thumbnail: {
-      height: 100,
-      width: 100,
+  const [articles, setArticles] = useState([]);
+  const [topic, setTopic] = useState('Headlines');
+  const { classes, user } = props;
+  const gridNum = isBrowser ? 3 : 12;
+  const articleCards = articles ? articles.map((article, i) =>
+    <Grid item xs={gridNum} key={i}>
+      <MediaCard save={user ? saveArticle : null} key={i} article={article}/> 
+    </Grid>    
+  ) : null;
 
-    }
+  useEffect(() => {
 
-})
-export default withStyles(styles) (
-class HeadlinesContainer extends Component {
+    fetchArticles();
+  }, []);
 
-  state = {
-    articles: [],
-    topic: 'Headlines'
+  const fetchArticles = async (topicArg = topic) => {
+
+    const top = topicArg === 'Recent' ? 'everything' : 'top-headlines';
+    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/${top}`).then(r => r.json())
+
+    console.log(json.articles)
+    setArticles(json.articles)
   }
-  handleChange = (event, change) => {
 
-    if (change === "Recent") {
-  fetch(`https://newsapi.org/v2/everything?sources=politico&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles, topic: change}))
-} else if ( change === "Headlines") {
-  fetch(`https://newsapi.org/v2/top-headlines?sources=politico&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles, topic: change}))
-}
-}
+  const handleChange = async (event, change) => {
 
-  saveArticle = (article) => {
+    const tempTopic = change === 'Recent' ? 'everything' : 'top-headlines';
+    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/${tempTopic}`).then(r => r.json());
+
+    setArticles(json.articles);
+    setTopic(tempTopic);
+  }
+
+  const saveArticle = (article) => {
 
     const newArticle = {
       title: article.title,
@@ -59,75 +50,78 @@ class HeadlinesContainer extends Component {
       url: article.url,
       urlToImage: article.urlToImage,
       description: article.description,
-      user_id: this.props.user.user.id
+      user_id: user.user.id
     }
-    HEADERS.Authorization = `Bearer ${this.props.user.jwt}`
-    fetch(`${API_ROOT}/articles`, {
+
+    fetch(`${process.env.REACT_APP_API_ROOT}/articles`, {
       method: 'POST',
-      headers: HEADERS,
-      body: JSON.stringify({article: newArticle, user_id: this.props.user.user.id}),
-    })
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${user.jwt}`
+      },
+      body: JSON.stringify({
+        article: newArticle,
+        user_id: user.user.id
+      }),
+    });
   }
 
-  componentDidMount() {
-    if (this.state.topic === "Headlines") {
-    fetch(`https://newsapi.org/v2/top-headlines?sources=politico&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles}))
-  } else if (this.state.topic === "Recent") {
-   fetch(`https://newsapi.org/v2/everything?sources=politico&apiKey=${process.env.REACT_APP_POLITICO_API_KEY}`).then(r => r.json()).then(json => this.setState({articles: json.articles}))
- }
-  }
-  render() {
-    const { classes } = this.props
-    let gridNum
-    if (isBrowser) {
-      gridNum = 3
-    } else {
-      gridNum = 12
-    }
-    let x
-  if  (this.props.user) {
-   x =  this.state.articles.map(article =>
-    <Grid item xs={gridNum}>
-    <MediaCard  save={this.saveArticle} article={article}/>
-    </Grid>
-  )
-} else if (!this.props.user && this.state.articles) {
-   x =  this.state.articles.map(article =>
-    <Grid item xs={gridNum}>
-    <MediaCard article={article}/>
-    </Grid>
-  )
-}
-    return (
-      <main className={classes.main}>
-      <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>{
-        (this.props.user) ?
-      <Tabs
-        value={this.state.topic}
-       onChange={this.handleChange}
-        variant="fullWidth"
-        indicatorColor="secondary"
-        textColor="secondary"
-      >
-        <Tab icon={<NotificationImportant />} value={"Headlines"} label="Headlines" />
-        <Tab icon={<AccessTime />} value={"Recent"} label="Recent" />
-
-      </Tabs>
-      :
-      ''
-    }
-    <Typography variant='display2' align='center' gutterBottom>
-      {this.state.topic}
-      </Typography>
-      <Divider />
-      <Grid container spacing={16}>
-      <Grid container spacing={32} justify='center'>
-      {(x) ? x : null}
-      </Grid>
-      </Grid>
+  return (
+    <main className={classes.main}>
+      <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
+        { (user) ?
+          <Tabs
+            value={topic}
+            onChange={handleChange}
+            variant='fullWidth'
+            indicatorColor='secondary'
+            textColor='secondary'
+          >
+            <Tab icon={<NotificationImportant />} value={'Headlines'} label='Headlines' />
+            <Tab icon={<AccessTime />} value={'Recent'} label='Recent' />
+          </Tabs>
+        :
+          ''
+        }
+        <Typography variant='h2' align='center' gutterBottom>
+          {topic}
+        </Typography>
+        <Divider />
+        <Grid container spacing={10}>
+          <Grid container spacing={10} justify='center'>
+            {(articleCards) ? articleCards : null}
+          </Grid>
+        </Grid>
       </Paper>
-      </main>
-    );
-  }
+    </main>
+  );
 }
-)
+
+const styles = theme => console.log(theme) || ({
+
+  main: {
+    width: 'auto',
+    display: 'block',
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    [theme.breakpoints.up(400 + theme.spacing(3 * 2))]: {
+      width: 1000,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing(3)}px ${theme.spacing(3)}px ${theme.spacing(3)}px`,
+  },
+  thumbnail: {
+    height: 100,
+    width: 100,
+  },
+});
+
+export default withStyles(styles)(HeadlinesContainer);
