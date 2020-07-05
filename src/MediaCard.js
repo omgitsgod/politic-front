@@ -1,66 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { Card, CardActionArea, CardActions, CardContent, Button, Typography } from '@material-ui/core';
 
-const styles = (theme) => ({
-  card: {
-
-    maxWidth: 345,
-     marginTop: theme.spacing.unit * 8
-  },
-  media: {
-    height: 200,
-  },
-
-
-});
 
 function MediaCard(props) {
-  const { classes } = props;
+
+  const { classes, article, save } = props;
+
   return (
 
     <Card className={classes.card}
     style={{ opacity: '.7', boxShadow: 'none'}}
-    raised='true'>
+    raised={true}>
       <CardActionArea>
-
-        <img src={props.article.urlToImage} className={classes.media} />
+        <img src={article.urlToImage} className={classes.media} alt='article'/>
         <CardContent>
-        <a target='blank' href={props.article.url} style={{ textDecoration: 'none', color: 'white' }}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {props.article.title}
+        <a target='blank' href={article.url} style={{ textDecoration: 'none', color: 'white' }}>
+          <Typography gutterBottom variant='h5' component='h2'>
+            {article.title}
           </Typography>
           </a>
-          <Typography component="p" align='right'>
-            {props.article.author}
+          <Typography component='p' align='right'>
+            {article.author}
           </Typography>
         </CardContent>
       </CardActionArea>
-      { (props.save) ?
+      {(save) ?
       <CardActions>
-        <Button size="small" color="primary" onClick={() => props.save(props.article)}>
+        <Button size='small' color='primary' onClick={() => save(article)}>
           Save
         </Button>
-        <Button size="small" color="primary" disabled="true">
+        <Button size='small' color='primary' disabled='true'>
           Share
         </Button>
       </CardActions>
       :
-      ''
-    }
+        ''
+      }
     </Card>
-
   );
 }
 
 MediaCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+const styles = (theme) => ({
+
+  card: {
+    maxWidth: 345,
+    marginTop: theme.spacing(8)
+  },
+  media: {
+    height: 200,
+  },
+});
 
 export default withStyles(styles)(MediaCard);
