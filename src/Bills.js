@@ -1,125 +1,107 @@
-import React from 'react';
-import { Component } from 'react'
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper'
-import { Tab, Tabs, Grid } from '@material-ui/core'
-import BillCard from './BillCard'
-import Pol2 from './Pol2'
-import { isBrowser } from "react-device-detect"
-
-import { Info} from '@material-ui/icons'
-
-const styles = (theme) => ({
-
-    main: {
-      width: 'auto',
-      display: 'block', // Fix IE 11 issue.
-      marginLeft: theme.spacing.unit * 3,
-      marginRight: theme.spacing.unit * 3,
-      [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-        width: 1000,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-      },
-    },
-    paper: {
-      marginTop: theme.spacing.unit * 8,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-    },
-  card: {
-    maxWidth: 345,
-     marginTop: theme.spacing.unit * 8
-  },
-  media: {
-    height: 200,
-  },
+import { Tab, Tabs, Grid, Paper } from '@material-ui/core';
+import { isBrowser } from 'react-device-detect';
+import { Info } from '@material-ui/icons';
+import BillCard from './BillCard';
+import Pol2 from './Pol2';
 
 
-});
+function Bills(props) {
 
-class Bills extends Component {
+  const [bills, setBills] = useState([]);
+  const [tab, setTab] = useState('Recent');
+  const [fed, setFed] = useState('');
+  const {classes} = props;
+  const gridNum = isBrowser ? 3 : 12;
+  const billCards = bills ? bills.map(bill => 
+    <Grid item xs={gridNum}> 
+      <BillCard bill={bill} handlePol={handlePol} /> 
+    </Grid>
+  ) : null
 
-  state = {
-    bills : [],
-    tab: 'Recent',
-    fed: ''
+  const fetchBills = async () => {
+
+    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/bills`).then(r => r.json);
+
+    setBills(json.results[0].bills);
   }
 
-  componentDidMount() {
-    fetch('https://api.propublica.org/congress/v1/116/both/bills/introduced.json',{
-      headers: {
-        Accept: "application/json",
-        'X-API-KEY': process.env.REACT_APP_PROPUB_API_KEY
-      }
-    }).then(r => r.json())
-    .then(bills => this.setState({bills: bills.results[0].bills}))
+  const handlePol = (pol) => {
+
+    (pol === 'Back') ? setFed('') : setFed(pol);
   }
 
-  handlePol = (pol) => {
-    if (pol === "Back") {
-      this.setState({fed: ''})
-    } else {
-  this.setState({fed: pol})
-  }
+  const handleChange = (event, change) => {
+
+    (change !== 'Back') ? setTab(change) : console.log('Back');
   }
 
-  handleChange = (event, change) => {
-    if (change === "Back") {
-    //  this.props.handlePol("Back")
-    } else {
-    this.setState({
-      tab: change
-    })
-  }
-  }
+  useEffect(() => {
 
-  render() {
-      const { classes } = this.props;
-      let gridNum
-      if (isBrowser) {
-        gridNum = 3
-      } else {
-        gridNum = 12
-      }
-      const x = this.state.bills.map(bill => <Grid item xs={gridNum}> <BillCard bill={bill} handlePol={this.handlePol} /> </Grid>)
+    fetchBills();
+  }, []);
 
-    return (
-      <main className={classes.main}>
-      { (this.state.fed.length === 0) ?
-      <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
-      <Tabs
-        value={this.state.tab}
-       onChange={this.handleChange}
-        variant="fullWidth"
-        indicatorColor="secondary"
-        textColor="secondary"
-      >
-
-        <Tab icon={<Info />} value={"Recent"} label="Recently Introduced" />
-
-      </Tabs>
-      <Grid container spacing={16}>
-      <Grid container spacing={32} justify='center'>
-      {x}
-      </Grid>
-      </Grid>
-      </Paper>
+  return (
+    <main className={classes.main}>
+      {(fed.length === 0) ?
+        <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
+          <Tabs
+            value={tab}
+            onChange={handleChange}
+            variant='fullWidth'
+            indicatorColor='secondary'
+            textColor='secondary'
+          >
+            <Tab icon={<Info />} value={'Recent'} label='Recently Introduced' />
+          </Tabs>
+          <Grid container spacing={16}>
+            <Grid container spacing={32} justify='center'>
+              {billCards}
+            </Grid>
+          </Grid>
+        </Paper>
       :
-      <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
-      <Pol2 id={this.state.fed} handlePol={this.handlePol}/>
-      </Paper>
-    }
-      </main>
-    )
-  }
+        <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
+          <Pol2 id={fed} handlePol={handlePol}/>
+        </Paper>
+      }
+    </main>
+  );
 }
 
 Bills.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+const styles = (theme) => ({
+
+  main: {
+    width: 'auto',
+    display: 'block',
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    [theme.breakpoints.up(400 + theme.spacing(3 * 2))]: {
+      width: 1000,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(3)}px`,
+  },
+  card: {
+    maxWidth: 345,
+    marginTop: theme.spacing(8)
+  },
+  media: {
+    height: 200,
+  },
+});
 
 export default withStyles(styles)(Bills);
