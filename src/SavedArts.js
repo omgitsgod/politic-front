@@ -19,7 +19,7 @@ function SavedArticles(props) {
 
   const fetchSavedArticles = async () => {
 
-    const json = await fetch(`${API_ROOT}/articles`, {
+    const json = await fetch(`${process.env.REACT_APP_API_ROOT}/articles`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${user.jwt}`
