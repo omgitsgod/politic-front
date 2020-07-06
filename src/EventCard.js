@@ -1,80 +1,71 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import { Card, CardActionArea, CardContent, Typography } from '@material-ui/core';
 
-const styles = (theme) => ({
-  card: {
-    maxWidth: 345,
-     marginTop: theme.spacing.unit * 8
-  },
-  media: {
-    height: 200,
-  },
-
-
-});
 
 function EventCard(props) {
-  const { classes } = props;
+
+  const { classes, event } = props;
+
   return (
-
-    <Card className={classes.card}
-    style={{ opacity: '.7', boxShadow: 'none'}}
-    raised='true'>
-
-    <CardActionArea>
-    <CardContent>
-
-    <Typography gutterBottom variant="title" component="p">
-     {props.event.entertainment}
-    </Typography>
-    { (props.event.hosts.length > 0) ?
-    <Typography gutterBottom variant="title" component="p">
-      Hosted by:
-    </Typography>
-    :
-    ''
-    }
-    {props.event.hosts.map(host => <Typography gutterBottom variant="title" component="p">{host.name}</Typography>)}
-
-
-    </CardContent>
-    <br />
-<CardContent >
-
-{(props.event.venue) ?
-  <div>
-<Typography component="p" align='center'  >
-{props.event.venue.address1},
-</Typography>
-<Typography component="p" align='center'  >
-{props.event.venue.city} {props.event.venue.state}
-</Typography>
-</div>
-:
-''
-}
-<Typography variant="h5" align='right'  style={{color: 'green'}}>
-on {props.event.start_date}
-</Typography>
-<br />
-
-
-  <br />
-    </CardContent>
-    </CardActionArea>
-
+    <Card 
+      className={classes.card}
+      style={{ opacity: '.7', boxShadow: 'none'}}
+      raised='true'
+    >
+      <CardActionArea>
+        <CardContent>
+          <Typography gutterBottom variant='title' component='p'>
+            {event.entertainment}
+          </Typography>
+          {(event.hosts.length > 0) ?
+            <Typography gutterBottom variant='title' component='p'>
+              Hosted by:
+            </Typography>
+          :
+            ''
+          }
+          {event.hosts.map(host => <Typography gutterBottom variant='title' component='p'>{host.name}</Typography>)}
+        </CardContent>
+        <br />
+        <CardContent>
+          {(event.venue) ?
+            <div>
+              <Typography component='p' align='center'  >
+                {event.venue.address1},
+              </Typography>
+              <Typography component='p' align='center'  >
+                {event.venue.city} {event.venue.state}
+              </Typography>
+            </div>
+          :
+            ''
+          }
+          <Typography variant='h5' align='right'  style={{color: 'green'}}>
+            on {event.start_date}
+          </Typography>
+          <br />
+          <br />
+        </CardContent>
+      </CardActionArea>
     </Card>
-
   );
 }
 
 EventCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+const styles = (theme) => ({
+
+  card: {
+    maxWidth: 345,
+    marginTop: theme.spacing(8)
+  },
+  media: {
+    height: 200,
+  },
+});
 
 export default withStyles(styles)(EventCard);
