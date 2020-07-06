@@ -1,7 +1,7 @@
 import React from 'react';
-import { Paper, Divider} from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
-import ConversationsList from './ConversationsList'
+import { Paper, Divider } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import ConversationsList from './ConversationsList';
 
 
 function Chat(props) {
