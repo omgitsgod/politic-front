@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@material-ui/core/Table';
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@material-ui/core';
 
 
 function AssetTable(props) {
