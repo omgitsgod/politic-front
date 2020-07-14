@@ -8,7 +8,6 @@ import { CssBaseline } from '@material-ui/core';
 import {BrowserRouter as Router } from 'react-router-dom'
 import { ActionCableProvider } from 'react-actioncable-provider';
 import { register } from './serviceWorker';
-import { API_WS_ROOT } from './constants';
 import dotenv from 'dotenv';
 
 const theme = createMuiTheme({
@@ -28,11 +27,12 @@ ReactDOM.render(
   <Router>
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-        <ActionCableProvider url={API_WS_ROOT}>
-          <App />
-        </ActionCableProvider>
+      <ActionCableProvider url={process.env.REACT_APP_API_WS_ROOT}>
+        <App />
+      </ActionCableProvider>
     </MuiThemeProvider>
-  </Router>
-  , document.getElementById('root'));
+  </Router>,
+  document.getElementById('root')
+);
 
 register();;
