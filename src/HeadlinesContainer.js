@@ -12,11 +12,6 @@ function HeadlinesContainer(props) {
   const [topic, setTopic] = useState('Headlines');
   const { classes, user } = props;
   const gridNum = isBrowser ? 3 : 12;
-  const articleCards = articles ? articles.map((article, i) =>
-    <Grid item xs={gridNum} key={i}>
-      <MediaCard save={user ? saveArticle : null} key={i} article={article}/> 
-    </Grid>    
-  ) : null;
 
   useEffect(() => {
 
@@ -90,7 +85,13 @@ function HeadlinesContainer(props) {
         <Divider />
         <Grid container spacing={10}>
           <Grid container spacing={10} justify='center'>
-            {(articleCards) ? articleCards : null}
+            {articles ? articles.map((article, i) =>
+              <Grid item xs={gridNum} key={i}>
+                <MediaCard save={user ? saveArticle : null} key={i} article={article}/> 
+              </Grid>) 
+            : 
+              null
+            }
           </Grid>
         </Grid>
       </Paper>
