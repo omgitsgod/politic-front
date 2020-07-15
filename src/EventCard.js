@@ -12,21 +12,21 @@ function EventCard(props) {
     <Card 
       className={classes.card}
       style={{ opacity: '.7', boxShadow: 'none'}}
-      raised='true'
+      raised={true}
     >
       <CardActionArea>
         <CardContent>
-          <Typography gutterBottom variant='title' component='p'>
+          <Typography gutterBottom variant='h6' component='p'>
             {event.entertainment}
           </Typography>
           {(event.hosts.length > 0) ?
-            <Typography gutterBottom variant='title' component='p'>
+            <Typography gutterBottom variant='body2' component='p'>
               Hosted by:
             </Typography>
           :
             ''
           }
-          {event.hosts.map(host => <Typography gutterBottom variant='title' component='p'>{host.name}</Typography>)}
+          {event.hosts.map(host => <Typography gutterBottom variant='body1' component='p' key={host.name}>{host.name}</Typography>)}
         </CardContent>
         <br />
         <CardContent>
