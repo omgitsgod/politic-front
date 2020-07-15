@@ -15,11 +15,6 @@ function Events(props) {
   const [fed, setFed] = useState('');
   const {classes} = props;
   const gridNum = isBrowser ? 3 : 12;
-  const eventCards = events ? events.map(event => 
-    <Grid item xs={gridNum}> 
-      <EventCard event={event}/> 
-    </Grid>
-  ) : []
 
   const handlePol = (pol) => {
 
@@ -56,15 +51,21 @@ function Events(props) {
           >
             <Tab icon={<Info />} value={'Recent'} label='Most Recent Events' />
           </Tabs>
-          <Grid container spacing={16}>
-            <Grid container spacing={32} justify='center'>
-              {eventCards}
+          <Grid container spacing={10}>
+            <Grid container spacing={10} justify='center'>
+              {events ? events.map(event => 
+                <Grid item xs={gridNum} key={event.id}> 
+                  <EventCard event={event} /> 
+                </Grid>) 
+              : 
+                null
+              }
             </Grid>
           </Grid>
         </Paper>
       :
         <Paper>
-          <Pol2 id={fed} handlePol={handlePol}/>
+          <Pol2 id={fed} handlePol={handlePol} />
         </Paper>
       }
     </main>
