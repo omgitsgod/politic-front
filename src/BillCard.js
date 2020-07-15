@@ -9,11 +9,11 @@ function BillCard(props) {
   const { classes, bill, handlePol } = props;
 
   return (
-    <Card className={classes.card} style={{ opacity: '.7', boxShadow: 'none'}} raised='true'>
+    <Card className={classes.card} style={{ opacity: '.7', boxShadow: 'none'}} raised={true}>
       <CardActionArea>
         <CardContent>
           <a target='blank' href={bill.govtrack_url} style={{ textDecoration: 'none', color: 'white' }}>
-            <Typography gutterBottom variant='title' component='p'>
+            <Typography gutterBottom variant='h6' component='p'>
               {bill.short_title}
             </Typography>
           </a>
