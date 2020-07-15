@@ -54,7 +54,7 @@ function App() {
     if (user.user) {
     setId(user.user.id)
     }
-  }, []);
+  }, [user]);
 
   return (
       <div className='App'>
