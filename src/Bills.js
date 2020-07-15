@@ -15,15 +15,10 @@ function Bills(props) {
   const [fed, setFed] = useState('');
   const {classes} = props;
   const gridNum = isBrowser ? 3 : 12;
-  const billCards = bills ? bills.map(bill => 
-    <Grid item xs={gridNum}> 
-      <BillCard bill={bill} handlePol={handlePol} /> 
-    </Grid>
-  ) : null
 
   const fetchBills = async () => {
 
-    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/bills`).then(r => r.json);
+    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/bills`).then(r => r.json());
 
     setBills(json.results[0].bills);
   }
@@ -56,9 +51,15 @@ function Bills(props) {
           >
             <Tab icon={<Info />} value={'Recent'} label='Recently Introduced' />
           </Tabs>
-          <Grid container spacing={16}>
-            <Grid container spacing={32} justify='center'>
-              {billCards}
+          <Grid container spacing={10}>
+            <Grid container spacing={10} justify='center'>
+              {bills ? bills.map(bill => 
+                <Grid item xs={gridNum} key={bill.bill_id}> 
+                  <BillCard bill={bill} handlePol={handlePol} /> 
+                </Grid>) 
+              : 
+                null
+              }
             </Grid>
           </Grid>
         </Paper>
