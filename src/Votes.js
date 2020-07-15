@@ -15,11 +15,6 @@ function Votes(props) {
   const [fed, setFed] = useState('');
   const { classes } = props;
   const gridNum = isBrowser ? 3 : 12;
-  const voteCards = votes ? votes.map(vote => 
-    <Grid item xs={gridNum}> 
-      <VoteCard vote={vote} handlePol={handlePol} /> 
-    </Grid>
-  ) : null
 
   useEffect(()=> {
 
@@ -28,7 +23,7 @@ function Votes(props) {
 
   const fetchVotes = async () => {
 
-    const json = fetch(`${process.env.REACT_APP_BACK_HOST}/news/recent`).then(r => r.json());
+    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/recent`).then(r => r.json());
 
     setVotes(json.results.votes);
   }
@@ -56,9 +51,15 @@ function Votes(props) {
           >
             <Tab icon={<Info />} value={'Recent'} label='Recently Voted' />
           </Tabs>
-          <Grid container spacing={16}>
-            <Grid container spacing={32} justify='center'>
-              {voteCards}
+          <Grid container spacing={10}>
+            <Grid container spacing={10} justify='center'>
+              {votes ? votes.map(vote => 
+                <Grid item xs={gridNum}> 
+                  <VoteCard vote={vote} handlePol={handlePol} /> 
+                </Grid>) 
+              : 
+                null
+              }
             </Grid>
           </Grid>
         </Paper>
