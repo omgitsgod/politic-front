@@ -31,7 +31,7 @@ function MediaCard(props) {
         <Button size='small' color='primary' onClick={() => save(article)}>
           Save
         </Button>
-        <Button size='small' color='primary' disabled='true'>
+        <Button size='small' color='primary' disabled={true}>
           Share
         </Button>
       </CardActions>
