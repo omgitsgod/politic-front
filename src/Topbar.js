@@ -123,7 +123,7 @@ function MenuAppBar(props) {
             onClick={toggleDrawer('left', false)}
             onKeyDown={toggleDrawer('left', false)}
           >
-            (logged) ?
+            {(logged) ?
               <div className={classes.list}>
                 <ListItem button>
                   <ListItemIcon className={classes.menuButton} onClick={toggleDrawer('left', true)} aria-label='Menu'>
@@ -227,6 +227,7 @@ function MenuAppBar(props) {
                   </ListItem>
                 </Link>
               </div>
+            }
           </div>
         </Drawer>
       </div>
