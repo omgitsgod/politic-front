@@ -12,11 +12,11 @@ function PoliticianProfile(props) {
   return (
     <>
       <CardActionArea>
-        {fed.photoUrl ? (
+        {fed.photoUrl ? 
           <img src={fed.photoUrl} className={classes.media} alt='Headshot' />
-        ) : (
+        : 
           <img src={unknownPhoto} className={classes.media} alt='Headshot' />
-        )}
+        }
         <CardContent>
           <Typography gutterBottom variant='h3' component='h2'>
             {fed.name}
@@ -26,7 +26,7 @@ function PoliticianProfile(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      {data.id ? (
+      {data.id ? 
         <CardActions>
           <Button size='small' color='primary' onClick={handleFinances}>
             <Typography component='p' color='secondary'>
@@ -55,7 +55,9 @@ function PoliticianProfile(props) {
             </Typography>
           </Button>
         </CardActions>
-      ) : null}
+      : 
+        null
+      }
       <CardActionArea>{handleView()}</CardActionArea>:
     </>
   );
