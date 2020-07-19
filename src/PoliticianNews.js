@@ -5,19 +5,19 @@ import ArticleCard from './MediaCard';
 
 function PoliticianNews(props) {
 
-    const { articles, gridNum } = props;
+  const { articles, gridNum } = props;
 
-    return (
-      <Grid container spacing={10}>
-        <Grid container spacing={10} justify='center'>
-          {articles.map(article => (
-            <Grid item xs={gridNum} key={article.title}>
-              <ArticleCard article={article} />
-            </Grid>
-          ))}
-        </Grid>
+  return (
+    <Grid container spacing={10}>
+      <Grid container spacing={10} justify='center'>
+        {articles.map(article => (
+          <Grid item xs={gridNum} key={article.title}>
+            <ArticleCard article={article} />
+          </Grid>
+        ))}
       </Grid>
-    );
+    </Grid>
+  );
 }
 
 export default PoliticianNews;
