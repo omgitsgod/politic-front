@@ -39,12 +39,12 @@ function SavedArticles(props) {
         className={classes.paper}
         style={{ background: 'transparent', boxShadow: 'none' }}
       >
-        <Typography variant='display2' align='center' gutterBottom>
+        <Typography variant='h5' align='center' gutterBottom>
           Saved Articles
         </Typography>
         <Divider />
-        <Grid container spacing={16}>
-          <Grid container spacing={32} justify='center'>
+        <Grid container spacing={10}>
+          <Grid container spacing={10} justify='center'>
             {articles ? articles.map((article) => (
               <Grid item xs={gridNum}>
                 <ArticleCard article={article} />
