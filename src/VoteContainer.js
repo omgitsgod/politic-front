@@ -8,7 +8,7 @@ import VoteCard from './VoteCard';
 import Pol2 from './Pol2';
 
 
-function Votes(props) {
+function VoteContainer(props) {
 
   const [votes, setVotes] = useState([]);
   const [tab, setTab] = useState('Recent');
@@ -72,7 +72,7 @@ function Votes(props) {
   );
 }
 
-Votes.propTypes = {
+VoteContainer.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -105,4 +105,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(Votes);
+export default withStyles(styles)(VoteContainer);
