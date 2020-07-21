@@ -4,12 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardActions, CardContent, Button, Typography } from '@material-ui/core';
 
 
-function MediaCard(props) {
+function ArticleCard(props) {
 
   const { classes, article, save } = props;
 
   return (
-
     <Card className={classes.card}
     style={{ opacity: '.7', boxShadow: 'none'}}
     raised={true}>
@@ -42,7 +41,7 @@ function MediaCard(props) {
   );
 }
 
-MediaCard.propTypes = {
+ArticleCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -57,4 +56,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(MediaCard);
+export default withStyles(styles)(ArticleCard);
