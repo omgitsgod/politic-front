@@ -8,7 +8,7 @@ import EventCard from './EventCard';
 import Pol2 from './Pol2';
 
 
-function Events(props) {
+function EventContainer(props) {
 
   const [events, setEvents] = useState([]);
   const [tab, setTab] = useState('Recent');
@@ -72,7 +72,7 @@ function Events(props) {
   );
 }
 
-Events.propTypes = {
+EventContainer.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -105,4 +105,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(Events);
+export default withStyles(styles)(EventContainer);
