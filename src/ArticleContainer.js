@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Paper, Typography, Grid, Divider, Tabs, Tab, } from '@material-ui/core';
 import { NotificationImportant, AccessTime } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
-import MediaCard from './MediaCard';
+import ArticleCard from './ArticleCard';
 import { isBrowser } from 'react-device-detect';
 
 
-function HeadlinesContainer(props) {
+function ArticleContainer(props) {
 
   const [articles, setArticles] = useState([]);
-  const [topic, setTopic] = useState('Headlines');
+  const [topic, setTopic] = useState('Recent News');
   const { classes, user } = props;
   const gridNum = isBrowser ? 3 : 12;
 
@@ -20,7 +20,7 @@ function HeadlinesContainer(props) {
 
   const fetchArticles = async (topicArg = topic) => {
 
-    const top = topicArg === 'Recent' ? 'everything' : 'top-headlines';
+    const top = topicArg === 'Recent News' ? 'everything' : 'top-headlines';
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/${top}`).then(r => r.json())
 
     console.log(json.articles)
@@ -65,7 +65,7 @@ function HeadlinesContainer(props) {
   return (
     <main className={classes.main}>
       <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
-        { (user) ?
+        {(user) ?
           <Tabs
             value={topic}
             onChange={handleChange}
@@ -77,7 +77,7 @@ function HeadlinesContainer(props) {
             <Tab icon={<AccessTime />} value={'Recent'} label='Recent' />
           </Tabs>
         :
-          ''
+          null
         }
         <Typography variant='h2' align='center' gutterBottom>
           {topic}
@@ -87,7 +87,7 @@ function HeadlinesContainer(props) {
           <Grid container spacing={10} justify='center'>
             {articles ? articles.map((article, i) =>
               <Grid item xs={gridNum} key={i}>
-                <MediaCard save={user ? saveArticle : null} key={i} article={article}/> 
+                <ArticleCard save={user ? saveArticle : null} key={i} article={article}/> 
               </Grid>) 
             : 
               null
@@ -125,4 +125,4 @@ const styles = theme => console.log(theme) || ({
   },
 });
 
-export default withStyles(styles)(HeadlinesContainer);
+export default withStyles(styles)(ArticleContainer);
