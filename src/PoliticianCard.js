@@ -1,35 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardActions, CardContent, Button, Typography } from '@material-ui/core';
 import unknownPhoto from './unknown-photo.png'
 
 
-function Feds(props) {
+function PoliticianCard(props) {
 
-  const [data, setData] = useState('');
   const { classes, fed, handlePol } = props;
 
-  const fetchCongress = async () => {
-
-    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/congress`).then(r => r.json());
-    const filtered = json.filter(rep => rep.name.official_full === fed.name)[0]
-
-    setData(filtered);
-  }
-
-  useEffect(() => {
-
-    fetchCongress();
-  }, [])
-
   return (
-    <Card className={classes.card} style={{ opacity: '.7', boxShadow: 'none'}} raised='true'>
+    <Card className={classes.card} style={{ opacity: '.7', boxShadow: 'none'}} raised={true}>
       <CardActionArea>
         {(fed.photoUrl) ?
-          <img src={fed.photoUrl} className={classes.media} /> 
+          <img src={fed.photoUrl} className={classes.media} alt='Headshot'/> 
         :
-          <img src={unknownPhoto} className={classes.media} />
+          <img src={unknownPhoto} className={classes.media} alt='Headshot'/>
         }
         <CardContent>
           <Typography gutterBottom variant='h5' component='h2' >
@@ -38,7 +24,7 @@ function Feds(props) {
           <Typography gutterBottom component='p' align='right'>
             {fed.office.name}
           </Typography>
-          {(this.props.fed.party === 'Democratic') ?
+          {(fed.party === 'Democratic') ?
             <Typography component='p' align='right' color='secondary'>
               {fed.party}
             </Typography>
@@ -49,19 +35,23 @@ function Feds(props) {
           }
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size='small' onClick={() => handlePol(fed)}>
-          More Info
-        </Button>
-        <Button size='small' color='primary' >
-          Share
-        </Button>
-      </CardActions>
+      {fed.data ?
+        <CardActions>
+          <Button size='small' onClick={() => handlePol(fed)}>
+            More Info
+          </Button>
+          <Button size='small' color='primary' >
+            Share
+          </Button>
+        </CardActions>
+      :
+        null
+      }
     </Card>
   );
 }
 
-Feds.propTypes = {
+PoliticianCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -77,4 +67,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(Feds);
+export default withStyles(styles)(PoliticianCard);
