@@ -4,10 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@material-ui/core';
 
 
-function IndusTable(props) {
+function IndustryTable(props) {
 
   const { classes, industry } = props;
-  const rows = industry.map(industry => createData(industry['@attributes'].industry_name, `$${industry['@attributes'].total}`, `$${industry['@attributes'].indivs}`, `$${industry['@attributes'].pacs}` ));
   let id = 0;
 
   const createData = (name, total, individual, pac) => {
@@ -15,6 +14,15 @@ function IndusTable(props) {
     id += 1;
     return { id, name, total, individual, pac };
   }
+  
+  const rows = industry.map((industry) =>
+    createData(
+      industry['@attributes'].industry_name,
+      `$${industry['@attributes'].total}`,
+      `$${industry['@attributes'].indivs}`,
+      `$${industry['@attributes'].pacs}`
+    )
+  );
   
   return (
     <Paper className={classes.root} style={{ opacity: '.7', boxShadow: 'none'}}>
@@ -44,7 +52,7 @@ function IndusTable(props) {
   );
 }
 
-IndusTable.propTypes = {
+IndustryTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -60,4 +68,4 @@ const styles = theme => ({
   },
 });
 
-export default withStyles(styles)(IndusTable);
+export default withStyles(styles)(IndustryTable);
