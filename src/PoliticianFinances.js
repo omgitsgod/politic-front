@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import AssetTable from './AssetTable';
+import FinanceTable from './FinanceTable';
 
 
 function PoliticianFinances(props) {
@@ -29,7 +29,7 @@ function PoliticianFinances(props) {
       <Typography variant='h5' align='center'>
         Assets
       </Typography>
-      <AssetTable assets={finance.assets.asset} />
+      <FinanceTable assets={finance.assets.asset} />
     </>
   );
 }
