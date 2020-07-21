@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import IndustryTable from './IndusTable';
+import IndustryTable from './IndustryTable';
 
 
 function PoliticianIndustry(props) {
