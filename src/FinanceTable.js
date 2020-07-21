@@ -4,17 +4,24 @@ import { withStyles } from '@material-ui/core/styles';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@material-ui/core';
 
 
-function AssetTable(props) {
+function FinanceTable(props) {
 
   const { classes, assets } = props;
-  const rows = assets.map(asset => createData(asset['@attributes'].name, `$${asset['@attributes'].holdings_low}`, `$${asset['@attributes'].holdings_high}`));
   let id = 0;
 
-  const createData = (name, holdings_high, holdings_low) => {
+  const createData = (name, holdings_low, holdings_high) => {
   
   id += 1;
-  return { id, name, holdings_high, holdings_low };
+  return { id, name, holdings_low, holdings_high };
   }
+
+  const rows = assets.map((asset) =>
+    createData(
+      asset['@attributes'].name,
+      `$${asset['@attributes'].holdings_low}`,
+      `$${asset['@attributes'].holdings_high}`
+    )
+  );
 
   return (
     <Paper className={classes.root} style={{ opacity: '.7', boxShadow: 'none'}}>
@@ -42,7 +49,7 @@ function AssetTable(props) {
   );
 }
 
-AssetTable.propTypes = {
+FinanceTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -58,5 +65,5 @@ const styles = theme => ({
   },
 });
 
-export default withStyles(styles)(AssetTable);
+export default withStyles(styles)(FinanceTable);
 
