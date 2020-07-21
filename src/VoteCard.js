@@ -11,26 +11,26 @@ function VoteCard(props) {
   return (
     <Card className={classes.card}
       style={{ opacity: '.7', boxShadow: 'none'}}
-      raised='true'
+      raised={true}
     >
       <CardActionArea>
         <CardContent>
           {(vote.url) ?
             <a target='blank' href={vote.url} style={{ textDecoration: 'none', color: 'white' }}>
-              <Typography gutterBottom variant='title' component='p'>
-                Bill:  {vote.bill.title}
+              <Typography gutterBottom variant='h5' component='p'>
+                {vote.bill.title}
               </Typography>
-              <Typography gutterBottom variant='title' component='p'>
+              <Typography gutterBottom variant='h6' component='p'>
                 {vote.question}?
               </Typography>
 
             </a>
           :
             <div>
-              <Typography gutterBottom variant='title' component='p'>
-                Bill:  {vote.bill.title}
+              <Typography gutterBottom variant='h5' component='p'>
+                {vote.bill.title}
               </Typography>
-              <Typography gutterBottom variant='title' component='p'>
+              <Typography gutterBottom variant='h6' component='p'>
                 {vote.question}?
               </Typography>
             </div>
@@ -48,7 +48,7 @@ function VoteCard(props) {
               </Typography>
             </div>
           :
-            ''
+            null
           }
           {(vote.position) ?
             <Typography variant='h6' align='right' color='secondary' >
