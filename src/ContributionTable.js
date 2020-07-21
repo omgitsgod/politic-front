@@ -4,10 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@material-ui/core';
 
 
-function ContriTable(props) {
+function ContributionTable(props) {
 
   const { classes, contribs } = props;
-  const rows = contribs.map(contrib => createData(contrib['@attributes'].org_name, `$${contrib['@attributes'].total}` ));
   let id = 0;
 
   const createData = (name, amount) => {
@@ -15,6 +14,13 @@ function ContriTable(props) {
     id += 1;
     return { id, name, amount };
   }
+
+  const rows = contribs.map((contrib) =>
+    createData(
+      contrib['@attributes'].org_name,
+      `$${contrib['@attributes'].total}`
+    )
+  );
 
   return (
     <Paper className={classes.root} style={{ opacity: '.7', boxShadow: 'none'}}>
@@ -40,7 +46,7 @@ function ContriTable(props) {
   );
 }
 
-ContriTable.propTypes = {
+ContributionTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -56,4 +62,4 @@ const styles = theme => ({
   },
 });
 
-export default withStyles(styles)(ContriTable);
+export default withStyles(styles)(ContributionTable);
