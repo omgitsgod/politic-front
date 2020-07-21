@@ -10,15 +10,16 @@ function ArticleCard(props) {
 
   return (
     <Card className={classes.card}
-    style={{ opacity: '.7', boxShadow: 'none'}}
-    raised={true}>
+      style={{opacity: '.7', boxShadow: 'none'}}
+      raised={true}
+    >
       <CardActionArea>
         <img src={article.urlToImage} className={classes.media} alt='article'/>
         <CardContent>
-        <a target='blank' href={article.url} style={{ textDecoration: 'none', color: 'white' }}>
-          <Typography gutterBottom variant='h5' component='h2'>
-            {article.title}
-          </Typography>
+          <a target='blank' href={article.url} style={{ textDecoration: 'none', color: 'white' }}>
+            <Typography gutterBottom variant='h5' component='h2'>
+              {article.title}
+            </Typography>
           </a>
           <Typography component='p' align='right'>
             {article.author}
@@ -35,7 +36,7 @@ function ArticleCard(props) {
         </Button>
       </CardActions>
       :
-        ''
+        null
       }
     </Card>
   );
