@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import ContributorTable from './ContriTable';
+import ContributionTable from './ContributionTable';
 
 
 function PoliticianContributions(props) {
@@ -8,12 +8,12 @@ function PoliticianContributions(props) {
     const { contributions } = props;
 
     return (
-      <>
-        <Typography variant='h5' align='center'>
-          Top Contributors
-        </Typography>
-        <ContributorTable contribs={contributions} />
-      </>
+        <>
+            <Typography variant='h5' align='center'>
+                Top Contributors
+            </Typography>
+            <ContributionTable contribs={contributions} />
+        </>
     );
 }
 
