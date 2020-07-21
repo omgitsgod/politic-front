@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, Typography, Grid, Divider, Tabs, Tab, } from '@material-ui/core';
-import { NotificationImportant, AccessTime } from '@material-ui/icons';
+import { Paper, Typography, Grid, Divider,  } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ArticleCard from './ArticleCard';
 import { isBrowser } from 'react-device-detect';
@@ -9,7 +8,6 @@ import { isBrowser } from 'react-device-detect';
 function ArticleContainer(props) {
 
   const [articles, setArticles] = useState([]);
-  const [topic, setTopic] = useState('Recent News');
   const { classes, user } = props;
   const gridNum = isBrowser ? 3 : 12;
 
@@ -18,22 +16,11 @@ function ArticleContainer(props) {
     fetchArticles();
   }, []);
 
-  const fetchArticles = async (topicArg = topic) => {
+  const fetchArticles = async () => {
 
-    const top = topicArg === 'Recent News' ? 'everything' : 'top-headlines';
-    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/${top}`).then(r => r.json())
+    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/everything`).then(r => r.json());
 
-    console.log(json.articles)
     setArticles(json.articles)
-  }
-
-  const handleChange = async (event, change) => {
-
-    const tempTopic = change === 'Recent' ? 'everything' : 'top-headlines';
-    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/${tempTopic}`).then(r => r.json());
-
-    setArticles(json.articles);
-    setTopic(tempTopic);
   }
 
   const saveArticle = (article) => {
@@ -65,22 +52,8 @@ function ArticleContainer(props) {
   return (
     <main className={classes.main}>
       <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
-        {(user) ?
-          <Tabs
-            value={topic}
-            onChange={handleChange}
-            variant='fullWidth'
-            indicatorColor='secondary'
-            textColor='secondary'
-          >
-            <Tab icon={<NotificationImportant />} value={'Headlines'} label='Headlines' />
-            <Tab icon={<AccessTime />} value={'Recent'} label='Recent' />
-          </Tabs>
-        :
-          null
-        }
         <Typography variant='h2' align='center' gutterBottom>
-          {topic}
+          Recent News
         </Typography>
         <Divider />
         <Grid container spacing={10}>
@@ -99,7 +72,7 @@ function ArticleContainer(props) {
   );
 }
 
-const styles = theme => console.log(theme) || ({
+const styles = theme => ({
 
   main: {
     width: 'auto',
