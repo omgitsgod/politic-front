@@ -8,7 +8,7 @@ import BillCard from './BillCard';
 import Pol2 from './Pol2';
 
 
-function Bills(props) {
+function BillContainer(props) {
 
   const [bills, setBills] = useState([]);
   const [tab, setTab] = useState('Recent');
@@ -72,7 +72,7 @@ function Bills(props) {
   );
 }
 
-Bills.propTypes = {
+BillContainer.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -105,4 +105,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(Bills);
+export default withStyles(styles)(BillContainer);
