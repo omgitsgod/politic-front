@@ -5,7 +5,7 @@ import { Tab, Tabs, Grid, Paper } from '@material-ui/core';
 import { isBrowser } from 'react-device-detect';
 import { Info } from '@material-ui/icons';
 import BillCard from './BillCard';
-import Pol2 from './Pol2';
+import Politician from './Politician';
 
 
 function BillContainer(props) {
@@ -65,7 +65,7 @@ function BillContainer(props) {
         </Paper>
       :
         <Paper className={classes.paper} style={{background: 'transparent', boxShadow: 'none'}}>
-          <Pol2 id={fed} handlePol={handlePol}/>
+          <Politician fed={fed} data={fed.data} handlePol={handlePol}/>
         </Paper>
       }
     </main>

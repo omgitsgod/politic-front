@@ -5,7 +5,7 @@ import { Tab, Tabs, Grid, Paper } from '@material-ui/core';
 import { isBrowser} from 'react-device-detect';
 import { Info } from '@material-ui/icons';
 import EventCard from './EventCard';
-import Pol2 from './Pol2';
+import Politician from './Politician';
 
 
 function EventContainer(props) {
@@ -65,7 +65,7 @@ function EventContainer(props) {
         </Paper>
       :
         <Paper>
-          <Pol2 id={fed} handlePol={handlePol} />
+          <Politician fed={fed} data={fed.data} handlePol={handlePol}/>
         </Paper>
       }
     </main>
