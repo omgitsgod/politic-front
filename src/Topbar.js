@@ -35,7 +35,7 @@ function MenuAppBar(props) {
         <AppBar position='fixed' style={{ background: 'transparent', boxShadow: 'none'}}>
           <Toolbar>
             {(logged) ? 
-              <IconButton className={classes.menuButton} onClick={toggleDrawer('left', true)}  color='secondary' aria-label='Menu'>
+              <IconButton className={classes.menuButton} onClick={toggleDrawer('left', true)} onMouseOver={toggleDrawer('left', true)}  color='secondary' aria-label='Menu'>
                 <AccountBalance />
               </IconButton>
             :
