@@ -23,7 +23,7 @@ function VoteContainer(props) {
 
   const fetchVotes = async () => {
 
-    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/recent`).then(r => r.json());
+    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/votes/recent`).then(r => r.json());
 
     setVotes(json.results.votes);
   }
@@ -53,8 +53,8 @@ function VoteContainer(props) {
           </Tabs>
           <Grid container spacing={10}>
             <Grid container spacing={10} justify='center'>
-              {votes ? votes.map(vote => 
-                <Grid item xs={gridNum}> 
+              {votes ? votes.map((vote, i) => 
+                <Grid item xs={gridNum} key={i}> 
                   <VoteCard vote={vote} handlePol={handlePol} /> 
                 </Grid>) 
               : 
