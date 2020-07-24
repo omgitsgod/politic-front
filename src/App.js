@@ -15,15 +15,11 @@ import SavedArts from './SavedArts';
 import ww2_and_wash_mount from './ww2_and_wash_mount.mp4';
 
 
-
-
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
-  const [zip, setZip] = useState('');
   const [id, setId] = useState(0);
-  const [address, setAddress] = useState('');
 
   const handleUser = (user) => {
 
@@ -36,20 +32,7 @@ function App() {
     }
   }
 
-  const handleZip = async (position) => {
-
-    const { latitude, longitude } = position.coords;
-    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/zip/${latitude}/${longitude}`).then(r => r.json());
-    const location = json.Response.View[0].Result[0].Location.Address;
-    const addy = `${location.HouseNumber}%20${location.Street}%20${location.PostalCode}`.split(' ').join('%20');
-
-    setZip(location.PostalCode);
-    setAddress(addy);
-  }
-
   useEffect(() => {
-
-    navigator.geolocation.getCurrentPosition(handleZip)
     
     if (user.user) {
     setId(user.user.id)
@@ -67,7 +50,7 @@ function App() {
           {(loggedIn) ?
             <ActionCableProvider url={`${process.env.REACT_APP_API_WS_ROOT}${user.jwt}`}>
               <Route exact path='/events' component={EventContainer} />
-              <Route path='/people' render={(props)=><PoliticianContainer {...props} user={user} handleUser={handleUser} address={address} zip={zip}/>}/>
+              <Route path='/people' render={(props)=><PoliticianContainer {...props} user={user} handleUser={handleUser} />} />
               <Route path='/news' render={(props)=><ArticleContainer {...props} user={user} id={id} handleUser={handleUser}/>}/>
               <Route path='/savedarts' render={(props)=><SavedArts {...props} user={user} handleUser={handleUser}/>}/>
               <Route path='/chat' render={(props)=><Chat {...props} user={user} handleUser={handleUser}/>}/>
@@ -83,6 +66,7 @@ function App() {
               <Route exact path='/bills' component={BillContainer} />
               <Route exact path='/votes' component={VoteContainer} />
               <Route exact path='/' component={ArticleContainer} />
+              <Route path='/people' render={(props)=><PoliticianContainer {...props} user={user} handleUser={handleUser}/>}/>
               <Route path='/signin' render={(props)=><SignIn {...props} handleUser={handleUser}/>}/>
               <Route path='/signup' render={(props)=><SignUp {...props} handleUser={handleUser}/>}/>
             </>
