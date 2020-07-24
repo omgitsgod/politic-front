@@ -34,13 +34,11 @@ function MenuAppBar(props) {
       <div className={classes.root}>
         <AppBar position='fixed' style={{ background: 'transparent', boxShadow: 'none'}}>
           <Toolbar>
-            {(logged) ? 
+
               <IconButton className={classes.menuButton} onClick={toggleDrawer('left', true)} onMouseOver={toggleDrawer('left', true)}  color='secondary' aria-label='Menu'>
                 <AccountBalance />
               </IconButton>
-            :
-              ''
-            }
+ 
             <Typography variant='h6' color='inherit' align='left' className={classes.grow}>
               <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>  politic </Link>
             </Typography>
@@ -171,7 +169,7 @@ function MenuAppBar(props) {
                       <ListItemIcon>
                         <People />
                       </ListItemIcon>
-                      <ListItemText primary='Pols' />
+                      <ListItemText primary='Politicians' />
                     </ListItem>
                   </Link>
                   <Link to='/events' style={{ textDecoration: 'none', color: 'white' }}>
@@ -210,6 +208,47 @@ function MenuAppBar(props) {
                     <ListItemText primary='Home' />
                   </ListItem>
                 </Link>
+                <Link to='/news' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <LineWeight />
+                      </ListItemIcon>
+                      <ListItemText primary='News' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/bills' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <CreditCard />
+                      </ListItemIcon>
+                      <ListItemText primary='Bills' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/votes' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <HowToVote />
+                      </ListItemIcon>
+                      <ListItemText primary='Votes' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/people' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <People />
+                      </ListItemIcon>
+                      <ListItemText primary='Politicians' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/events' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <Event />
+                      </ListItemIcon>
+                      <ListItemText primary='Events' />
+                    </ListItem>
+                  </Link>
+                  <Divider />
                 <Link to='/signin' style={{ textDecoration: 'none', color: 'white' }}>
                   <ListItem button>
                     <ListItemIcon>
