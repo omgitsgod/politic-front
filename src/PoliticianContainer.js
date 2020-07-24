@@ -40,21 +40,21 @@ function PoliticanContainer(props) {
 
   useEffect(() => {
 
+  //  handleZipOpen()
     fetchReps();
   }, [zip]);
   
   return (
     <main className={classes.main}>
-      {zip && fed.length === 0 && feds.length > 0 ? 
+      {zip ?
+      fed.length === 0 && feds.length > 0 ? 
         <PoliticianList feds={feds} gridNum={gridNum} handlePol={handlePol} />
       : 
+        <Politician fed={fed} handlePol={handlePol} data={fed.data} />
+      
+      :
         <ZipCodeModal open={openZip} setOpen={setOpenZip} setZip={setZip} fetchReps={fetchReps} />
-      }
-      {fed.length > 0  ? 
-        <Politician fed={fed} handlePol={handlePol} data={fed.data} /> 
-      : 
-        null
-      }
+    }
     </main>
   );
 }
