@@ -7,6 +7,7 @@ import PoliticianContainer from './PoliticianContainer';
 import BillContainer from './BillContainer';
 import VoteContainer from './VoteContainer';
 import EventContainer from './EventContainer';
+import PoliticianSearch from './PoliticianSearch';
 import TopBar from './Topbar';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
@@ -50,6 +51,7 @@ function App() {
           {(loggedIn) ?
             <ActionCableProvider url={`${process.env.REACT_APP_API_WS_ROOT}${user.jwt}`}>
               <Route exact path='/events' component={EventContainer} />
+              <Route exact path='/search' component={PoliticianSearch} />
               <Route path='/people' render={(props)=><PoliticianContainer {...props} user={user} handleUser={handleUser} />} />
               <Route path='/news' render={(props)=><ArticleContainer {...props} user={user} id={id} handleUser={handleUser}/>}/>
               <Route path='/savedarts' render={(props)=><SavedArts {...props} user={user} handleUser={handleUser}/>}/>
@@ -66,6 +68,7 @@ function App() {
               <Route exact path='/bills' component={BillContainer} />
               <Route exact path='/votes' component={VoteContainer} />
               <Route exact path='/' component={ArticleContainer} />
+              <Route exact path='/search' component={PoliticianSearch} />
               <Route path='/people' render={(props)=><PoliticianContainer {...props} user={user} handleUser={handleUser}/>}/>
               <Route path='/signin' render={(props)=><SignIn {...props} handleUser={handleUser}/>}/>
               <Route path='/signup' render={(props)=><SignUp {...props} handleUser={handleUser}/>}/>
