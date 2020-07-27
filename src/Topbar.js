@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Icon, IconButton, MenuItem, Menu, Button, Drawer, List, ListItemText, Divider, ListItem, ListItemIcon } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import MailIcon from '@material-ui/icons/Mail';
-import { Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star, CreditCard, HowToVote, Event, People, AccountCircle } from '@material-ui/icons'
+import { Home, AccountBalance, LineWeight, Chat, LockOpen, Create, Star, Search, CreditCard, HowToVote, Event, People, AccountCircle } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 
 
@@ -34,11 +34,9 @@ function MenuAppBar(props) {
       <div className={classes.root}>
         <AppBar position='fixed' style={{ background: 'transparent', boxShadow: 'none'}}>
           <Toolbar>
-
-              <IconButton className={classes.menuButton} onClick={toggleDrawer('left', true)} onMouseOver={toggleDrawer('left', true)}  color='secondary' aria-label='Menu'>
-                <AccountBalance />
-              </IconButton>
- 
+            <IconButton className={classes.menuButton} onClick={toggleDrawer('left', true)} onMouseOver={toggleDrawer('left', true)}  color='secondary' aria-label='Menu'>
+              <AccountBalance />
+            </IconButton>
             <Typography variant='h6' color='inherit' align='left' className={classes.grow}>
               <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>  politic </Link>
             </Typography>
@@ -169,7 +167,15 @@ function MenuAppBar(props) {
                       <ListItemIcon>
                         <People />
                       </ListItemIcon>
-                      <ListItemText primary='Politicians' />
+                      <ListItemText primary='My Politicians' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/search' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <Search />
+                      </ListItemIcon>
+                      <ListItemText primary='Search Politicians' />
                     </ListItem>
                   </Link>
                   <Link to='/events' style={{ textDecoration: 'none', color: 'white' }}>
@@ -237,7 +243,15 @@ function MenuAppBar(props) {
                       <ListItemIcon>
                         <People />
                       </ListItemIcon>
-                      <ListItemText primary='Politicians' />
+                      <ListItemText primary='My Politicians' />
+                    </ListItem>
+                  </Link>
+                  <Link to='/search' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <Search />
+                      </ListItemIcon>
+                      <ListItemText primary='Search Politicians' />
                     </ListItem>
                   </Link>
                   <Link to='/events' style={{ textDecoration: 'none', color: 'white' }}>
