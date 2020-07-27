@@ -40,7 +40,6 @@ function PoliticanContainer(props) {
 
   useEffect(() => {
 
-  //  handleZipOpen()
     fetchReps();
   }, [zip]);
   
@@ -59,7 +58,7 @@ function PoliticanContainer(props) {
   );
 }
 
-const styles = theme => console.log(theme) || ({
+const styles = theme => ({
 
   main: {
     width: 'auto',
