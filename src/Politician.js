@@ -76,7 +76,7 @@ function Politician(props) {
 
   const handleBills = async () => {
 
-    const id = data.id.bioguide;
+    const id = data ? data.id.bioguide : fed.id.bioguide;
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/bills/${id}`).then(r => r.json());
 
     setBills(json.results[0].bills);
@@ -85,7 +85,7 @@ function Politician(props) {
 
   const handleVotes = async () => {
 
-    const id = data.id.bioguide;
+    const id = data ? data.id.bioguide : fed.id.bioguide;
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/votes/${id}`).then(r => r.json());
 
     setVote(json.results[0].votes);
@@ -94,7 +94,7 @@ function Politician(props) {
 
   const handleFinances = async () => {
 
-    const id = data.id.opensecrets;
+    const id = data ? data.id.opensecrets : fed.id.opensecrets;
     console.log(id)
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/finance/${id}/memPFDprofile&year=2014&output=json`).then(r => r.json());
     const json2 = await fetch(`${process.env.REACT_APP_BACK_HOST}/finance/${id}/candSummary&output=json`).then(r => r.json());
@@ -107,7 +107,7 @@ function Politician(props) {
 
   const handleEvents = async () => {
     
-    const id = data.id.opensecrets;
+    const id = data ? data.id.opensecrets : fed.id.opensecrets;
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/events/${id}`).then(r => r.json());
 
     setEvents(json.objects);
@@ -116,7 +116,7 @@ function Politician(props) {
 
   const handleContribs = async () => {
 
-    const id = data.id.opensecrets;
+    const id = data ? data.id.opensecrets : fed.id.opensecrets;
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/finance/${id}/candContrib&output=json`).then(r => r.json());
 
     console.log(json)
@@ -126,7 +126,7 @@ function Politician(props) {
 
   const handleIndustry = async () => {
 
-    const id = data.id.opensecrets;
+    const id = data ? data.id.opensecrets : fed.id.opensecrets;
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/finance/${id}/candIndustry&output=json&cycle=2020`).then(r => r.json());
     setIndustry(json.response.industries.industry);
     setView('industry');
@@ -135,7 +135,7 @@ function Politician(props) {
   const fetchCongress = async () => {
     
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/congress`).then(r => r.json());
-    const repIDS = json.filter(rep => rep.id.bioguide === data.id.bioguide)[0]
+    const repIDS = json.filter(rep => rep.id.bioguide === (fed.id.bioguide || data.id.bioguide))[0]
     console.log(json)
     console.log(repIDS)
     if (repIDS) {
