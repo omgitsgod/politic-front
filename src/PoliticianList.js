@@ -6,18 +6,22 @@ import PoliticianCard from './PoliticianCard';
 
 function PoliticianList(props) {
 
-    const { classes, feds, gridNum, handlePol } = props;
+    const { classes, feds, gridNum, handlePol, search } = props;
 
     return (
         <Paper className={classes.paper} style={{ background: 'transparent', boxShadow: 'none' }}>
-            <Typography variant='h2' align='center' gutterBottom>
-                Politicians
-            </Typography>
+            {search ?
+                null
+            :
+                <Typography variant='h2' align='center' gutterBottom>
+                    Politicians
+                </Typography>
+            }
             <Divider />
             <Grid container spacing={10}>
                 <Grid container spacing={10} justify='center'>
                     {feds ? feds.map(fed => (
-                        <Grid item xs={gridNum} key={fed.name}>
+                        <Grid item xs={gridNum} key={fed.search ? fed.name.official_full : fed.name}>
                             <PoliticianCard fed={fed} handlePol={handlePol} />
                         </Grid>))  
                     : 
