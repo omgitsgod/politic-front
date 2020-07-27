@@ -19,14 +19,14 @@ function PoliticianProfile(props) {
         }
         <CardContent>
           <Typography gutterBottom variant='h3' component='h2'>
-            {fed.name}
+            {fed.search ? fed.name.official_full : fed.name}
           </Typography>
           <Typography component='p' align='right'>
-            {fed.party}
+            {fed.search ? fed.terms[fed.terms.length - 1].party : fed.party}
           </Typography>
         </CardContent>
       </CardActionArea>
-      {data.id ? 
+      {fed.id || data.id ? 
         <CardActions>
           <Button size='small' color='primary' onClick={handleFinances}>
             <Typography component='p' color='secondary'>
