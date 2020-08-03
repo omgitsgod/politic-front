@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, Typography, Grid, Divider,  } from '@material-ui/core';
+import { Paper, Typography, Grid, Divider, CircularProgress } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ArticleCard from './ArticleCard';
 import { isBrowser } from 'react-device-detect';
@@ -58,12 +58,12 @@ function ArticleContainer(props) {
         <Divider />
         <Grid container spacing={10}>
           <Grid container spacing={10} justify='center'>
-            {articles ? articles.map((article, i) =>
+            {articles && articles.length > 0 ? articles.map((article, i) =>
               <Grid item xs={gridNum} key={i}>
                 <ArticleCard save={user ? saveArticle : null} key={i} article={article}/> 
               </Grid>) 
-            : 
-              null
+            :
+              <CircularProgress className={classes.loading}size={200} />
             }
           </Grid>
         </Grid>
@@ -95,6 +95,9 @@ const styles = theme => ({
   thumbnail: {
     height: 100,
     width: 100,
+  },
+  loading: {
+    marginTop: '20%',
   },
 });
 
