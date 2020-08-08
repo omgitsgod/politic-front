@@ -13,7 +13,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Chat from './Chat';
 import SavedArts from './SavedArts';
-import washington from './washington.m4v';
+import washington from './washington.mp4';
 
 
 function App() {
