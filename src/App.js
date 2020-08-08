@@ -13,7 +13,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Chat from './Chat';
 import SavedArts from './SavedArts';
-import ww2_and_wash_mount from './ww2_and_wash_mount.mp4';
+import washington from './washington.m4v';
 
 
 function App() {
@@ -43,8 +43,8 @@ function App() {
   return (
       <div className='App'>
         <video className='myVideo' loop autoPlay muted>
-          <source src={ww2_and_wash_mount} type='video/mp4' />
-          <source src={ww2_and_wash_mount} type='video/ogg' />
+          <source src={washington} type='video/mp4' />
+          <source src={washington} type='video/ogg' />
           Your browser does not support the video tag.
         </video>
         <TopBar logged={loggedIn} handleUser={handleUser}/>
