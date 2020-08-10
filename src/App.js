@@ -68,6 +68,7 @@ function App() {
               <Route exact path='/bills' component={BillContainer} />
               <Route exact path='/votes' component={VoteContainer} />
               <Route exact path='/' component={ArticleContainer} />
+              <Route exact path='/news' component={ArticleContainer} />
               <Route exact path='/search' component={PoliticianSearch} />
               <Route path='/people' render={(props)=><PoliticianContainer {...props} user={user} handleUser={handleUser}/>}/>
               <Route path='/signin' render={(props)=><SignIn {...props} handleUser={handleUser}/>}/>
