@@ -95,11 +95,9 @@ function Politician(props) {
   const handleFinances = async () => {
 
     const id = data ? data.id.opensecrets : fed.id.opensecrets;
-    console.log(id)
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/finance/${id}/memPFDprofile&year=2014&output=json`).then(r => r.json());
     const json2 = await fetch(`${process.env.REACT_APP_BACK_HOST}/finance/${id}/candSummary&output=json`).then(r => r.json());
 
-    console.log(json)
     setFinance(json.response.member_profile);
     setCycle(json2.response.summary['@attributes']);
     setView('finance');
@@ -119,7 +117,6 @@ function Politician(props) {
     const id = data ? data.id.opensecrets : fed.id.opensecrets;
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/finance/${id}/candContrib&output=json`).then(r => r.json());
 
-    console.log(json)
     setContribs(json.response.contributors.contributor);
     setView('contribs');
   }
@@ -135,9 +132,7 @@ function Politician(props) {
   const fetchCongress = async () => {
     
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/congress`).then(r => r.json());
-    const repIDS = json.filter(rep => rep.id.bioguide === (fed.id.bioguide || data.id.bioguide))[0]
-    console.log(json)
-    console.log(repIDS)
+    const repIDS = json.filter(rep => rep.id.bioguide === (data ? data.id.bioguide : fed.id.bioguide))[0]
     if (repIDS) {
       const name = repIDS.id.wikipedia.split(' ').join('%20')
       const news = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/pol/${name}`).then(r => r.json());
@@ -146,14 +141,12 @@ function Politician(props) {
       setArticles(news.articles);
     } else {
       const name = fed.name.split(' ').join('%20');
-      console.log(fed.name)
-      console.log(name);
       const news = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/pol/${name}`).then(r => r.json());
 
       setArticles(news);
     }
   }
-  console.log(data)
+
   useEffect(() => {
 
     fetchCongress();
