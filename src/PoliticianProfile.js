@@ -11,7 +11,7 @@ function PoliticianProfile(props) {
 
   return (
     <>
-      <CardActionArea>
+      <CardActionArea classes={{ root: classes.actionArea, focusHighlight: classes.focusHighlight }}>
         {fed.photoUrl ? 
           <img src={fed.photoUrl} className={classes.media} alt='Headshot' />
         : 
@@ -58,7 +58,9 @@ function PoliticianProfile(props) {
       : 
         null
       }
-      <CardActionArea>{handleView()}</CardActionArea>:
+      <CardActionArea classes={{ root: classes.actionArea, focusHighlight: classes.focusHighlight }}>
+        {handleView()}
+      </CardActionArea>:
     </>
   );
 }
@@ -68,10 +70,15 @@ PoliticianProfile.propTypes = {
 };
 
 const styles = (theme) => ({
-
   media: {
     height: 200,
   },
+  actionArea: {
+    '&:hover $focusHighlight': {
+      opacity: 0,
+    },
+  },
+  focusHighlight: {},
 });
 
 export default withStyles(styles)(PoliticianProfile);
