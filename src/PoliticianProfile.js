@@ -58,9 +58,9 @@ function PoliticianProfile(props) {
       : 
         null
       }
-      <CardActionArea classes={{ root: classes.actionArea, focusHighlight: classes.focusHighlight }}>
+      <>
         {handleView()}
-      </CardActionArea>:
+      </>
     </>
   );
 }
