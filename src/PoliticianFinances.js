@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography, Paper } from '@material-ui/core';
 import FinanceTable from './FinanceTable';
 
 
@@ -8,7 +8,7 @@ function PoliticianFinances(props) {
   const { finance, cycle } = props;
 
   return (
-    <>
+    <Paper style={{background: 'transparent', boxShadow: 'none', width: '100%'}}>
       <Typography component='p' align='right'>
         First Elected: {cycle.first_elected}
       </Typography>
@@ -30,7 +30,7 @@ function PoliticianFinances(props) {
         Assets
       </Typography>
       <FinanceTable assets={finance.assets.asset} />
-    </>
+    </Paper>
   );
 }
 
