@@ -17,7 +17,6 @@ function PoliticanContainer(props) {
 
   const handlePol = (pol) => {
 
-    console.log(pol)
     pol === 'Back' ? setFed('') : setFed(pol);
   }
   
@@ -34,8 +33,6 @@ function PoliticanContainer(props) {
     const state = json.normalizedInput.state;
     
     setFeds(officials);
-    console.log(officials)
-    console.log(state)
   }
 
   useEffect(() => {
