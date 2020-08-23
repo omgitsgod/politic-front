@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Tab, Tabs, Grid, Paper } from '@material-ui/core';
+import { CircularProgress, Tab, Tabs, Grid, Paper } from '@material-ui/core';
 import { isBrowser} from 'react-device-detect';
 import { Info } from '@material-ui/icons';
 import EventCard from './EventCard';
@@ -53,12 +53,12 @@ function EventContainer(props) {
           </Tabs>
           <Grid container spacing={10}>
             <Grid container spacing={10} justify='center'>
-              {events ? events.map(event => 
+              {events && events.length > 0 ? events.map(event => 
                 <Grid item xs={gridNum} key={event.id}> 
                   <EventCard event={event} /> 
                 </Grid>) 
               : 
-                null
+                <CircularProgress className={classes.loading}size={200} />
               }
             </Grid>
           </Grid>
@@ -102,6 +102,9 @@ const styles = (theme) => ({
   },
   media: {
     height: 200,
+  },
+  loading: {
+    marginTop: '20%',
   },
 });
 
