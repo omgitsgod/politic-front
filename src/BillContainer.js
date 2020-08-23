@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Tab, Tabs, Grid, Paper } from '@material-ui/core';
+import { CircularProgress ,Tab, Tabs, Grid, Paper } from '@material-ui/core';
 import { isBrowser } from 'react-device-detect';
 import { Info } from '@material-ui/icons';
 import BillCard from './BillCard';
@@ -53,12 +53,12 @@ function BillContainer(props) {
           </Tabs>
           <Grid container spacing={10}>
             <Grid container spacing={10} justify='center'>
-              {bills ? bills.map(bill => 
+              {bills && bills.length > 0 ? bills.map(bill => 
                 <Grid item xs={gridNum} key={bill.bill_id}> 
                   <BillCard bill={bill} handlePol={handlePol} /> 
                 </Grid>) 
               : 
-                null
+                <CircularProgress className={classes.loading}size={200} />
               }
             </Grid>
           </Grid>
@@ -102,6 +102,9 @@ const styles = (theme) => ({
   },
   media: {
     height: 200,
+  },
+  loading: {
+    marginTop: '20%',
   },
 });
 
