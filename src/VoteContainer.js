@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Tab, Tabs, Grid, Paper } from '@material-ui/core';
+import { CircularProgress, Tab, Tabs, Grid, Paper } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
 import { isBrowser } from 'react-device-detect';
 import VoteCard from './VoteCard';
@@ -53,12 +53,12 @@ function VoteContainer(props) {
           </Tabs>
           <Grid container spacing={10}>
             <Grid container spacing={10} justify='center'>
-              {votes ? votes.map((vote, i) => 
+              {votes && votes.length > 0 ? votes.map((vote, i) => 
                 <Grid item xs={gridNum} key={i}> 
                   <VoteCard vote={vote} handlePol={handlePol} /> 
                 </Grid>) 
               : 
-                null
+                <CircularProgress className={classes.loading}size={200} />
               }
             </Grid>
           </Grid>
@@ -102,6 +102,9 @@ const styles = (theme) => ({
   },
   media: {
     height: 200,
+  },
+  loading: {
+    marginTop: '20%',
   },
 });
 
