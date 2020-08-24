@@ -29,29 +29,33 @@ function PoliticianProfile(props) {
       {fed.id || data.id ? 
         <CardActions>
           <Button size='small' color='primary' onClick={handleFinances}>
-            <Typography component='p' color='secondary'>
-              My Finances
+            <Typography variant='h6' color='primary'>
+              <b>Finances</b>
             </Typography>
           </Button>
           <Button size='small' color='primary' onClick={handleVotes}>
-            How do I vote?
+            <Typography variant='h6' color='primary'>
+              <b>Votes</b>
+            </Typography>
           </Button>
           <Button size='small' color='primary' onClick={handleContribs}>
-            <Typography component='p' color='secondary'>
-              Contributors
+            <Typography variant='h6' color='primary'>
+              <b>Contributors</b>
             </Typography>
           </Button>
           <Button size='small' color='primary' onClick={handleBills}>
-            Bills Ive Sponsered
+            <Typography variant='h6' color='primary'>
+              <b>Bills</b>
+            </Typography>
           </Button>
           <Button size='small' color='primary' onClick={handleEvents}>
-            <Typography component='p' color='secondary'>
-              Events
+            <Typography variant='h6' color='primary'>
+              <b>Events</b>
             </Typography>
           </Button>
           <Button size='small' color='primary' onClick={handleIndustry}>
-            <Typography component='p' color='secondary'>
-              Which Industries Own Me
+            <Typography variant='h6' color='primary'>
+              <b>Industries</b>
             </Typography>
           </Button>
         </CardActions>
