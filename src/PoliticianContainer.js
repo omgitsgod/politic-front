@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { CircularProgress } from '@material-ui/core';
 import PoliticianList from './PoliticianList';
 import Politician from './Politician';
 import ZipCodeModal from './ZipCodeModal';
@@ -38,16 +39,18 @@ function PoliticanContainer(props) {
   useEffect(() => {
 
     fetchReps();
-  }, [zip]);
-  
+  }, [zip, fed]);
+  console.log(fed)
   return (
     <main className={classes.main}>
       {zip ?
       fed.length === 0 && feds.length > 0 ? 
         <PoliticianList feds={feds} gridNum={gridNum} handlePol={handlePol} />
       : 
-        <Politician fed={fed} handlePol={handlePol} data={fed.data} />
-      
+        fed && fed.name.length > 0 ?
+          <Politician fed={fed} handlePol={handlePol} data={fed.data} />
+        :
+          <CircularProgress className={classes.loading}size={200} />
       :
         <ZipCodeModal open={openZip} setOpen={setOpenZip} setZip={setZip} fetchReps={fetchReps} />
     }
@@ -78,6 +81,9 @@ const styles = theme => ({
   thumbnail: {
     height: 100,
     width: 100,
+  },
+  loading: {
+    marginTop: '20%',
   },
 });
 
