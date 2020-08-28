@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { CircularProgress ,Tab, Tabs, Grid, Paper } from '@material-ui/core';
+import { CircularProgress, Tab, Tabs, Grid, Paper } from '@material-ui/core';
 import { isBrowser } from 'react-device-detect';
 import { Info } from '@material-ui/icons';
 import BillCard from './BillCard';
