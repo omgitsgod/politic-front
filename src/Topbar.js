@@ -162,6 +162,14 @@ function MenuAppBar(props) {
                       <ListItemText primary='Votes' />
                     </ListItem>
                   </Link>
+                  <Link to='/events' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <Event />
+                      </ListItemIcon>
+                      <ListItemText primary='Events' />
+                    </ListItem>
+                  </Link>
                   <Link to='/people' style={{ textDecoration: 'none', color: 'white' }}>
                     <ListItem button>
                       <ListItemIcon>
@@ -176,14 +184,6 @@ function MenuAppBar(props) {
                         <Search />
                       </ListItemIcon>
                       <ListItemText primary='Search Politicians' />
-                    </ListItem>
-                  </Link>
-                  <Link to='/events' style={{ textDecoration: 'none', color: 'white' }}>
-                    <ListItem button>
-                      <ListItemIcon>
-                        <Event />
-                      </ListItemIcon>
-                      <ListItemText primary='Events' />
                     </ListItem>
                   </Link>
                   <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
@@ -238,6 +238,14 @@ function MenuAppBar(props) {
                       <ListItemText primary='Votes' />
                     </ListItem>
                   </Link>
+                  <Link to='/events' style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <Event />
+                      </ListItemIcon>
+                      <ListItemText primary='Events' />
+                    </ListItem>
+                  </Link>
                   <Link to='/people' style={{ textDecoration: 'none', color: 'white' }}>
                     <ListItem button>
                       <ListItemIcon>
@@ -252,14 +260,6 @@ function MenuAppBar(props) {
                         <Search />
                       </ListItemIcon>
                       <ListItemText primary='Search Politicians' />
-                    </ListItem>
-                  </Link>
-                  <Link to='/events' style={{ textDecoration: 'none', color: 'white' }}>
-                    <ListItem button>
-                      <ListItemIcon>
-                        <Event />
-                      </ListItemIcon>
-                      <ListItemText primary='Events' />
                     </ListItem>
                   </Link>
                   <Divider />
