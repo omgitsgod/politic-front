@@ -11,7 +11,7 @@ function PoliticanContainer(props) {
   
   const [feds, setFeds] = useState([]);
   const [openZip, setOpenZip] = useState(true);
-  const [zip, setZip] = useState();
+  const [zip, setZip] = useState(localStorage.getItem('zip') ? localStorage.getItem('zip') : null);
   const [fed, setFed] = useState('');
   const { classes } = props;
   const gridNum = isBrowser ? 3 : 12;
@@ -25,7 +25,6 @@ function PoliticanContainer(props) {
     
     setOpenZip(true);
   }
-
   const fetchReps = async () => {
 
     const actionZip = zip || 10005;
@@ -34,6 +33,11 @@ function PoliticanContainer(props) {
     const state = json.normalizedInput.state;
     
     setFeds(officials);
+  }
+
+  const handleSetZip = (inputedZip) => {
+    localStorage.setItem('zip', inputedZip)
+    setZip(inputedZip)
   }
 
   useEffect(() => {
@@ -52,7 +56,7 @@ function PoliticanContainer(props) {
         :
           <CircularProgress className={classes.loading}size={200} />
       :
-        <ZipCodeModal open={openZip} setOpen={setOpenZip} setZip={setZip} fetchReps={fetchReps} />
+        <ZipCodeModal open={openZip} setOpen={setOpenZip} setZip={handleSetZip} fetchReps={fetchReps} />
     }
     </main>
   );
