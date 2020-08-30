@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Card, CardActionArea, CardContent, Typography } from '@material-ui/core';
+import { Card, CardActionArea, CardContent, Typography, Icon, Divider } from '@material-ui/core';
+import HowToVote from '@material-ui/icons/HowToVote';
 
 
 function VoteCard(props) {
 
   const { classes, vote } = props;
-
+  console.log(vote)
   return (
     <Card className={classes.card}
       style={{ opacity: '.7', boxShadow: 'none'}}
@@ -15,65 +16,54 @@ function VoteCard(props) {
     >
       <CardActionArea>
         <CardContent>
-          {(vote.url) ?
-            <a target='blank' href={vote.url} style={{ textDecoration: 'none', color: 'white' }}>
-              <Typography gutterBottom variant='h5' component='p'>
-                {vote.bill.title}
-              </Typography>
-              <Typography gutterBottom variant='h6' component='p'>
-                {vote.question}?
-              </Typography>
-
-            </a>
-          :
-            <div>
-              <Typography gutterBottom variant='h5' component='p'>
-                {vote.bill.title}
-              </Typography>
-              <Typography gutterBottom variant='h6' component='p'>
-                {vote.question}?
-              </Typography>
-            </div>
-          }
+          <a target='blank' href={vote.url ? vote.url : null} style={{ textDecoration: 'none', color: 'white' }}>
+            <Typography gutterBottom variant='h5' component='p'>
+              {vote.bill.number}
+            </Typography>
+            <br />
+            <Typography gutterBottom variant='h6' component='p'>
+              {vote.question}?
+            </Typography>
+          </a>
         </CardContent>
-        <br />
+        <Divider />
         <CardContent >
-          {(vote.democratic) ?
-            <div>
-              <Typography component='p' align='right' color='secondary'>
-                    Democrates Voted: {vote.democratic.majority_position}
-              </Typography>
-              <Typography component='p' align='right' color='error'>
-                  Republicans Voted: {vote.republican.majority_position}
-              </Typography>
-            </div>
-          :
-            null
-          }
+            <Typography gutterBottom align='right' component='p'>
+              {vote.bill.title ? vote.bill.title : null}
+            </Typography>
           {(vote.position) ?
-            <Typography variant='h6' align='right' color='secondary' >
+            <Typography variant='h6' align='left' color='primary' >
               I voted {vote.position}
             </Typography>
           :
             null
           }
-          <Typography variant='h5' align='right'  style={{color: 'green'}}>
-            Yay: {vote.total.yes}
+          <Typography variant='h6' align='right' color='white'>
+            Yea: {vote.total.yes}
           </Typography>
           <br />
-          <Typography variant='h5' align='right' color='error'>
+          <Typography variant='h6' align='right' color='primary'>
             Nay: {vote.total.no}
           </Typography>
           <br />
           {(vote.result === 'Passed') || (vote.result === 'Cloture on the Motion to Proceed Passed') || ('Motion to Proceed Agreed to') ?
-            <Typography variant='h5' align='center' color='secondary' >
+            <Typography variant='h5' align='center' color='white' >
               {vote.result}
             </Typography>
           :
-            <Typography variant='h5' align='center' color='error' >
+            <Typography variant='h5' align='center' color='primary' >
               {vote.result}
             </Typography>
           }
+          <a target='blank' href={vote.url ? vote.url : null} style={{ textDecoration: 'none', color: 'white' }}>
+            <Icon
+              color='secondary'
+              fontSize='large'
+              style={{ padding: 7, color: 'white' }}
+            >
+              <HowToVote fontSize='large'/>
+            </Icon>
+          </a>
           <br />
         </CardContent>
       </CardActionArea>
