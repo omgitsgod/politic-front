@@ -16,13 +16,31 @@ function PoliticianCard(props) {
     switch (type) {
       case 'rep':
         title = 'Representative';
-        break
+        break;
       case 'sen':
-        title = 'Senator'
-        break
+        title = 'Senator';
+        break;
       default:
-        title = ''
-        break
+        title = '';
+        break;
+    }
+
+    return title;
+  }
+
+  const mapParty = (type) => {
+    let title
+
+    switch(type) {
+      case 'Democratic Party':
+        title = 'Democrat';
+        break;
+      case 'Republican Party':
+        title = 'Republican';
+        break;
+      default:
+        title = type;
+        break;
     }
 
     return title;
@@ -38,19 +56,19 @@ function PoliticianCard(props) {
             <img src={unknownPhoto} className={classes.media} alt='Headshot' />
           )}
           <CardContent>
-            <Typography gutterBottom variant='h5' component='h2'>
+            <Typography gutterBottom variant='h6' component='h2'>
               {fed.name}
             </Typography>
             <Typography gutterBottom component='p' align='right'>
               {fed.office.name}
             </Typography>
-            {fed.party === 'Democratic' ? (
+            {fed.party !== 'Republican Party' ? (
               <Typography component='p' align='right' color='secondary'>
-                {fed.party}
+                {mapParty(fed.party)}
               </Typography>
             ) : (
               <Typography component='p' align='right' color='error'>
-                {fed.party}
+                {mapParty(fed.party)}
               </Typography>
             )}
           </CardContent>
@@ -105,6 +123,7 @@ const styles = (theme) => ({
     height: 400,
     maxWidth: 345,
     marginTop: theme.spacing(8),
+    border: '2px solid #000',
   },
   media: {
     height: 200,
