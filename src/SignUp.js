@@ -33,13 +33,13 @@ function SignUp(props) {
   }
 
   return (
-    <main className={classes.main}>
+    <main className={classes.main} style={{opacity: '.7', boxShadow: 'none'}} raised={true}>
       <Paper className={classes.paper} style={{ background: 'transparent', boxShadow: 'none'}}>
         <Avatar  className={classes.avatar}>
           <LockIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Sign up
+          Sign Up
         </Typography>
         <form
          className={classes.form}
@@ -89,6 +89,7 @@ const styles = theme => ({
       marginLeft: 'auto',
       marginRight: 'auto',
     },
+    backgroundColor: theme.palette.primary.dark
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -96,6 +97,7 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(3)}px`,
+    border: '2px solid #000',
   },
   avatar: {
     margin: theme.spacing(),
