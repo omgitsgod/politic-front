@@ -11,7 +11,7 @@ function PoliticanContainer(props) {
   
   const [feds, setFeds] = useState([]);
   const [openZip, setOpenZip] = useState(true);
-  const [zip, setZip] = useState(localStorage.getItem('zip') ? localStorage.getItem('zip') : null);
+  const [zip, setZip] = useState(localStorage.getItem('zip'));
   const [fed, setFed] = useState('');
   const { classes } = props;
   const gridNum = isBrowser ? 3 : 12;
@@ -36,28 +36,33 @@ function PoliticanContainer(props) {
   }
 
   const handleSetZip = (inputedZip) => {
-    localStorage.setItem('zip', inputedZip)
-    setZip(inputedZip)
+    if (inputedZip === 'reset') {
+      localStorage.removeItem('zip')
+      setZip(undefined);
+    } else {
+      localStorage.setItem('zip', inputedZip)
+      setZip(inputedZip)
+    }
   }
 
   useEffect(() => {
 
     fetchReps();
   }, [zip, fed]);
-  console.log(fed)
+
   return (
     <main className={classes.main}>
       {zip ?
-      fed.length === 0 && feds.length > 0 ? 
-        <PoliticianList feds={feds} gridNum={gridNum} handlePol={handlePol} />
-      : 
-        fed && fed.name.length > 0 ?
-          <Politician fed={fed} handlePol={handlePol} data={fed.data} />
-        :
-          <CircularProgress className={classes.loading}size={200} />
+        fed.length === 0 && feds.length > 0 ? 
+          <PoliticianList feds={feds} gridNum={gridNum} handlePol={handlePol} district='' setZip={handleSetZip}/>
+        : 
+          fed && fed.name.length > 0 ?
+            <Politician fed={fed} handlePol={handlePol} data={fed.data} />
+          :
+            <CircularProgress className={classes.loading}size={200} />
       :
         <ZipCodeModal open={openZip} setOpen={setOpenZip} setZip={handleSetZip} fetchReps={fetchReps} />
-    }
+      }
     </main>
   );
 }
