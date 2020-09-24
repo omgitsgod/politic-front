@@ -11,7 +11,6 @@ import PoliticianBills from './PoliticianBills';
 import PoliticianNews from './PoliticianNews';
 import PoliticianProfile from './PoliticianProfile';
 import PoliticianTabs from './PoliticianTabs';
-import { isBrowser } from 'react-device-detect';
 
 
 function Politician(props) {
@@ -28,7 +27,6 @@ function Politician(props) {
   const [bills, setBills] = useState();
   const [events, setEvents] = useState();
   const { classes, handlePol, fed, data } = props;
-  const gridNum = isBrowser ? 3 : 12;
 
   const handleChange = (event, change) => {
 
@@ -44,19 +42,19 @@ function Politician(props) {
 
     switch(view){
       case 'votes':
-        display = <PoliticianVotes votes={vote} gridNum={gridNum} handleBillPol={handleBillPol} />
+        display = <PoliticianVotes votes={vote} handleBillPol={handleBillPol} />
         break
         case 'finance': 
           display = <PoliticianFinances finance={finance} cycle={cycle} />
           break
         case 'bills':
-          display = <PoliticianBills bills={bills} gridNum={gridNum} handleBillPol={handleBillPol} />
+          display = <PoliticianBills bills={bills} handleBillPol={handleBillPol} />
           break
         case 'industry':
           display = <PoliticianIndustry industry={industry} />
           break
         case 'events':
-          display = <PoliticianEvents events={events} gridNum={gridNum} />
+          display = <PoliticianEvents events={events} />
           break
         case 'contribs':
           display = <PoliticianContributions contributions={contribs} />;
@@ -157,7 +155,7 @@ function Politician(props) {
       {tab === 'News' && articles.length > 0 ?
         <Paper className={classes.paper} style={{ background: 'transparent', boxShadow: 'none' }}>
           <PoliticianTabs tab={tab} handleChange={handleChange} />
-          <PoliticianNews articles={articles} gridNum={gridNum} />
+          <PoliticianNews articles={articles} />
         </Paper>
       :
         <Card className={classes.paper} style={{ background: 'transparent', boxShadow: 'none' }} raised={true}>
