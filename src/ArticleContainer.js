@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Paper, Typography, Grid, Divider, CircularProgress } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ArticleCard from './ArticleCard';
-import { isBrowser } from 'react-device-detect';
 
 
 function ArticleContainer(props) {
 
   const [articles, setArticles] = useState([]);
   const { classes, user } = props;
-  const gridNum = isBrowser ? 3 : 12;
 
   useEffect(() => {
 
@@ -56,16 +54,14 @@ function ArticleContainer(props) {
           Recent News
         </Typography>
         <Divider />
-        <Grid container spacing={10}>
-          <Grid container spacing={10} justify='center'>
-            {articles && articles.length > 0 ? articles.map((article, i) =>
-              <Grid item xs={gridNum} key={i}>
-                <ArticleCard save={user ? saveArticle : null} key={i} article={article}/> 
-              </Grid>) 
-            :
-              <CircularProgress className={classes.loading}size={200} />
-            }
-          </Grid>
+        <Grid container spacing={10} justify='center'>
+          {articles && articles.length > 0 ? articles.map((article, i) =>
+            <Grid item xs={12} sm={6} md={3} key={i}>
+              <ArticleCard save={user ? saveArticle : null} key={i} article={article}/> 
+            </Grid>) 
+          :
+            <CircularProgress className={classes.loading}size={200} />
+          }
         </Grid>
       </Paper>
     </main>
