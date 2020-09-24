@@ -5,7 +5,7 @@ import ContributionTable from './ContributionTable';
 
 function PoliticianContributions(props) {
 
-  const { contributions, classes } = props;
+  const { contributions } = props;
 
   return (
     <Paper style={{background: 'transparent', boxShadow: 'none', width: '100%'}}>
