@@ -7,7 +7,7 @@ import HighlightOff from '@material-ui/icons/HighlightOff';
 
 function PoliticianList(props) {
 
-  const { classes, feds, gridNum, handlePol, search, district, setZip } = props;
+  const { classes, feds, handlePol, search, district, setZip } = props;
 
   return (
     <Paper className={classes.paper} style={{ background: 'transparent', boxShadow: 'none' }}>
@@ -31,16 +31,14 @@ function PoliticianList(props) {
         </>
     	}
       <Divider />
-      <Grid container spacing={10}>
-        <Grid container spacing={10} justify='center'>
-          {feds ? feds.map(fed => (
-            <Grid item xs={gridNum} key={fed.search ? fed.name.official_full : fed.name}>
-              <PoliticianCard fed={fed} handlePol={handlePol} />
-            </Grid>))  
-          : 
-            null
-          }
-        </Grid>
+      <Grid container spacing={10} justify='center'>
+        {feds ? feds.map(fed => (
+          <Grid item xs={12} sm={6} md={3} key={fed.search ? fed.name.official_full : fed.name}>
+            <PoliticianCard fed={fed} handlePol={handlePol} />
+          </Grid>))  
+        : 
+          null
+        }
       </Grid>
   	</Paper>
   );
