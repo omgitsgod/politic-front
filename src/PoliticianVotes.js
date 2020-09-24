@@ -5,21 +5,19 @@ import VoteCard from './VoteCard';
 
 function PoliticianVotes(props) {
 
-  const { votes, gridNum, handleBillPol } = props;
+  const { votes, handleBillPol } = props;
 
   return (
     <Paper style={{background: 'transparent', boxShadow: 'none', width: '100%'}}>
       <Typography variant='h5' align='center'>
         Votes
       </Typography>
-      <Grid container spacing={10}>
-        <Grid container spacing={10} justify='center'>
-          {votes.map((vote, i) => (
-            <Grid item xs={gridNum} key={i}>
-              <VoteCard vote={vote} handlePol={handleBillPol} />
-            </Grid>
-          ))}
-        </Grid>
+      <Grid container spacing={10} justify='center'>
+        {votes.map((vote, i) => (
+          <Grid item xs={12} sm={6} md={3}  key={i}>
+            <VoteCard vote={vote} handlePol={handleBillPol} />
+          </Grid>
+        ))}
       </Grid>
     </Paper>
   );
