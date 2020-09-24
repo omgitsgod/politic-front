@@ -34,7 +34,7 @@ function MenuAppBar(props) {
       <div className={classes.root}>
         <AppBar position='fixed' style={{ background: 'transparent', boxShadow: 'none'}}>
           <Toolbar>
-            <IconButton className={classes.menuButton} onClick={toggleDrawer('left', true)} onMouseOver={toggleDrawer('left', true)}  color='secondary' aria-label='Menu'>
+            <IconButton className={classes.menuButton} onClick={toggleDrawer('left', true)} color='secondary' aria-label='Menu'>
               <AccountBalance />
             </IconButton>
             <Typography variant='h6' color='inherit' align='left' className={classes.grow}>
