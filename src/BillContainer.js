@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { CircularProgress, Tab, Tabs, Grid, Paper } from '@material-ui/core';
-import { isBrowser } from 'react-device-detect';
 import { Info } from '@material-ui/icons';
 import BillCard from './BillCard';
 import Politician from './Politician';
@@ -14,7 +13,6 @@ function BillContainer(props) {
   const [tab, setTab] = useState('Recent');
   const [fed, setFed] = useState('');
   const {classes} = props;
-  const gridNum = isBrowser ? 3 : 12;
 
   const fetchBills = async () => {
 
@@ -51,16 +49,14 @@ function BillContainer(props) {
           >
             <Tab icon={<Info />} value={'Recent'} label='Recently Introduced' />
           </Tabs>
-          <Grid container spacing={10}>
-            <Grid container spacing={10} justify='center'>
-              {bills && bills.length > 0 ? bills.map(bill => 
-                <Grid item xs={gridNum} key={bill.bill_id}> 
-                  <BillCard bill={bill} handlePol={handlePol} /> 
-                </Grid>) 
-              : 
-                <CircularProgress className={classes.loading}size={200} />
-              }
-            </Grid>
+          <Grid container spacing={10} justify='center'>
+            {bills && bills.length > 0 ? bills.map(bill => 
+              <Grid item xs={12} sm={6} md={3}  key={bill.bill_id}> 
+                <BillCard bill={bill} handlePol={handlePol} /> 
+              </Grid>) 
+            : 
+              <CircularProgress className={classes.loading}size={200} />
+            }
           </Grid>
         </Paper>
       :
