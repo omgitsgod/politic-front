@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { CircularProgress, Tab, Tabs, Grid, Paper } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
-import { isBrowser } from 'react-device-detect';
 import VoteCard from './VoteCard';
 import Politician from './Politician';
 
@@ -14,7 +13,6 @@ function VoteContainer(props) {
   const [tab, setTab] = useState('Recent');
   const [fed, setFed] = useState('');
   const { classes } = props;
-  const gridNum = isBrowser ? 3 : 12;
 
   useEffect(()=> {
 
@@ -51,16 +49,14 @@ function VoteContainer(props) {
           >
             <Tab icon={<Info />} value={'Recent'} label='Recently Voted' />
           </Tabs>
-          <Grid container spacing={10}>
-            <Grid container spacing={10} justify='center'>
-              {votes && votes.length > 0 ? votes.map((vote, i) => 
-                <Grid item xs={gridNum} key={i}> 
-                  <VoteCard vote={vote} handlePol={handlePol} /> 
-                </Grid>) 
-              : 
-                <CircularProgress className={classes.loading}size={200} />
-              }
-            </Grid>
+          <Grid container spacing={10} justify='center'>
+            {votes && votes.length > 0 ? votes.map((vote, i) => 
+              <Grid item xs={12} sm={6} md={3}  key={i}> 
+                <VoteCard vote={vote} handlePol={handlePol} /> 
+              </Grid>) 
+            : 
+              <CircularProgress className={classes.loading}size={200} />
+            }
           </Grid>
         </Paper>
       :
