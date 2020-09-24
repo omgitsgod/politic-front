@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Paper, Typography,  Grid, Divider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ArticleCard from './ArticleCard';
-import { isBrowser} from 'react-device-detect';
 
 
 function SavedArticles(props) {
 
   const [articles, setArticles] = useState([]);
   const { classes, user } = props;
-  const gridNum = isBrowser ? 3 : 12;
 
   const fetchSavedArticles = async () => {
 
@@ -43,16 +41,14 @@ function SavedArticles(props) {
           Saved Articles
         </Typography>
         <Divider />
-        <Grid container spacing={10}>
-          <Grid container spacing={10} justify='center'>
-            {articles ? articles.map((article) => (
-              <Grid item xs={gridNum}>
-                <ArticleCard article={article} />
-              </Grid>))
-            : 
-              null
-            }
-          </Grid>
+        <Grid container spacing={10} justify='center'>
+          {articles ? articles.map((article) => (
+            <Grid item xs={12} sm={6} md={3} >
+              <ArticleCard article={article} />
+            </Grid>))
+          : 
+            null
+          }
         </Grid>
       </Paper>
     </main>
