@@ -4,7 +4,6 @@ import { CircularProgress } from '@material-ui/core';
 import PoliticianList from './PoliticianList';
 import Politician from './Politician';
 import ZipCodeModal from './ZipCodeModal';
-import { isBrowser } from 'react-device-detect';
 
 
 function PoliticanContainer(props) {
@@ -14,23 +13,17 @@ function PoliticanContainer(props) {
   const [zip, setZip] = useState(localStorage.getItem('zip'));
   const [fed, setFed] = useState('');
   const { classes } = props;
-  const gridNum = isBrowser ? 3 : 12;
 
   const handlePol = (pol) => {
 
     pol === 'Back' ? setFed('') : setFed(pol);
   }
-  
-  const handleZipOpen = () => {
-    
-    setOpenZip(true);
-  }
+
   const fetchReps = async () => {
 
     const actionZip = zip || 10005;
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/reps/${actionZip}`).then(r => r.json());
     const officials = json.officials;
-    const state = json.normalizedInput.state;
     
     setFeds(officials);
   }
@@ -54,7 +47,7 @@ function PoliticanContainer(props) {
     <main className={classes.main}>
       {zip ?
         fed.length === 0 && feds.length > 0 ? 
-          <PoliticianList feds={feds} gridNum={gridNum} handlePol={handlePol} district='' setZip={handleSetZip}/>
+          <PoliticianList feds={feds} handlePol={handlePol} district='' setZip={handleSetZip}/>
         : 
           fed && fed.name.length > 0 ?
             <Politician fed={fed} handlePol={handlePol} data={fed.data} />
