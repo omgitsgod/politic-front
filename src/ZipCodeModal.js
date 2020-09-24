@@ -25,7 +25,6 @@ function ZipCodeModal(props) {
         const { latitude, longitude } = position.coords;
         const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/zip/${latitude}/${longitude}`).then(r => r.json());
         const location = json.Response.View[0].Result[0].Location.Address;
-        const addy = `${location.HouseNumber}%20${location.Street}%20${location.PostalCode}`.split(' ').join('%20');
 
         console.log(location.PostalCode);
         setZip(location.PostalCode);
