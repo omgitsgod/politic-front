@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { CircularProgress, Tab, Tabs, Grid, Paper } from '@material-ui/core';
-import { isBrowser} from 'react-device-detect';
 import { Info } from '@material-ui/icons';
 import EventCard from './EventCard';
 import Politician from './Politician';
@@ -14,7 +13,6 @@ function EventContainer(props) {
   const [tab, setTab] = useState('Recent');
   const [fed, setFed] = useState('');
   const {classes} = props;
-  const gridNum = isBrowser ? 3 : 12;
 
   const handlePol = (pol) => {
 
@@ -51,16 +49,14 @@ function EventContainer(props) {
           >
             <Tab icon={<Info />} value={'Recent'} label='Most Recent Events' />
           </Tabs>
-          <Grid container spacing={10}>
-            <Grid container spacing={10} justify='center'>
-              {events && events.length > 0 ? events.map(event => 
-                <Grid item xs={gridNum} key={event.id}> 
-                  <EventCard event={event} /> 
-                </Grid>) 
-              : 
-                <CircularProgress className={classes.loading}size={200} />
-              }
-            </Grid>
+          <Grid container spacing={10} justify='center'>
+            {events && events.length > 0 ? events.map(event => 
+              <Grid item xs={12} sm={6} md={3}  key={event.id}> 
+                <EventCard event={event} /> 
+              </Grid>) 
+            : 
+              <CircularProgress className={classes.loading}size={200} />
+            }
           </Grid>
         </Paper>
       :
