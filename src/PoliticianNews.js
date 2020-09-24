@@ -5,17 +5,15 @@ import ArticleCard from './ArticleCard';
 
 function PoliticianNews(props) {
 
-  const { articles, gridNum } = props;
+  const { articles } = props;
 
   return (
-    <Grid container spacing={10}>
-      <Grid container spacing={10} justify='center'>
-        {articles.map(article => (
-          <Grid item xs={gridNum} key={article.title}>
-            <ArticleCard article={article} />
-          </Grid>
-        ))}
-      </Grid>
+    <Grid container spacing={10} justify='center'>
+      {articles.map(article => (
+        <Grid item xs={12} sm={6} md={3} key={article.title}>
+          <ArticleCard article={article} />
+        </Grid>
+      ))}
     </Grid>
   );
 }
