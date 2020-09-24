@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Paper, Typography, FormControl, InputLabel, Input,  Button } from '@material-ui/core';
-import  { GpsFixedTwoTone as LocationIcon } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
-import { isBrowser } from 'react-device-detect';
 import PoliticianList from './PoliticianList';
 import Politician from './Politician';
 
@@ -12,7 +10,6 @@ function PoliticianSearch(props) {
     const [results, setResults] = useState([]);
     const [fed, setFed] = useState('');
     const { classes } = props;
-    const gridNum = isBrowser ? 3 : 12;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -65,7 +62,7 @@ function PoliticianSearch(props) {
                 null
             }   
             {results.length > 0 && fed.length === 0 ? 
-                <PoliticianList feds={results} handlePol={handlePol} gridNum={gridNum} search={true} />
+                <PoliticianList feds={results} handlePol={handlePol} search={true} />
             : 
                 null
             }
