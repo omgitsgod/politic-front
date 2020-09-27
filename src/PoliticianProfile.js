@@ -27,7 +27,7 @@ function PoliticianProfile(props) {
         </CardContent>
       </CardActionArea>
       {fed.id || data.id ? 
-        <CardActions>
+        <CardContent>
           <Button size='small' color='primary' onClick={handleFinances}>
             <Typography variant='h6' color='primary'>
               <b>Finances</b>
@@ -58,7 +58,7 @@ function PoliticianProfile(props) {
               <b>Industries</b>
             </Typography>
           </Button>
-        </CardActions>
+        </CardContent>
       : 
         null
       }
