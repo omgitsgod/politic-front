@@ -160,7 +160,7 @@ function Politician(props) {
       :
         <Card className={classes.paper} style={{ background: 'transparent', boxShadow: 'none' }} raised={true}>
           <PoliticianTabs tab={tab} handleChange={handleChange} />
-          <PoliticianProfile fed={fed} data={data} handleView={handleView} handleFinances={handleFinances} handleVotes={handleVotes} handleContribs={handleContribs} handleBills={handleBills} handleEvents={handleEvents} handleIndustry={handleIndustry} />
+          <PoliticianProfile fed={fed} data={data} handleView={handleView} onClickActions={handleFinances, handleVotes, handleContribs, handleBills, handleEvents, handleIndustry} />
         </Card>
       }
     </main>
