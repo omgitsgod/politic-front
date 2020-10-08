@@ -8,9 +8,8 @@ import SpeedDial from './PoliticianSpeedDial';
 
 function PoliticianProfile(props) {
 
-  const { classes, fed, data, handleView, handleFinances, handleVotes, handleContribs, handleBills, handleEvents, handleIndustry } = props;
+  const { classes, fed, data, handleView, onClickActions } = props;
   const [open, setOpen] = useState(false);
-  const onClickActions = { handleView, handleFinances, handleVotes, handleContribs, handleBills, handleEvents, handleIndustry }
 
   const handleBackdrop = (bool) => {
 
