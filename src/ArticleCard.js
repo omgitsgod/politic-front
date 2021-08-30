@@ -50,11 +50,13 @@ const styles = (theme) => ({
 
   card: {
     maxWidth: 345,
+    minWidth: 200,
+    boxSizing: 'content-box',
     marginTop: theme.spacing(8),
     border: '2px solid #000',
   },
   media: {
-    height: 200,
+    width: '100%',
   },
 });
 
