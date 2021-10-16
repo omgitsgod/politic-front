@@ -21,9 +21,11 @@ function VoteContainer(props) {
 
   const fetchVotes = async () => {
 
-    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/votes/recent`).then(r => r.json());
+    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/votes/recent`)
+      .then((r) => r.json())
+      .catch(() => console.log('error'));
 
-    setVotes(json.results.votes);
+    if (json?.results) setVotes(json.results.votes);
   }
 
   const handlePol = (pol) => {
