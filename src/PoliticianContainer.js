@@ -22,10 +22,15 @@ function PoliticanContainer(props) {
   const fetchReps = async () => {
 
     const actionZip = zip || 10005;
-    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/reps/${actionZip}`).then(r => r.json());
-    const officials = json.officials;
+    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/reps/${actionZip}`)
+      .then(r => r.json())
+      .catch(() => console.log("error"))
+
+    if (json?.officials) {
+      const officials = json.officials;
     
-    setFeds(officials);
+      setFeds(officials);
+    }
   }
 
   const handleSetZip = (inputedZip) => {
