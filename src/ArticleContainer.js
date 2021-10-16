@@ -16,9 +16,11 @@ function ArticleContainer(props) {
 
   const fetchArticles = async () => {
 
-    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/everything`).then(r => r.json());
+    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/news/everything`)
+      .then(r => r.json())
+      .catch(() => console.log("error"))
 
-    setArticles(json.articles)
+    if (json?.articles) setArticles(json.articles)
   }
 
   const saveArticle = (article) => {
