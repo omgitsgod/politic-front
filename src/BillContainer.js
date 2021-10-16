@@ -16,9 +16,11 @@ function BillContainer(props) {
 
   const fetchBills = async () => {
 
-    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/bills`).then(r => r.json());
+    const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/bills`)
+      .then((r) => r.json())
+      .catch(() => console.log('error'));
 
-    setBills(json.results[0].bills);
+    if (json?.results) setBills(json.results[0].bills);
   }
 
   const handlePol = (pol) => {
