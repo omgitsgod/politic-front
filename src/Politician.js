@@ -148,7 +148,7 @@ function Politician(props) {
   useEffect(() => {
 
     fetchCongress();
-  }, [fetch])
+  }, [fetchCongress])
 
   return (
     <main className={classes.main}>
