@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Card, Paper } from '@material-ui/core';
@@ -42,7 +42,7 @@ function Politician(props) {
 
     switch(view){
       case 'votes':
-        display = <PoliticianVotes votes={vote} handleBillPol={handleBillPol} />
+        display = <PoliticianVotes votes={vote} pol={billPol} handleBillPol={handleBillPol} />
         break
         case 'finance': 
           display = <PoliticianFinances finance={finance} cycle={cycle} />
@@ -127,7 +127,7 @@ function Politician(props) {
     setView('industry');
   }
 
-  const fetchCongress = async () => {
+  const fetchCongress = useCallback(async () => {
     
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/congress`).then(r => r.json());
     const repIDS = json.filter(rep => rep.id.bioguide === (data ? data.id.bioguide : fed.id.bioguide))[0]
@@ -143,12 +143,12 @@ function Politician(props) {
 
       setArticles(news);
     }
-  }
+  }, [data, fed.id.bioguide, fed.name])
 
   useEffect(() => {
 
     fetchCongress();
-  }, [])
+  }, [fetch])
 
   return (
     <main className={classes.main}>
