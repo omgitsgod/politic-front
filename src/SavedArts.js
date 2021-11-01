@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Paper, Typography,  Grid, Divider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ArticleCard from './ArticleCard';
@@ -9,7 +9,7 @@ function SavedArticles(props) {
   const [articles, setArticles] = useState([]);
   const { classes, user } = props;
 
-  const fetchSavedArticles = async () => {
+  const fetchSavedArticles = useCallback(async () => {
 
     if (user) {
       const json = await fetch(`${process.env.REACT_APP_API_ROOT}/articles`, {
@@ -24,12 +24,12 @@ function SavedArticles(props) {
 
       setArticles(filteredArticles);
     }
-  }
+  }, [user]);
 
   useEffect(() => {
 
     fetchSavedArticles()
-  }, []);
+  }, [fetchSavedArticles]);
 
   return (
     <main className={classes.main}>
