@@ -145,6 +145,15 @@ function Politician(props) {
     }
   }, [data, fed.id.bioguide, fed.name])
 
+  const profileOnClickActions = {
+    handleFinances,
+    handleVotes,
+    handleContribs,
+    handleBills,
+    handleEvents,
+    handleIndustry,
+  };
+
   useEffect(() => {
 
     fetchCongress();
@@ -152,17 +161,29 @@ function Politician(props) {
 
   return (
     <main className={classes.main}>
-      {tab === 'News' && articles.length > 0 ?
-        <Paper className={classes.paper} style={{ background: 'transparent', boxShadow: 'none' }}>
+      {tab === 'News' && articles.length > 0 ? (
+        <Paper
+          className={classes.paper}
+          style={{ background: 'transparent', boxShadow: 'none' }}
+        >
           <PoliticianTabs tab={tab} handleChange={handleChange} />
           <PoliticianNews articles={articles} />
         </Paper>
-      :
-        <Card className={classes.paper} style={{ background: 'transparent', boxShadow: 'none' }} raised={true}>
+      ) : (
+        <Card
+          className={classes.paper}
+          style={{ background: 'transparent', boxShadow: 'none' }}
+          raised={true}
+        >
           <PoliticianTabs tab={tab} handleChange={handleChange} />
-          <PoliticianProfile fed={fed} data={data} handleView={handleView} onClickActions={handleFinances, handleVotes, handleContribs, handleBills, handleEvents, handleIndustry} />
+          <PoliticianProfile
+            fed={fed}
+            data={data}
+            handleView={handleView}
+            onClickActions={profileOnClickActions}
+          />
         </Card>
-      }
+      )}
     </main>
   );
 }
