@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { CircularProgress } from '@material-ui/core';
 import PoliticianList from './PoliticianList';
@@ -19,7 +19,7 @@ function PoliticanContainer(props) {
     pol === 'Back' ? setFed('') : setFed(pol);
   }
 
-  const fetchReps = async () => {
+  const fetchReps = useCallback(async () => {
 
     const actionZip = zip || 10005;
     const json = await fetch(`${process.env.REACT_APP_BACK_HOST}/reps/${actionZip}`)
@@ -31,7 +31,7 @@ function PoliticanContainer(props) {
     
       setFeds(officials);
     }
-  }
+  }, [zip])
 
   const handleSetZip = (inputedZip) => {
     if (inputedZip === 'reset') {
@@ -46,7 +46,7 @@ function PoliticanContainer(props) {
   useEffect(() => {
 
     fetchReps();
-  }, [zip, fed]);
+  }, [fetchReps, zip, fed]);
 
   return (
     <main className={classes.main}>
